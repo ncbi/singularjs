@@ -1,0 +1,12 @@
+{
+  "name": "dcjs-standalone-version",
+  "description": "dcjs-standalone-version, no crossfilter on client",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "d3": "~3.4.8",
+    "dcjs": "~1.7.0"
+  }
+}

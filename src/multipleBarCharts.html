@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>dc.js - Bar Chart Example</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../lib/dcjs/dc.css"/>
+</head>
+<body>
+
+<div id="seqlen0-chart">
+    <strong><i class="fa fa-bar-chart-o"></i> By seqlen0</strong>
+    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+    <a class="reset" href="javascript:myCharts.items.seqlen0.filterAll();dc.redrawAll();" style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
+    </a>
+
+    <div style="clear: both;"></div>
+</div>
+<div id="seqlen1-chart">
+    <strong><i class="fa fa-bar-chart-o"></i> By seqlen1</strong>
+    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+    <a class="reset" href="javascript:myCharts.items.seqlen1.filterAll();dc.redrawAll();" style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
+    </a>
+
+    <div style="clear: both;"></div>
+</div>
+<div id="seqlen2-chart"><strong><i class="fa fa-bar-chart-o"></i> By seqlen2</strong>
+    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+    <a class="reset" href="javascript:myCharts.items.seqlen2.filterAll();dc.redrawAll();" style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
+    </a>
+
+    <div style="clear: both;"></div>
+</div>
+
+
+<script type="text/javascript" src="../lib/d3/d3.min.js"></script>
+<script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
+<script type="text/javascript" src="js/CHARTS.js"></script>
+
+
+<script type="text/javascript">
+    var myCharts = new dc.CHARTS();
+
+    d3.json("json/barchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
+            var barchart1 = myCharts.createBarChart({
+                field: chartname,
+                xmin: 6,
+                xmax: 20,
+                xtickscale: 1,
+                width: 400
+            }).filterHandler(myCharts.getChartFilterHandler);
+            // barchart1.margins().left = 80;
+            // this will make the left margin to show the yaxis properly
+            barchart1.group(myCharts.getGroupsFromData(json)).render();
+        });
+        myCharts.renderAll()
+    });
+
+    //dc.renderAll();
+
+</script>
+
+</body>
+</html>

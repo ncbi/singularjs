@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>dc.js - Bar Chart Example</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../lib/dcjs/dc.css"/>
+</head>
+<body>
+
+<div id="test"></div>
+<div id="seqlen-chart"></div>
+
+<script type="text/javascript" src="../lib/d3/d3.min.js"></script>
+<script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
+<script type="text/javascript" src="js/CHARTS.js"></script>
+
+
+<script type="text/javascript">
+    var myCharts = new dc.CHARTS();
+
+    var barchart1 = myCharts.createBarChart({
+        field: "seqlen",
+        xmin: 6,
+        xmax: 20,
+        xtickscale: 1,
+        width: 400
+    });
+
+    // barchart1.margins().left = 80;
+    //this will make the left margin to show the yaxis properly
+
+    barchart1.filterHandler(myCharts.getChartFilterHandler);
+    d3.json("json/barchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        barchart1.group(myCharts.getGroupsFromData(json)).render();
+    });
+
+
+    var chart = dc.barChart("#test");
+    var runDimension = "runDimension", speedSumGroup = {
+        all: function () {
+            return [
+                {
+                    "key": 1,
+                    "value": 4.47
+                },
+                {
+                    "key": 2,
+                    "value": 8.42
+                },
+                {
+                    "key": 3,
+                    "value": 12.99
+                },
+                {
+                    "key": 4,
+                    "value": 18
+                },
+                {
+                    "key": 5,
+                    "value": 20.45
+                },
+                {
+                    "key": 6,
+                    "value": 23.7
+                },
+                {
+                    "key": 7,
+                    "value": 27.790000000000003
+                },
+                {
+                    "key": 8,
+                    "value": 34.16
+                },
+                {
+                    "key": 9,
+                    "value": 39.78000000000001
+                },
+                {
+                    "key": 10,
+                    "value": 42.800000000000004
+                },
+                {
+                    "key": 11,
+                    "value": 49.39
+                },
+                {
+                    "key": 12,
+                    "value": 53.64
+                },
+                {
+                    "key": 13,
+                    "value": 55.77
+                },
+                {
+                    "key": 14,
+                    "value": 56
+                },
+                {
+                    "key": 15,
+                    "value": 62.550000000000004
+                },
+                {
+                    "key": 16,
+                    "value": 66.24000000000001
+                },
+                {
+                    "key": 17,
+                    "value": 75.47999999999999
+                },
+                {
+                    "key": 18,
+                    "value": 77.04
+                },
+                {
+                    "key": 19,
+                    "value": 80.17999999999999
+                },
+                {
+                    "key": 20,
+                    "value": 85
+                }
+            ];
+        }
+    };
+
+    chart.width(768).height(480).x(d3.scale.linear().domain([6, 20])).brushOn(false).yAxisLabel("This is the Y Axis!").dimension(runDimension).group(speedSumGroup);
+
+    //chart.render();
+    dc.renderAll();
+
+</script>
+
+</body>
+</html>
