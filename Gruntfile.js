@@ -9,7 +9,9 @@ module.exports = function (grunt) {
             js: {
                 // 'js/libs/*.js', // All JS in the libs folder
                 // "lib/d3/d3.min.js",
-                src: [ "lib/crossfilter/crossfilter.min.js", "src/js/dc_1.7.0_modified.js", "src/js/CHARTS.js", "js/d3.js", "js/crossfilter.js"],
+                src: [ "src/js/crossfilter_1.3.7_quicksort_modified.js",
+                    "src/js/dc_1.7.0_modified.js",
+                    "src/js/CHARTS.js"],
                 dest: 'build/dc-charts.js'
             },
             css: {

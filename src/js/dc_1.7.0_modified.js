@@ -811,7 +811,7 @@ dc.baseChart = function (_chart) {
         var data = arr ? arr : _chart.group().all().slice(0); // clone
         if(data.length < 2)
             return data;
-        var sort = crossfilter.quicksort.by(_chart.ordering());
+        var sort = quicksort.by(_chart.ordering());
         return sort(data,0,data.length);
     };
 
@@ -3922,7 +3922,7 @@ dc.dataTable = function(parent, chartGroup) {
 
     function nestEntries() {
         if (!_sort)
-            _sort = crossfilter.quicksort.by(_sortBy);
+            _sort = quicksort.by(_sortBy);
 
         var entries = _chart.dimension().top(_size);
 

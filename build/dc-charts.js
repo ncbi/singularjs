@@ -1,4 +1,315 @@
-!function(r){function n(r){return r}function t(r,n){for(var t=0,e=n.length,u=Array(e);e>t;++t)u[t]=r[n[t]];return u}function e(r){function n(n,t,e,u){for(;u>e;){var f=e+u>>>1;r(n[f])<t?e=f+1:u=f}return e}function t(n,t,e,u){for(;u>e;){var f=e+u>>>1;t<r(n[f])?u=f:e=f+1}return e}return t.right=t,t.left=n,t}function u(r){function n(r,n,t){for(var u=t-n,f=(u>>>1)+1;--f>0;)e(r,f,u,n);return r}function t(r,n,t){for(var u,f=t-n;--f>0;)u=r[n],r[n]=r[n+f],r[n+f]=u,e(r,1,f,n);return r}function e(n,t,e,u){for(var f,o=n[--u+t],i=r(o);(f=t<<1)<=e&&(e>f&&r(n[u+f])>r(n[u+f+1])&&f++,!(i<=r(n[u+f])));)n[u+t]=n[u+f],t=f;n[u+t]=o}return n.sort=t,n}function f(r){function n(n,e,u,f){var o,i,a,c,l=Array(f=Math.min(u-e,f));for(i=0;f>i;++i)l[i]=n[e++];if(t(l,0,f),u>e){o=r(l[0]);do(a=r(c=n[e])>o)&&(l[0]=c,o=r(t(l,0,f)[0]));while(++e<u)}return l}var t=u(r);return n}function o(r){function n(n,t,e){for(var u=t+1;e>u;++u){for(var f=u,o=n[u],i=r(o);f>t&&r(n[f-1])>i;--f)n[f]=n[f-1];n[f]=o}return n}return n}function i(r){function n(r,n,u){return(N>u-n?e:t)(r,n,u)}function t(t,e,u){var f,o=0|(u-e)/6,i=e+o,a=u-1-o,c=e+u-1>>1,l=c-o,v=c+o,s=t[i],h=r(s),d=t[l],p=r(d),g=t[c],y=r(g),m=t[v],x=r(m),b=t[a],A=r(b);h>p&&(f=s,s=d,d=f,f=h,h=p,p=f),x>A&&(f=m,m=b,b=f,f=x,x=A,A=f),h>y&&(f=s,s=g,g=f,f=h,h=y,y=f),p>y&&(f=d,d=g,g=f,f=p,p=y,y=f),h>x&&(f=s,s=m,m=f,f=h,h=x,x=f),y>x&&(f=g,g=m,m=f,f=y,y=x,x=f),p>A&&(f=d,d=b,b=f,f=p,p=A,A=f),p>y&&(f=d,d=g,g=f,f=p,p=y,y=f),x>A&&(f=m,m=b,b=f,f=x,x=A,A=f);var k=d,O=p,w=m,E=x;t[i]=s,t[l]=t[e],t[c]=g,t[v]=t[u-1],t[a]=b;var M=e+1,U=u-2,z=E>=O&&O>=E;if(z)for(var N=M;U>=N;++N){var C=t[N],S=r(C);if(O>S)N!==M&&(t[N]=t[M],t[M]=C),++M;else if(S>O)for(;;){var q=r(t[U]);{if(!(q>O)){if(O>q){t[N]=t[M],t[M++]=t[U],t[U--]=C;break}t[N]=t[U],t[U--]=C;break}U--}}}else for(var N=M;U>=N;N++){var C=t[N],S=r(C);if(O>S)N!==M&&(t[N]=t[M],t[M]=C),++M;else if(S>E)for(;;){var q=r(t[U]);{if(!(q>E)){O>q?(t[N]=t[M],t[M++]=t[U],t[U--]=C):(t[N]=t[U],t[U--]=C);break}if(U--,N>U)break}}}if(t[e]=t[M-1],t[M-1]=k,t[u-1]=t[U+1],t[U+1]=w,n(t,e,M-1),n(t,U+2,u),z)return t;if(i>M&&U>a){for(var F,q;(F=r(t[M]))<=O&&F>=O;)++M;for(;(q=r(t[U]))<=E&&q>=E;)--U;for(var N=M;U>=N;N++){var C=t[N],S=r(C);if(O>=S&&S>=O)N!==M&&(t[N]=t[M],t[M]=C),M++;else if(E>=S&&S>=E)for(;;){var q=r(t[U]);{if(!(E>=q&&q>=E)){O>q?(t[N]=t[M],t[M++]=t[U],t[U--]=C):(t[N]=t[U],t[U--]=C);break}if(U--,N>U)break}}}}return n(t,M,U+1)}var e=o(r);return n}function a(r){for(var n=Array(r),t=-1;++t<r;)n[t]=0;return n}function c(r,n){for(var t=r.length;n>t;)r[t++]=0;return r}function l(r,n){if(n>32)throw Error("invalid array width!");return r}function v(r,n){return function(t){var e=t.length;return[r.left(t,n,0,e),r.right(t,n,0,e)]}}function s(r,n){var t=n[0],e=n[1];return function(n){var u=n.length;return[r.left(n,t,0,u),r.left(n,e,0,u)]}}function h(r){return[0,r.length]}function d(){return null}function p(){return 0}function g(r){return r+1}function y(r){return r-1}function m(r){return function(n,t){return n+ +r(t)}}function x(r){return function(n,t){return n-r(t)}}function b(){function r(r){var n=E,t=r.length;return t&&(b=b.concat(r),z=F(z,E+=t),S.forEach(function(e){e(r,n,t)})),l}function e(){for(var r=A(E,E),n=[],t=0,e=0;E>t;++t)z[t]?r[t]=e++:n.push(t);N.forEach(function(r){r(0,[],n)}),q.forEach(function(n){n(r)});for(var u,t=0,e=0;E>t;++t)(u=z[t])&&(t!==e&&(z[e]=u,b[e]=b[t]),++e);for(b.length=e;E>e;)z[--E]=0}function o(r){function e(n,e,u){T=n.map(r),V=$(k(u),0,u),T=t(T,V);var f,o=_(T),i=o[0],a=o[1];if(W)for(f=0;u>f;++f)W(T[f],f)||(z[V[f]+e]|=Y);else{for(f=0;i>f;++f)z[V[f]+e]|=Y;for(f=a;u>f;++f)z[V[f]+e]|=Y}if(!e)return P=T,Q=V,tn=i,en=a,void 0;var c=P,l=Q,v=0,s=0;for(P=Array(E),Q=A(E,E),f=0;e>v&&u>s;++f)c[v]<T[s]?(P[f]=c[v],Q[f]=l[v++]):(P[f]=T[s],Q[f]=V[s++]+e);for(;e>v;++v,++f)P[f]=c[v],Q[f]=l[v];for(;u>s;++s,++f)P[f]=T[s],Q[f]=V[s]+e;o=_(P),tn=o[0],en=o[1]}function o(r,n,t){rn.forEach(function(r){r(T,V,n,t)}),T=V=null}function a(r){for(var n,t=0,e=0;E>t;++t)z[n=Q[t]]&&(t!==e&&(P[e]=P[t]),Q[e]=r[n],++e);for(P.length=e;E>e;)Q[e++]=0;var u=_(P);tn=u[0],en=u[1]}function c(r){var n=r[0],t=r[1];if(W)return W=null,G(function(r,e){return e>=n&&t>e}),tn=n,en=t,X;var e,u,f,o=[],i=[];if(tn>n)for(e=n,u=Math.min(tn,t);u>e;++e)z[f=Q[e]]^=Y,o.push(f);else if(n>tn)for(e=tn,u=Math.min(n,en);u>e;++e)z[f=Q[e]]^=Y,i.push(f);if(t>en)for(e=Math.max(n,en),u=t;u>e;++e)z[f=Q[e]]^=Y,o.push(f);else if(en>t)for(e=Math.max(tn,t),u=en;u>e;++e)z[f=Q[e]]^=Y,i.push(f);return tn=n,en=t,N.forEach(function(r){r(Y,o,i)}),X}function l(r){return null==r?B():Array.isArray(r)?j(r):"function"==typeof r?D(r):C(r)}function C(r){return c((_=v(w,r))(P))}function j(r){return c((_=s(w,r))(P))}function B(){return c((_=h)(P))}function D(r){return _=h,G(W=r),tn=0,en=E,X}function G(r){var n,t,e,u=[],f=[];for(n=0;E>n;++n)!(z[t=Q[n]]&Y)^(e=r(P[n],n))&&(e?(z[t]&=Z,u.push(t)):(z[t]|=Y,f.push(t)));N.forEach(function(r){r(Y,u,f)})}function H(r){for(var n,t=[],e=en;--e>=tn&&r>0;)z[n=Q[e]]||(t.push(b[n]),--r);return t}function I(r){for(var n,t=[],e=tn;en>e&&r>0;)z[n=Q[e]]||(t.push(b[n]),--r),e++;return t}function J(r){function t(n,t,e,u){function f(){++T===L&&(m=R(m,K<<=1),B=R(B,K),L=O(K))}var l,v,s,h,p,g,y=j,m=A(T,L),x=H,k=J,w=T,M=0,U=0;for(X&&(x=k=d),j=Array(T),T=0,B=w>1?F(B,E):A(E,L),w&&(s=(v=y[0]).key);u>U&&!((h=r(n[U]))>=h);)++U;for(;u>U;){for(v&&h>=s?(p=v,g=s,m[M]=T,(v=y[++M])&&(s=v.key)):(p={key:h,value:k()},g=h),j[T]=p;!(h>g||(B[l=t[U]+e]=T,z[l]&Z||(p.value=x(p.value,b[l])),++U>=u));)h=r(n[U]);f()}for(;w>M;)j[m[M]=T]=y[M++],f();if(T>M)for(M=0;e>M;++M)B[M]=m[B[M]];l=N.indexOf(V),T>1?(V=o,W=a):(1===T?(V=i,W=c):(V=d,W=d),B=null),N[l]=V}function e(){if(T>1){for(var r=T,n=j,t=A(r,r),e=0,u=0;E>e;++e)z[e]&&(t[B[u]=B[e]]=1,++u);for(j=[],T=0,e=0;r>e;++e)t[e]&&(t[e]=T++,j.push(n[e]));if(T>1)for(var e=0;u>e;++e)B[e]=t[B[e]];else B=null;N[N.indexOf(V)]=T>1?(W=a,V=o):1===T?(W=c,V=i):W=V=d}else if(1===T){for(var e=0;E>e;++e)if(z[e])return;j=[],T=0,N[N.indexOf(V)]=V=W=d}}function o(r,n,t){if(r!==Y&&!X){var e,u,f,o;for(e=0,f=n.length;f>e;++e)z[u=n[e]]&Z||(o=j[B[u]],o.value=H(o.value,b[u]));for(e=0,f=t.length;f>e;++e)(z[u=t[e]]&Z)===r&&(o=j[B[u]],o.value=I(o.value,b[u]))}}function i(r,n,t){if(r!==Y&&!X){var e,u,f,o=j[0];for(e=0,f=n.length;f>e;++e)z[u=n[e]]&Z||(o.value=H(o.value,b[u]));for(e=0,f=t.length;f>e;++e)(z[u=t[e]]&Z)===r&&(o.value=I(o.value,b[u]))}}function a(){var r,n;for(r=0;T>r;++r)j[r].value=J();for(r=0;E>r;++r)z[r]&Z||(n=j[B[r]],n.value=H(n.value,b[r]))}function c(){var r,n=j[0];for(n.value=J(),r=0;E>r;++r)z[r]&Z||(n.value=H(n.value,b[r]))}function l(){return X&&(W(),X=!1),j}function v(r){var n=D(l(),0,j.length,r);return G.sort(n,0,n.length)}function s(r,n,t){return H=r,I=n,J=t,X=!0,S}function h(){return s(g,y,p)}function k(r){return s(m(r),x(r),p)}function w(r){function n(n){return r(n.value)}return D=f(n),G=u(n),S}function M(){return w(n)}function U(){return T}function C(){var r=N.indexOf(V);return r>=0&&N.splice(r,1),r=rn.indexOf(t),r>=0&&rn.splice(r,1),r=q.indexOf(e),r>=0&&q.splice(r,1),S}var S={top:v,all:l,reduce:s,reduceCount:h,reduceSum:k,order:w,orderNatural:M,size:U,dispose:C,remove:C};nn.push(S);var j,B,D,G,H,I,J,K=8,L=O(K),T=0,V=d,W=d,X=!0;return arguments.length<1&&(r=n),N.push(V),rn.push(t),q.push(e),t(P,Q,0,E),h().orderNatural()}function K(){var r=J(d),n=r.all;return delete r.all,delete r.top,delete r.order,delete r.orderNatural,delete r.size,r.value=function(){return n()[0].value},r}function L(){nn.forEach(function(r){r.dispose()});var r=S.indexOf(e);for(r>=0&&S.splice(r,1),r=S.indexOf(o),r>=0&&S.splice(r,1),r=q.indexOf(a),r>=0&&q.splice(r,1),r=0;E>r;++r)z[r]&=Z;return M&=Z,X}var P,Q,T,V,W,X={filter:l,filterExact:C,filterRange:j,filterFunction:D,filterAll:B,top:H,bottom:I,group:J,groupAll:K,dispose:L,remove:L},Y=~M&-~M,Z=~Y,$=i(function(r){return T[r]}),_=h,rn=[],nn=[],tn=0,en=0;return S.unshift(e),S.push(o),q.push(a),M|=Y,(U>=32?!Y:M&(1<<U)-1)&&(z=R(z,U<<=1)),e(b,0,E),o(b,0,E),X}function a(){function r(r,n){var t;if(!h)for(t=n;E>t;++t)z[t]||(a=c(a,b[t]))}function n(r,n,t){var e,u,f;if(!h){for(e=0,f=n.length;f>e;++e)z[u=n[e]]||(a=c(a,b[u]));for(e=0,f=t.length;f>e;++e)z[u=t[e]]===r&&(a=l(a,b[u]))}}function t(){var r;for(a=v(),r=0;E>r;++r)z[r]||(a=c(a,b[r]))}function e(r,n,t){return c=r,l=n,v=t,h=!0,s}function u(){return e(g,y,p)}function f(r){return e(m(r),x(r),p)}function o(){return h&&(t(),h=!1),a}function i(){var t=N.indexOf(n);return t>=0&&N.splice(t),t=S.indexOf(r),t>=0&&S.splice(t),s}var a,c,l,v,s={reduce:e,reduceCount:u,reduceSum:f,value:o,dispose:i,remove:i},h=!0;return N.push(n),S.push(r),r(b,0,E),u()}function c(){return E}var l={add:r,remove:e,dimension:o,groupAll:a,size:c},b=[],E=0,M=0,U=8,z=C(0),N=[],S=[],q=[];return arguments.length?r(arguments[0]):l}function A(r,n){return(257>n?C:65537>n?S:q)(r)}function k(r){for(var n=A(r,r),t=-1;++t<r;)n[t]=t;return n}function O(r){return 8===r?256:16===r?65536:4294967296}b.version="1.3.7",b.permute=t;var w=b.bisect=e(n);w.by=e;var E=b.heap=u(n);E.by=u;var M=b.heapselect=f(n);M.by=f;var U=b.insertionsort=o(n);U.by=o;var z=b.quicksort=i(n);z.by=i;var N=32,C=a,S=a,q=a,F=c,R=l;"undefined"!=typeof Uint8Array&&(C=function(r){return new Uint8Array(r)},S=function(r){return new Uint16Array(r)},q=function(r){return new Uint32Array(r)},F=function(r,n){if(r.length>=n)return r;var t=new r.constructor(n);return t.set(r),t},R=function(r,n){var t;switch(n){case 16:t=S(r.length);break;case 32:t=q(r.length);break;default:throw Error("invalid array width!")}return t.set(r),t}),r.crossfilter=b}("undefined"!=typeof exports&&exports||this);
+/*
+ * Implementation based on the crossfilter+"1.3.7"+Dart project;
+ *     see lib/crossfilter/LICENSE for details.
+ *     see lib/crossfilter/libdart/LICENSE for details.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+var quicksort = {};
+quicksort.by = quicksort_by;
+function insertionsort_by(f) {
+
+    function insertionsort(a, lo, hi) {
+        for (var i = lo + 1; i < hi; ++i) {
+            for (var j = i, t = a[i], x = f(t); j > lo && f(a[j - 1]) > x; --j) {
+                a[j] = a[j - 1];
+            }
+            a[j] = t;
+        }
+        return a;
+    }
+
+    return insertionsort;
+}
+
+function quicksort_by(f) {
+    var insertionsort = insertionsort_by(f);
+
+    function sort(a, lo, hi) {
+        return (hi - lo < quicksort_sizeThreshold
+            ? insertionsort
+            : quicksort)(a, lo, hi);
+    }
+
+    function quicksort(a, lo, hi) {
+        // Compute the two pivots by looking at 5 elements.
+        var sixth = (hi - lo) / 6 | 0,
+            i1 = lo + sixth,
+            i5 = hi - 1 - sixth,
+            i3 = lo + hi - 1 >> 1,  // The midpoint.
+            i2 = i3 - sixth,
+            i4 = i3 + sixth;
+
+        var e1 = a[i1], x1 = f(e1),
+            e2 = a[i2], x2 = f(e2),
+            e3 = a[i3], x3 = f(e3),
+            e4 = a[i4], x4 = f(e4),
+            e5 = a[i5], x5 = f(e5);
+
+        var t;
+
+        // Sort the selected 5 elements using a sorting network.
+        if (x1 > x2) t = e1, e1 = e2, e2 = t, t = x1, x1 = x2, x2 = t;
+        if (x4 > x5) t = e4, e4 = e5, e5 = t, t = x4, x4 = x5, x5 = t;
+        if (x1 > x3) t = e1, e1 = e3, e3 = t, t = x1, x1 = x3, x3 = t;
+        if (x2 > x3) t = e2, e2 = e3, e3 = t, t = x2, x2 = x3, x3 = t;
+        if (x1 > x4) t = e1, e1 = e4, e4 = t, t = x1, x1 = x4, x4 = t;
+        if (x3 > x4) t = e3, e3 = e4, e4 = t, t = x3, x3 = x4, x4 = t;
+        if (x2 > x5) t = e2, e2 = e5, e5 = t, t = x2, x2 = x5, x5 = t;
+        if (x2 > x3) t = e2, e2 = e3, e3 = t, t = x2, x2 = x3, x3 = t;
+        if (x4 > x5) t = e4, e4 = e5, e5 = t, t = x4, x4 = x5, x5 = t;
+
+        var pivot1 = e2, pivotValue1 = x2,
+            pivot2 = e4, pivotValue2 = x4;
+
+        // e2 and e4 have been saved in the pivot variables. They will be written
+        // back, once the partitioning is finished.
+        a[i1] = e1;
+        a[i2] = a[lo];
+        a[i3] = e3;
+        a[i4] = a[hi - 1];
+        a[i5] = e5;
+
+        var less = lo + 1,   // First element in the middle partition.
+            great = hi - 2;  // Last element in the middle partition.
+
+        // Note that for value comparison, <, <=, >= and > coerce to a primitive via
+        // Object.prototype.valueOf; == and === do not, so in order to be consistent
+        // with natural order (such as for Date objects), we must do two compares.
+        var pivotsEqual = pivotValue1 <= pivotValue2 && pivotValue1 >= pivotValue2;
+        if (pivotsEqual) {
+
+            // Degenerated case where the partitioning becomes a dutch national flag
+            // problem.
+            //
+            // [ |  < pivot  | == pivot | unpartitioned | > pivot  | ]
+            //  ^             ^          ^             ^            ^
+            // left         less         k           great         right
+            //
+            // a[left] and a[right] are undefined and are filled after the
+            // partitioning.
+            //
+            // Invariants:
+            //   1) for x in ]left, less[ : x < pivot.
+            //   2) for x in [less, k[ : x == pivot.
+            //   3) for x in ]great, right[ : x > pivot.
+            for (var k = less; k <= great; ++k) {
+                var ek = a[k], xk = f(ek);
+                if (xk < pivotValue1) {
+                    if (k !== less) {
+                        a[k] = a[less];
+                        a[less] = ek;
+                    }
+                    ++less;
+                } else if (xk > pivotValue1) {
+
+                    // Find the first element <= pivot in the range [k - 1, great] and
+                    // put [:ek:] there. We know that such an element must exist:
+                    // When k == less, then el3 (which is equal to pivot) lies in the
+                    // interval. Otherwise a[k - 1] == pivot and the search stops at k-1.
+                    // Note that in the latter case invariant 2 will be violated for a
+                    // short amount of time. The invariant will be restored when the
+                    // pivots are put into their final positions.
+                    while (true) {
+                        var greatValue = f(a[great]);
+                        if (greatValue > pivotValue1) {
+                            great--;
+                            // This is the only location in the while-loop where a new
+                            // iteration is started.
+                            continue;
+                        } else if (greatValue < pivotValue1) {
+                            // Triple exchange.
+                            a[k] = a[less];
+                            a[less++] = a[great];
+                            a[great--] = ek;
+                            break;
+                        } else {
+                            a[k] = a[great];
+                            a[great--] = ek;
+                            // Note: if great < k then we will exit the outer loop and fix
+                            // invariant 2 (which we just violated).
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+
+            // We partition the list into three parts:
+            //  1. < pivot1
+            //  2. >= pivot1 && <= pivot2
+            //  3. > pivot2
+            //
+            // During the loop we have:
+            // [ | < pivot1 | >= pivot1 && <= pivot2 | unpartitioned  | > pivot2  | ]
+            //  ^            ^                        ^              ^             ^
+            // left         less                     k              great        right
+            //
+            // a[left] and a[right] are undefined and are filled after the
+            // partitioning.
+            //
+            // Invariants:
+            //   1. for x in ]left, less[ : x < pivot1
+            //   2. for x in [less, k[ : pivot1 <= x && x <= pivot2
+            //   3. for x in ]great, right[ : x > pivot2
+            for (var k = less; k <= great; k++) {
+                var ek = a[k], xk = f(ek);
+                if (xk < pivotValue1) {
+                    if (k !== less) {
+                        a[k] = a[less];
+                        a[less] = ek;
+                    }
+                    ++less;
+                } else {
+                    if (xk > pivotValue2) {
+                        while (true) {
+                            var greatValue = f(a[great]);
+                            if (greatValue > pivotValue2) {
+                                great--;
+                                if (great < k) break;
+                                // This is the only location inside the loop where a new
+                                // iteration is started.
+                                continue;
+                            } else {
+                                // a[great] <= pivot2.
+                                if (greatValue < pivotValue1) {
+                                    // Triple exchange.
+                                    a[k] = a[less];
+                                    a[less++] = a[great];
+                                    a[great--] = ek;
+                                } else {
+                                    // a[great] >= pivot1.
+                                    a[k] = a[great];
+                                    a[great--] = ek;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Move pivots into their final positions.
+        // We shrunk the list from both sides (a[left] and a[right] have
+        // meaningless values in them) and now we move elements from the first
+        // and third partition into these locations so that we can store the
+        // pivots.
+        a[lo] = a[less - 1];
+        a[less - 1] = pivot1;
+        a[hi - 1] = a[great + 1];
+        a[great + 1] = pivot2;
+
+        // The list is now partitioned into three partitions:
+        // [ < pivot1   | >= pivot1 && <= pivot2   |  > pivot2   ]
+        //  ^            ^                        ^             ^
+        // left         less                     great        right
+
+        // Recursive descent. (Don't include the pivot values.)
+        sort(a, lo, less - 1);
+        sort(a, great + 2, hi);
+
+        if (pivotsEqual) {
+            // All elements in the second partition are equal to the pivot. No
+            // need to sort them.
+            return a;
+        }
+
+        // In theory it should be enough to call _doSort recursively on the second
+        // partition.
+        // The Android source however removes the pivot elements from the recursive
+        // call if the second partition is too large (more than 2/3 of the list).
+        if (less < i1 && great > i5) {
+            var lessValue, greatValue;
+            while ((lessValue = f(a[less])) <= pivotValue1 && lessValue >= pivotValue1) ++less;
+            while ((greatValue = f(a[great])) <= pivotValue2 && greatValue >= pivotValue2) --great;
+
+            // Copy paste of the previous 3-way partitioning with adaptions.
+            //
+            // We partition the list into three parts:
+            //  1. == pivot1
+            //  2. > pivot1 && < pivot2
+            //  3. == pivot2
+            //
+            // During the loop we have:
+            // [ == pivot1 | > pivot1 && < pivot2 | unpartitioned  | == pivot2 ]
+            //              ^                      ^              ^
+            //            less                     k              great
+            //
+            // Invariants:
+            //   1. for x in [ *, less[ : x == pivot1
+            //   2. for x in [less, k[ : pivot1 < x && x < pivot2
+            //   3. for x in ]great, * ] : x == pivot2
+            for (var k = less; k <= great; k++) {
+                var ek = a[k], xk = f(ek);
+                if (xk <= pivotValue1 && xk >= pivotValue1) {
+                    if (k !== less) {
+                        a[k] = a[less];
+                        a[less] = ek;
+                    }
+                    less++;
+                } else {
+                    if (xk <= pivotValue2 && xk >= pivotValue2) {
+                        while (true) {
+                            var greatValue = f(a[great]);
+                            if (greatValue <= pivotValue2 && greatValue >= pivotValue2) {
+                                great--;
+                                if (great < k) break;
+                                // This is the only location inside the loop where a new
+                                // iteration is started.
+                                continue;
+                            } else {
+                                // a[great] < pivot2.
+                                if (greatValue < pivotValue1) {
+                                    // Triple exchange.
+                                    a[k] = a[less];
+                                    a[less++] = a[great];
+                                    a[great--] = ek;
+                                } else {
+                                    // a[great] == pivot1.
+                                    a[k] = a[great];
+                                    a[great--] = ek;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // The second partition has now been cleared of pivot elements and looks
+        // as follows:
+        // [  *  |  > pivot1 && < pivot2  | * ]
+        //        ^                      ^
+        //       less                  great
+        // Sort the second partition using recursive descent.
+
+        // The second partition looks as follows:
+        // [  *  |  >= pivot1 && <= pivot2  | * ]
+        //        ^                        ^
+        //       less                    great
+        // Simply sort it by recursive descent.
+
+        return sort(a, less, great + 1);
+    }
+
+    return sort;
+}
+
+var quicksort_sizeThreshold = 32;
+
 /*!
  *  dc 1.7.0
  *  http://dc-js.github.io/dc.js/
@@ -812,7 +1123,7 @@ dc.baseChart = function (_chart) {
         var data = arr ? arr : _chart.group().all().slice(0); // clone
         if(data.length < 2)
             return data;
-        var sort = crossfilter.quicksort.by(_chart.ordering());
+        var sort = quicksort.by(_chart.ordering());
         return sort(data,0,data.length);
     };
 
@@ -3923,7 +4234,7 @@ dc.dataTable = function(parent, chartGroup) {
 
     function nestEntries() {
         if (!_sort)
-            _sort = crossfilter.quicksort.by(_sortBy);
+            _sort = quicksort.by(_sortBy);
 
         var entries = _chart.dimension().top(_size);
 
