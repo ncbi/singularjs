@@ -12,23 +12,23 @@ module.exports = function (grunt) {
                 src: [ "src/js/crossfilter_1.3.7_quicksort_modified.js",
                     "src/js/dc_1.7.0_modified.js",
                     "src/js/CHARTS.js"],
-                dest: 'build/dc-charts.js'
+                dest: 'dist/dc-charts.js'
             },
             css: {
                 src: ["lib/dcjs/dc.css"],
-                dest: 'build/dc-charts.css'
+                dest: 'dist/dc-charts.css'
             }
         },
         uglify: {
             build: {
-                src: 'build/dc-charts.js',
-                dest: 'build/dc-charts.min.js'
+                src: 'dist/dc-charts.js',
+                dest: 'dist/dc-charts.min.js'
             }
         },
         cssmin: {
             cssbuild: {
-                src: 'build/dc-charts.css',
-                dest: 'build/dc-charts.min.css'
+                src: 'dist/dc-charts.css',
+                dest: 'dist/dc-charts.min.css'
             }
         }
     });
