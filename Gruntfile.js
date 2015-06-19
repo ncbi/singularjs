@@ -5,30 +5,29 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {
-            // 2. Configuration for concatinating files goes here.
+            // 2. Configuration js src files goes here.
             js: {
-                // 'js/libs/*.js', // All JS in the libs folder
-                // "lib/d3/d3.min.js",
-                src: [ "src/js/crossfilter_1.3.7_quicksort_modified.js",
+                src: [
+                    "src/js/crossfilter_1.3.7_quicksort_modified.js",
                     "src/js/dc_1.7.0_modified.js",
                     "src/js/CHARTS.js"],
-                dest: 'dist/dc-charts.js'
+                dest: 'dist/Singular.js'
             },
             css: {
-                src: ["lib/dcjs/dc.css"],
-                dest: 'dist/dc-charts.css'
+                src: ["bower_components/dcjs/dc.css"],
+                dest: 'dist/Singular.css'
             }
         },
         uglify: {
             build: {
-                src: 'dist/dc-charts.js',
-                dest: 'dist/dc-charts.min.js'
+                src: 'dist/Singular.js',
+                dest: 'dist/Singular.min.js'
             }
         },
         cssmin: {
             cssbuild: {
-                src: 'dist/dc-charts.css',
-                dest: 'dist/dc-charts.min.css'
+                src: 'dist/Singular.css',
+                dest: 'dist/Singular.min.css'
             }
         }
     });

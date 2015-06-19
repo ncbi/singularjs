@@ -1,12 +1,12 @@
 {
-  "name": "dc-charts",
-  "description": "dcjs-standalone-version, no dependency on crossfilter and jquery",
-  "version": "0.0.2",
+  "name": "Singular",
+  "description": "Singular is a fork of the modified dc-chart-js(in house lib,a standalone-version without dependency on crossfilter and jquery of dc.js that tuned to support remote data stores)",
+  "version": "0.0.3",
   "license": "MIT",
   "private": true,
   "main": [
-    "dist/dc-charts.min.css",
-    "dist/dc-charts.min.js"
+    "dist/Singular.min.css",
+    "dist/Singular.min.js"
   ],
   "dependencies": {
     "d3": "~3.5.4"
