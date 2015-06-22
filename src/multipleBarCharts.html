@@ -41,26 +41,23 @@
 
 
 <script type="text/javascript">
-    var myCharts = new Singular();
+    var singular = new Singular();
 
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
-            var barchart1 = myCharts.createBarChart({
+            var barchart1 = singular.createBarChart({
                 field: chartname,
                 xmin: 6,
                 xmax: 20,
                 xtickscale: 1,
                 width: 400
-            }).filterHandler(myCharts.getDefaultFilterHandler);
-            // barchart1.margins().left = 80;
-            // this will make the left margin to show the yaxis properly
-            barchart1.group(Singular.getGroupsFromData(json)).render();
-        });
-        myCharts.renderAll()
-    });
+            }).filterHandler(singular.getDefaultFilterHandler);
 
-    //dc.renderAll();
+            barchart1.load(json);
+        });
+        singular.renderAll();//dc.renderAll() also works
+    });
 
 </script>
 

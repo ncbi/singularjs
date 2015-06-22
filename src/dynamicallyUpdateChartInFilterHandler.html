@@ -10,7 +10,7 @@
 <div id="seqlen0-chart">
     <strong><i class="fa fa-bar-chart-o"></i> By seqlen0</strong>
     <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:myCharts.items.seqlen0.filterAll();dc.redrawAll();" style="display: none;">reset
+    <a class="reset" href="javascript:singular.items.seqlen0.filterAll();dc.redrawAll();" style="display: none;">reset
         <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
     </a>
 
@@ -19,7 +19,7 @@
 <div id="seqlen1-chart">
     <strong><i class="fa fa-bar-chart-o"></i> By seqlen1</strong>
     <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:myCharts.items.seqlen1.filterAll();dc.redrawAll();" style="display: none;">reset
+    <a class="reset" href="javascript:singular.items.seqlen1.filterAll();dc.redrawAll();" style="display: none;">reset
         <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
     </a>
 
@@ -47,8 +47,8 @@
         return data;
     };
 
-    var myCharts = new Singular(),
-            chart1 = myCharts.createBarChart({
+    var singular = new Singular(),
+            chart1 = singular.createBarChart({
                 field: 'seqlen0',
                 xmin: 1,
                 xmax: 100,
@@ -56,7 +56,7 @@
                 width: 300,
                 height: 200
             }),
-            chart2 = myCharts.createBarChart({
+            chart2 = singular.createBarChart({
                 field: 'seqlen1',
                 xmin: 1,
                 xmax: 100,
@@ -65,11 +65,11 @@
                 height: 200
             }),
             myHandler1 = function () {
-                console.info(myCharts.getAllFilters());
+                console.info(singular.getAllFilters());
                 chart2.load(getData());
             },
             myHandler2 = function () {
-                console.info(myCharts.getAllFilters());
+                console.info(singular.getAllFilters());
                 chart1.load(getData());
             };
 
@@ -80,7 +80,7 @@
     chart1.load(getData());
     chart2.load(getData());
     //    setInterval(function () {
-    //        chart2.group(myCharts.getGroupsFromData(getData())).render();
+    //        chart2.group(singular.getGroupsFromData(getData())).render();
     //    }, 1000);
 
 </script>

@@ -197,7 +197,7 @@ class Singular {
      * @param newconf
      * @returns {*}
      */
-    public createBarChart = function (newconf:ChartConfiguration) {
+    public createBarChart = function (newconf:ChartConfiguration):DC.BarChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
                 xmin: 0,
@@ -234,7 +234,7 @@ class Singular {
             });
         chart.xAxis().ticks(5);
         chart.xAxis().tickFormat((v)=> {
-            return v * conf.xtickscale;
+            return v * conf.xtickscale+'';
         });
         chart.yAxis().ticks(5);
         chart.load = function (data) {
@@ -254,7 +254,7 @@ class Singular {
      * @param newconf
      * @returns {*}
      */
-    public createRowChart = function (newconf) {
+    public createRowChart = function (newconf):DC.RowChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
                 field: "row",
@@ -305,7 +305,7 @@ class Singular {
      *
      *
      */
-    public createPieChart = function (newconf) {
+    public createPieChart = function (newconf):DC.PieChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
                 field: "pie",

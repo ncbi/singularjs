@@ -116,7 +116,7 @@ var Singular = (function () {
             });
             chart.xAxis().ticks(5);
             chart.xAxis().tickFormat(function (v) {
-                return v * conf.xtickscale;
+                return v * conf.xtickscale + '';
             });
             chart.yAxis().ticks(5);
             chart.load = function (data) {
