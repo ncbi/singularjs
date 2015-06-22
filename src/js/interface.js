@@ -247,7 +247,7 @@ var Singular = (function () {
     /**
      * getDimensions
      * @param data
-     * @returns {{top: (function(any): any[]), filter: (function(any): undefined), filterFunction: (function(any): undefined)}}
+     * @returns {{top: (function(any): any[]), filter: (function(any): void), filterFunction: (function(any): void)}}
      */
     Singular.getDimensions = function (data) {
         return {

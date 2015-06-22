@@ -234,7 +234,7 @@ class Singular {
             });
         chart.xAxis().ticks(5);
         chart.xAxis().tickFormat((v)=> {
-            return v * conf.xtickscale+'';
+            return v * conf.xtickscale + '';
         });
         chart.yAxis().ticks(5);
         chart.load = function (data) {
@@ -387,7 +387,7 @@ class Singular {
     /**
      * getDimensions
      * @param data
-     * @returns {{top: (function(any): any[]), filter: (function(any): undefined), filterFunction: (function(any): undefined)}}
+     * @returns {{top: (function(any): any[]), filter: (function(any): void), filterFunction: (function(any): void)}}
      */
     static getDimensions = function (data:any[]) {
         return {
