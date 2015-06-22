@@ -1,6 +1,6 @@
 {
-  "name": "dc-charts-js",
-  "version": "0.1.0",
+  "name": "singularjs",
+  "version": "0.0.3",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-cli": "0.1.11",
