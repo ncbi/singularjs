@@ -37,11 +37,11 @@
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
 <script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
-<script type="text/javascript" src="js/CHARTS.js"></script>
+<script type="text/javascript" src="js/interface.js"></script>
 
 
 <script type="text/javascript">
-    var myCharts = new dc.CHARTS();
+    var myCharts = new Singular();
 
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
@@ -52,10 +52,10 @@
                 xmax: 20,
                 xtickscale: 1,
                 width: 400
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             // barchart1.margins().left = 80;
             // this will make the left margin to show the yaxis properly
-            barchart1.group(myCharts.getGroupsFromData(json)).render();
+            barchart1.group(Singular.getGroupsFromData(json)).render();
         });
         myCharts.renderAll()
     });

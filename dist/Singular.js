@@ -5746,7 +5746,7 @@ if(typeof define === "function" && define.amd) {
                 xtickscale: 1,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             // chart.margins().left = 80;
             // this will make the left margin to show the yaxis properly
             chart.group(myCharts.getGroupsFromData(json)).render();
@@ -5761,7 +5761,7 @@ if(typeof define === "function" && define.amd) {
                 field: chartname,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             chart.group(myCharts.getGroupsFromData(json)).render();
         });
         myCharts.renderAll()
@@ -5775,7 +5775,7 @@ if(typeof define === "function" && define.amd) {
                 field: chartname,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             chart.dimension(myCharts.getDimensions(json));
             chart.group(myCharts.getGroupsFromData(json)).render();
         });

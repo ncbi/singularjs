@@ -47,10 +47,11 @@
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
 <script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
-<script type="text/javascript" src="js/CHARTS.js"></script>
+
+<script type="text/javascript" src="js/interface.js"></script>
 
 <script type="text/javascript">
-    var myCharts = new dc.CHARTS();
+    var myCharts = new Singular();
 
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
@@ -62,7 +63,7 @@
                 xtickscale: 1,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             // chart.margins().left = 80;
             // this will make the left margin to show the yaxis properly
             chart.group(myCharts.getGroupsFromData(json)).render();
@@ -77,7 +78,7 @@
                 field: chartname,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             chart.group(myCharts.getGroupsFromData(json)).render();
         });
         myCharts.renderAll()
@@ -91,7 +92,7 @@
                 field: chartname,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(myCharts.getDefaultFilterHandler);
             chart.dimension(myCharts.getDimensions(json));
             chart.group(myCharts.getGroupsFromData(json)).render();
         });

@@ -19,25 +19,26 @@
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
 <script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
-<script type="text/javascript" src="js/CHARTS.js"></script>
+<script type="text/javascript" src="js/interface.js"></script>
 
 <script type="text/javascript">
-    var myCharts = new dc.CHARTS();
+    var singular = new Singular();
+    var defaultHandler = singular.getDefaultFilterHandler;
 
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
-            var chart = myCharts.createBarChart({
+            var chart = singular.createBarChart({
                 field: chartname,
                 xmin: 6,
                 xmax: 20,
                 xtickscale: 1,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
+            }).filterHandler(defaultHandler);
             // barchart1.margins().left = 80;
             // this will make the left margin to show the yaxis properly
-            chart.group(myCharts.getGroupsFromData(json)).render();
+            chart.group(singular.getGroupsFromData(json)).render();
         });
         dc.renderAll();
     });
@@ -45,12 +46,12 @@
     d3.json("json/rowchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         ["row0", "row1", "row2"].forEach(function (chartname, index) {
-            var chart = myCharts.createRowChart({
+            var chart = singular.createRowChart({
                 field: chartname,
                 width: 300,
                 height: 200
-            }).filterHandler(myCharts.getChartFilterHandler);
-            chart.group(myCharts.getGroupsFromData(json)).render();
+            }).filterHandler(defaultHandler);
+            chart.group(singular.getGroupsFromData(json)).render();
         });
         dc.renderAll();
     });

@@ -13,10 +13,10 @@
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
 <script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
-<script type="text/javascript" src="js/CHARTS.js"></script>
+<script type="text/javascript" src="js/interface.js"></script>
 
 <script type="text/javascript">
-    var myCharts = new dc.CHARTS();
+    var myCharts = new Singular();
 
     var barchart1 = myCharts.createBarChart({
         field: "seqlen",
@@ -29,7 +29,7 @@
     // barchart1.margins().left = 80;
     //this will make the left margin to show the yaxis properly
 
-    barchart1.filterHandler(myCharts.getChartFilterHandler);
+    barchart1.filterHandler(myCharts.getDefaultFilterHandler);
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         barchart1.group(myCharts.getGroupsFromData(json)).render();

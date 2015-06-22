@@ -30,12 +30,10 @@
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
 <script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
-<script type="text/javascript" src="js/CHARTS.js"></script>
-
+<script type="text/javascript" src="js/interface.js"></script>
 
 <script type="text/javascript">
     var getData = function () {
-
         var data = [];
         for (var i = 0; i < 100; i++) {
             data.push([i, 5 + Math.random() * 20]);
@@ -46,11 +44,11 @@
                 value: d[1]
             };
         });
-        return data
+        return data;
     };
 
-    var myCharts = new dc.CHARTS(),
-            chart = myCharts.createBarChart({
+    var myCharts = new Singular(),
+            chart1 = myCharts.createBarChart({
                 field: 'seqlen0',
                 xmin: 1,
                 xmax: 100,
@@ -58,35 +56,32 @@
                 width: 300,
                 height: 200
             }),
-            myHandler = function () {
-                console.info(JSON.stringify(myCharts.getAllFilters(), null, 2));
-                chart.group(myCharts.getGroupsFromData(getData())).render();
+            chart2 = myCharts.createBarChart({
+                field: 'seqlen1',
+                xmin: 1,
+                xmax: 100,
+                xtickscale: 1,
+                width: 300,
+                height: 200
+            }),
+            myHandler1 = function () {
+                console.info(myCharts.getAllFilters());
+                chart2.load(getData());
+            },
+            myHandler2 = function () {
+                console.info(myCharts.getAllFilters());
+                chart1.load(getData());
             };
+
     //attach listener
-    chart.filterHandler(myHandler);
+    chart1.filterHandler(myHandler1);
+    chart2.filterHandler(myHandler2);
     //init load
-    chart.group(myCharts.getGroupsFromData(getData())).render();
-
-
-
-
-    var chart2 = myCharts.createBarChart({
-        field: 'seqlen1',
-        xmin: 1,
-        xmax: 100,
-        xtickscale: 1,
-        width: 300,
-        height: 200
-    });
-    var myHandler = function () {
-        console.info(JSON.stringify(myCharts.getAllFilters(), null, 2));
-        chart2.group(myCharts.getGroupsFromData(getData())).render();
-    }
-
-    chart2.filterHandler(myHandler);
-    setInterval(function () {
-        chart2.group(myCharts.getGroupsFromData(getData())).render();
-    }, 1000);
+    chart1.load(getData());
+    chart2.load(getData());
+    //    setInterval(function () {
+    //        chart2.group(myCharts.getGroupsFromData(getData())).render();
+    //    }, 1000);
 
 </script>
 
