@@ -32,7 +32,7 @@ var Singular = (function () {
      */
     function Singular() {
         var _this = this;
-        this.version = '0.0.3';
+        this.version = '0.0.4';
         this.items = []; //any chart type
         /**
          * render all the charts managed by me, CHARTS
@@ -101,7 +101,7 @@ var Singular = (function () {
                 xtickscale: 1,
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
-            }), chart = dc.barChart("#" + conf.field + "-chart");
+            }), chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
             chart.xtickscale = conf.xtickscale;
             me.items[conf.field] = chart;
             chart.width(conf.width).height(conf.height).margins({
@@ -146,7 +146,7 @@ var Singular = (function () {
                 //colorsdomain: ["active", "inactive", "unspecified", "inclonclusive"],
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
-            }), chart = dc.rowChart("#" + conf.field + "-chart");
+            }), chart = dc.rowChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
             this.items[conf.field] = chart;
             chart.width(conf.width).height(conf.height).margins({
                 top: 10,
@@ -171,23 +171,23 @@ var Singular = (function () {
          * function that create customized row chart
          *
          * usage:
-         * CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:"actvtyrow"});
+         * CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:'actvtyrow'});
          *
          *
          *
          */
         this.createPieChart = function (newconf) {
             var me = this, conf = Singular.apply({}, newconf, {
-                field: "pie",
+                field: 'pie',
                 width: 200,
                 height: 120,
                 innerRadius: 20,
                 slicesCap: 5,
                 //colors: ['red', 'green', 'blue', '#c6dbef', '#dadaeb'],
-                //colorsdomain: ["active", "inactive", "unspecified", "inclonclusive"],
+                //colorsdomain: ['active', 'inactive', 'unspecified', 'inclonclusive'],
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
-            }), chart = dc.pieChart("#" + conf.field + "-chart");
+            }), chart = dc.pieChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
             me.items[conf.field] = chart;
             chart.width(conf.width).height(conf.height).dimension(conf.dimension).group(conf.dimensionGroup).innerRadius(conf.innerRadius).slicesCap(conf.slicesCap).legend(dc.legend());
             //chart.colors(conf.colors).colorDomain(conf.colorsdomain);
@@ -219,7 +219,7 @@ var Singular = (function () {
         if (q) {
             this.apply(o, q);
         }
-        if (o && n && typeof n === "object") {
+        if (o && n && typeof n === 'object') {
             var p;
             for (p in n) {
                 if (n.hasOwnProperty(p)) {
@@ -255,10 +255,10 @@ var Singular = (function () {
                 return data.slice(0, count);
             },
             filter: function (filter) {
-                console.log("dimention.filter():" + filter);
+                console.log('dimention.filter():' + filter);
             },
             filterFunction: function (filter) {
-                console.log("dimention.filterFunction():" + filter);
+                console.log('dimention.filterFunction():' + filter);
             }
         };
     };

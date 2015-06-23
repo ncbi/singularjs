@@ -86,9 +86,10 @@ declare
 var dc:DC.Base;
 
 interface ChartConfiguration {
-    field: string ;// use to label the dom el
+    field: string ;// use to label the field
     width: number;
     height: number;
+    itemId?: string; // dom el id, #id, must be unique if provided
     colors?:any[];
     colorsdomain?:any[];
 
@@ -119,7 +120,7 @@ dc.useRemoteData = true;
  * Singular class
  */
 class Singular {
-    public version:string = '0.0.3';
+    public version:string = '0.0.4';
     public items:any[] = [];//any chart type
 
     /**
@@ -209,7 +210,7 @@ class Singular {
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
             }),
-            chart = dc.barChart("#" + conf.field + "-chart");
+            chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
@@ -267,7 +268,7 @@ class Singular {
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
             }),
-            chart = dc.rowChart("#" + conf.field + "-chart");
+            chart = dc.rowChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
 
         this.items[conf.field] = chart;
 
@@ -300,7 +301,7 @@ class Singular {
      * function that create customized row chart
      *
      * usage:
-     * CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:"actvtyrow"});
+     * CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:'actvtyrow'});
      *
      *
      *
@@ -308,17 +309,17 @@ class Singular {
     public createPieChart = function (newconf):DC.PieChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
-                field: "pie",
+                field: 'pie',
                 width: 200,
                 height: 120,
                 innerRadius: 20,
                 slicesCap: 5,
                 //colors: ['red', 'green', 'blue', '#c6dbef', '#dadaeb'],
-                //colorsdomain: ["active", "inactive", "unspecified", "inclonclusive"],
+                //colorsdomain: ['active', 'inactive', 'unspecified', 'inclonclusive'],
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
             }),
-            chart = dc.pieChart("#" + conf.field + "-chart");
+            chart = dc.pieChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
         me.items[conf.field] = chart;
 
         chart.width(conf.width)
@@ -358,7 +359,7 @@ class Singular {
         if (q) {
             this.apply(o, q);
         }
-        if (o && n && typeof n === "object") {
+        if (o && n && typeof n === 'object') {
             var p;
             for (p in n) {
                 if (n.hasOwnProperty(p)) {
@@ -395,10 +396,10 @@ class Singular {
                 return data.slice(0, count);
             },
             filter: function (filter) {
-                console.log("dimention.filter():" + filter);
+                console.log('dimention.filter():' + filter);
             },
             filterFunction: function (filter) {
-                console.log("dimention.filterFunction():" + filter);
+                console.log('dimention.filterFunction():' + filter);
             }
         };
     };

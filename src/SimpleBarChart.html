@@ -7,8 +7,8 @@
 </head>
 <body>
 
-<div id="test"></div>
 <div id="seqlen-chart"></div>
+<div id="seqlen-chart-explicit-id"></div>
 
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
@@ -18,19 +18,20 @@
 <script type="text/javascript">
     var singular = new Singular();
 
-    var barchart1 = singular.createBarChart({
-        field: "seqlen",
+    var barchart = singular.createBarChart({
+        field: 'seqlen',
+        itemId: 'seqlen-chart-explicit-id',
         xmin: 6,
         xmax: 20,
         xtickscale: 1,
         width: 400
     });
 
-    // barchart1.margins().left = 80;  //this will make the left margin to show the yaxis properly
-    barchart1.filterHandler(singular.getDefaultFilterHandler);
+    // barchart.margins().left = 80;  //this will make the left margin to show the yaxis properly
+    barchart.filterHandler(singular.defaultFilterHandler);
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
-        barchart1.load(json);
+        barchart.load(json);
     });
 
 
