@@ -8,6 +8,6 @@
         
 ## wget
 
-        wget https://***REMOVED***/users/hanl/repos/singular/browse/dist/Singular.min.css
-        wget https://***REMOVED***/users/hanl/repos/singular/browse/dist/Singular.min.js
+         curl https://***REMOVED***/users/hanl/repos/singular/browse/dist/Singular.min.css?raw > Singular.min.css
+         curl https://***REMOVED***/users/hanl/repos/singular/browse/dist/Singular.min.js?raw > Singular.min.js
         
