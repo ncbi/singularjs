@@ -76,12 +76,12 @@ var Singular = (function () {
             return currentFilters;
         };
         /**
-         *getDefaultFilterHandler
+         *defaultFilterHandler
          * @param dimension
          * @param filter
          * @returns {*}
          */
-        this.getDefaultFilterHandler = function (dimension, filter) {
+        this.defaultFilterHandler = function (dimension, filter) {
             console.info("Chart.FilterHandler():filter=" + filter + " dimension = " + dimension);
             console.info(_this.getAllFilters());
             return filter; // return the actual filter value

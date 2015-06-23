@@ -52,7 +52,7 @@
 
 <script type="text/javascript">
     var singular = new Singular();
-    var defaultHandler = defaultHandler;
+    var defaultHandler = singular.defaultFilterHandler;
 
     d3.json("json/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);

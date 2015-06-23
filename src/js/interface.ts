@@ -35,7 +35,7 @@
 //               xtickscale: 1,
 //               width: 300,
 //               height: 200
-//           }).filterHandler(myCharts.getDefaultFilterHandler);
+//           }).filterHandler(myCharts.defaultFilterHandler);
 //           // chart.margins().left = 80;
 //           // this will make the left margin to show the yaxis properly
 //           chart.group(myCharts.getGroupsFromData(json)).render();
@@ -50,7 +50,7 @@
 //               field: chartname,
 //               width: 300,
 //               height: 200
-//           }).filterHandler(myCharts.getDefaultFilterHandler);
+//           }).filterHandler(myCharts.defaultFilterHandler);
 //           chart.group(myCharts.getGroupsFromData(json)).render();
 //       });
 //       myCharts.renderAll()
@@ -64,7 +64,7 @@
 //               field: chartname,
 //               width: 300,
 //               height: 200
-//           }).filterHandler(myCharts.getDefaultFilterHandler);
+//           }).filterHandler(myCharts.defaultFilterHandler);
 //           chart.dimension(myCharts.getDimensions(json));
 //           chart.group(myCharts.getGroupsFromData(json)).render();
 //       });
@@ -180,12 +180,12 @@ class Singular {
         return currentFilters;
     };
     /**
-     *getDefaultFilterHandler
+     *defaultFilterHandler
      * @param dimension
      * @param filter
      * @returns {*}
      */
-    public getDefaultFilterHandler = (dimension, filter) => {
+    public defaultFilterHandler = (dimension, filter) => {
         console.info("Chart.FilterHandler():filter=" + filter + " dimension = " + dimension);
         console.info(this.getAllFilters());
         return filter;// return the actual filter value
