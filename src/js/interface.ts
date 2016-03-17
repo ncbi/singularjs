@@ -82,8 +82,7 @@ declare module DC {
     }
 }
 
-declare
-var dc:DC.Base;
+declare var dc:DC.Base;
 
 interface ChartConfiguration {
     field: string ;// use to label the field
@@ -280,8 +279,8 @@ class Singular {
         }).dimension(conf.dimension)//
             .group(conf.dimensionGroup)//
             .renderLabel(true).colors(conf.colors).label(function (d) {
-                return d.key;
-            }).elasticX(true).xAxis().ticks(2);
+            return d.key;
+        }).elasticX(true).xAxis().ticks(2);
 
         chart.colors(conf.colors).colorDomain(conf.colorsdomain);
         chart.ordering(function (d) {

@@ -5792,12 +5792,13 @@ var Singular = (function () {
                 if (_this.items.hasOwnProperty(chartName)) {
                     chart = _this.items[chartName];
                     if (chart.filters && chart.filters() && chart.filters().length > 0) {
+                        var chartFilters = JSON.parse(JSON.stringify(chart.filters().slice(0)));//deep clone
                         if (chart.xtickscale && chart.xtickscale > 0) {
-                            for (i = 0; i < chart.filters()[0].length; i++) {
-                                chart.filters()[0][i] = Math.floor(chart.filters()[0][i] * chart.xtickscale);
+                            for (i = 0; i < chartFilters[0].length; i++) {
+                                chartFilters[0][i] = Math.floor(chartFilters[0][i] * chart.xtickscale);
                             }
                         }
-                        currentFilters[chartName] = chart.filters();
+                        currentFilters[chartName] = chartFilters;
                     }
                 }
             }
@@ -5837,11 +5838,17 @@ var Singular = (function () {
                 right: 50,
                 bottom: 30,
                 left: 40
-            }).dimension(conf.dimension).group(conf.dimensionGroup).elasticY(true).gap(1).x(d3.scale.linear().domain([conf.xmin, conf.xmax])).renderHorizontalGridLines(true).filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                return s;
-            });
+            }).dimension(conf.dimension) //
+                .group(conf.dimensionGroup) //
+                .elasticY(true) //
+                .gap(1) //
+                .x(d3.scale.linear().domain([conf.xmin, conf.xmax])) //
+                .renderHorizontalGridLines(true) //
+                .filterPrinter(function (filters) {
+                    var filter = filters[0], s = "";
+                    s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                    return s;
+                });
             chart.xAxis().ticks(5);
             chart.xAxis().tickFormat(function (v) {
                 return v * conf.xtickscale + '';
@@ -5881,7 +5888,9 @@ var Singular = (function () {
                 right: 50,
                 bottom: 30,
                 left: 40
-            }).dimension(conf.dimension).group(conf.dimensionGroup).renderLabel(true).colors(conf.colors).label(function (d) {
+            }).dimension(conf.dimension) //
+                .group(conf.dimensionGroup) //
+                .renderLabel(true).colors(conf.colors).label(function (d) {
                 return d.key;
             }).elasticX(true).xAxis().ticks(2);
             chart.colors(conf.colors).colorDomain(conf.colorsdomain);
@@ -5917,7 +5926,13 @@ var Singular = (function () {
                 dimensionGroup: Singular.getGroupsFromData([])
             }), chart = dc.pieChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
             me.items[conf.field] = chart;
-            chart.width(conf.width).height(conf.height).dimension(conf.dimension).group(conf.dimensionGroup).innerRadius(conf.innerRadius).slicesCap(conf.slicesCap).legend(dc.legend());
+            chart.width(conf.width)
+                .height(conf.height)
+                .dimension(conf.dimension)
+                .group(conf.dimensionGroup)
+                .innerRadius(conf.innerRadius)
+                .slicesCap(conf.slicesCap)
+                .legend(dc.legend());
             //chart.colors(conf.colors).colorDomain(conf.colorsdomain);
             chart.load = function (data) {
                 chart.group(Singular.getGroupsFromData(data)).render();
@@ -5926,6 +5941,7 @@ var Singular = (function () {
             return chart;
         };
     }
+
     /*****************************************************
      * static methods section
      ****************************************************/
