@@ -1,6 +1,6 @@
-# Singular 0.0.5
+# Singular 0.0.6
 
-v0.0.5 
+v0.0.6 
 
   * add time series bar chart
 
