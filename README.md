@@ -1,4 +1,8 @@
-# Singular 0.0.4
+# Singular 0.0.5
+
+v0.0.5 
+
+  * add time series bar chart
 
 #installation
 

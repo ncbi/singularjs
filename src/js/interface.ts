@@ -98,12 +98,19 @@ interface ChartConfiguration {
     dimension?:any;
     dimensionGroup?:any;
 
-    //Bar Chart
-    xmin?:number;
-    xmax?:number
+    //Bar Chart and time series Bar Chart
+    xmin?:any;
+    xmax?:any;
+    gap?:number;
+
+    //Bar Chart only
     numberFormat?:any;
     xtickscale?:number;
+    elasticX:boolean;
 
+    //time series Bar Chart Only
+    xUnits?:any;
+    timeParser?:any;
 }
 
 /**
@@ -193,7 +200,7 @@ class Singular {
 
 
     /**
-     *
+     * createBarChart
      * @param newconf
      * @returns {*}
      */
@@ -202,8 +209,10 @@ class Singular {
             conf = Singular.apply({}, newconf, {
                 xmin: 0,
                 xmax: 150,
+                gap: 1,
                 width: 400,
                 height: 180,
+                elasticX: false,
                 numberFormat: d3.format(".0f"),
                 xtickscale: 1,
                 dimension: Singular.getDimensions([]),
@@ -221,8 +230,9 @@ class Singular {
         }).dimension(conf.dimension)//
             .group(conf.dimensionGroup)//
             .elasticY(true)//
+            .elasticX(conf.elasticX)//
             //.centerBar(true)//
-            .gap(1)//
+            .gap(conf.gap)//
             // .round(dc.round.floor)//
             .x(d3.scale.linear().domain([conf.xmin, conf.xmax]))//
             // .xUnits(dc.units.fp.precision(0.01))
@@ -244,6 +254,60 @@ class Singular {
         return chart;
     };
 
+    /**
+     * createBarChart
+     * @param newconf
+     * @returns {*}
+     */
+    public createTimeSeriesBarChart = function (newconf:ChartConfiguration):DC.BarChart {
+        var me = this,
+            conf = Singular.apply({}, newconf, {
+                xmin: new Date(2015, 2, 31),
+                xmax: new Date(2015, 3, 10),
+                gap: 1,
+                width: 400,
+                height: 180,
+                elasticX: false,
+                xUnits: d3.time.days,
+                timeParser: d3.time.format("%d-%m-%Y %H:%M:%S").parse,
+                dimension: Singular.getDimensions([]),
+                dimensionGroup: Singular.getGroupsFromData([])
+            }),
+            chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+
+        me.items[conf.field] = chart;
+
+        chart.width(conf.width).height(conf.height).margins({
+            top: 10,
+            right: 50,
+            bottom: 30,
+            left: 40
+        }).dimension(conf.dimension)//
+            .group(conf.dimensionGroup)//
+            .elasticY(true)//
+            .elasticX(conf.elasticX)//
+            //.centerBar(true)//
+            .gap(conf.gap)
+            .brushOn(true)
+            .x(d3.time.scale().domain([conf.xmin, conf.xmax]))
+            .xUnits(conf.xUnits)
+            .renderHorizontalGridLines(true)//
+            .filterPrinter(function (filters) {
+                var filter = filters[0], s = "";
+                s += filter[0] + " -> " + filter[1];
+                return s;
+            });
+        chart.xAxis().ticks(5);
+        chart.yAxis().ticks(5);
+        chart.load = function (data) {
+            data.forEach(function (d) {
+                d.key = d3.time.day(conf.timeParser(d.key));
+            });
+            chart.group(Singular.getGroupsFromData(data)).render();
+            return chart;
+        };
+        return chart;
+    };
     /**
      * createRowChart
      *   -- function that create customized row chart

@@ -86,7 +86,7 @@ var Singular = (function () {
             return filter; // return the actual filter value
         };
         /**
-         *
+         * createBarChart
          * @param newconf
          * @returns {*}
          */
@@ -94,8 +94,10 @@ var Singular = (function () {
             var me = this, conf = Singular.apply({}, newconf, {
                 xmin: 0,
                 xmax: 150,
+                gap: 1,
                 width: 400,
                 height: 180,
+                elasticX: false,
                 numberFormat: d3.format(".0f"),
                 xtickscale: 1,
                 dimension: Singular.getDimensions([]),
@@ -111,7 +113,8 @@ var Singular = (function () {
             }).dimension(conf.dimension) //
                 .group(conf.dimensionGroup) //
                 .elasticY(true) //
-                .gap(1) //
+                .elasticX(conf.elasticX) //
+                .gap(conf.gap) //
                 .x(d3.scale.linear().domain([conf.xmin, conf.xmax])) //
                 .renderHorizontalGridLines(true) //
                 .filterPrinter(function (filters) {
@@ -125,6 +128,55 @@ var Singular = (function () {
             });
             chart.yAxis().ticks(5);
             chart.load = function (data) {
+                chart.group(Singular.getGroupsFromData(data)).render();
+                return chart;
+            };
+            return chart;
+        };
+        /**
+         * createBarChart
+         * @param newconf
+         * @returns {*}
+         */
+        this.createTimeSeriesBarChart = function (newconf) {
+            var me = this, conf = Singular.apply({}, newconf, {
+                xmin: new Date(2015, 2, 31),
+                xmax: new Date(2015, 3, 10),
+                gap: 1,
+                width: 400,
+                height: 180,
+                elasticX: false,
+                xUnits: d3.time.days,
+                timeParser: d3.time.format("%d-%m-%Y %H:%M:%S").parse,
+                dimension: Singular.getDimensions([]),
+                dimensionGroup: Singular.getGroupsFromData([])
+            }), chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+            me.items[conf.field] = chart;
+            chart.width(conf.width).height(conf.height).margins({
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            }).dimension(conf.dimension) //
+                .group(conf.dimensionGroup) //
+                .elasticY(true) //
+                .elasticX(conf.elasticX) //
+                .gap(conf.gap)
+                .brushOn(true)
+                .x(d3.time.scale().domain([conf.xmin, conf.xmax]))
+                .xUnits(conf.xUnits)
+                .renderHorizontalGridLines(true) //
+                .filterPrinter(function (filters) {
+                var filter = filters[0], s = "";
+                s += filter[0] + " -> " + filter[1];
+                return s;
+            });
+            chart.xAxis().ticks(5);
+            chart.yAxis().ticks(5);
+            chart.load = function (data) {
+                data.forEach(function (d) {
+                    d.key = d3.time.day(conf.timeParser(d.key));
+                });
                 chart.group(Singular.getGroupsFromData(data)).render();
                 return chart;
             };
