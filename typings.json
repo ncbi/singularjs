@@ -1,0 +1,9 @@
+{
+  "name": "singularjs",
+  "version": false,
+  "ambientDependencies": {
+    "d3": "github:DefinitelyTyped/DefinitelyTyped/d3/d3.d.ts#101a5daef4fc42eca0d447ba5d080248f80daf90",
+    "dc": "github:DefinitelyTyped/DefinitelyTyped/dcjs/dc.d.ts#101a5daef4fc42eca0d447ba5d080248f80daf90",
+    "crossfilter": "github:DefinitelyTyped/DefinitelyTyped/crossfilter/crossfilter.d.ts#101a5daef4fc42eca0d447ba5d080248f80daf90"
+  }
+}

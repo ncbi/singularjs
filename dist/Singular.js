@@ -5726,8 +5726,7 @@ if(typeof define === "function" && define.amd) {
 }
 )();
 
-///<reference path='../../typings/d3/d3.d.ts'/>
-///<reference path='../../typings/dcjs/dc.d.ts'/>
+///<reference path='../../typings/browser.d.ts'/>
 /**
  * Created by hanl on 6/22/2015.
  *
@@ -5792,13 +5791,12 @@ var Singular = (function () {
                 if (_this.items.hasOwnProperty(chartName)) {
                     chart = _this.items[chartName];
                     if (chart.filters && chart.filters() && chart.filters().length > 0) {
-                        var chartFilters = JSON.parse(JSON.stringify(chart.filters().slice(0)));//deep clone
                         if (chart.xtickscale && chart.xtickscale > 0) {
-                            for (i = 0; i < chartFilters[0].length; i++) {
-                                chartFilters[0][i] = Math.floor(chartFilters[0][i] * chart.xtickscale);
+                            for (i = 0; i < chart.filters()[0].length; i++) {
+                                chart.filters()[0][i] = Math.floor(chart.filters()[0][i] * chart.xtickscale);
                             }
                         }
-                        currentFilters[chartName] = chartFilters;
+                        currentFilters[chartName] = chart.filters();
                     }
                 }
             }
@@ -5845,10 +5843,10 @@ var Singular = (function () {
                 .x(d3.scale.linear().domain([conf.xmin, conf.xmax])) //
                 .renderHorizontalGridLines(true) //
                 .filterPrinter(function (filters) {
-                    var filter = filters[0], s = "";
-                    s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                    return s;
-                });
+                var filter = filters[0], s = "";
+                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                return s;
+            });
             chart.xAxis().ticks(5);
             chart.xAxis().tickFormat(function (v) {
                 return v * conf.xtickscale + '';
@@ -5941,7 +5939,6 @@ var Singular = (function () {
             return chart;
         };
     }
-
     /*****************************************************
      * static methods section
      ****************************************************/
@@ -6007,5 +6004,5 @@ var Singular = (function () {
         };
     };
     return Singular;
-})();
+}());
 //# sourceMappingURL=interface.js.map

@@ -1,5 +1,5 @@
-///<reference path='../../typings/d3/d3.d.ts'/>
-///<reference path='../../typings/dcjs/dc.d.ts'/>
+///<reference path='../../typings/browser.d.ts'/>
+
 /**
  * Created by hanl on 6/22/2015.
  *
@@ -77,7 +77,7 @@ declare module DC {
         useRemoteData:boolean;
     }
     export interface BaseMixin<T> {
-        load(data:any): void;
+        load(data:any):void;
         xtickscale:number;
     }
 }
@@ -85,24 +85,24 @@ declare module DC {
 declare var dc:DC.Base;
 
 interface ChartConfiguration {
-    field: string ;// use to label the field
-    width: number;
-    height: number;
-    itemId?: string; // dom el id, #id, must be unique if provided
+    field:string ;// use to label the field
+    width:number;
+    height:number;
+    itemId?:string; // dom el id, #id, must be unique if provided
     colors?:any[];
     colorsdomain?:any[];
 
     //Pie Chart
-    innerRadius?: number;
-    slicesCap?: number;
-    dimension?: any;
-    dimensionGroup?: any;
+    innerRadius?:number;
+    slicesCap?:number;
+    dimension?:any;
+    dimensionGroup?:any;
 
     //Bar Chart
-    xmin?: number;
-    xmax?: number
-    numberFormat?: any;
-    xtickscale?: number;
+    xmin?:number;
+    xmax?:number
+    numberFormat?:any;
+    xtickscale?:number;
 
 }
 
