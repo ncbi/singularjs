@@ -5791,12 +5791,13 @@ var Singular = (function () {
                 if (_this.items.hasOwnProperty(chartName)) {
                     chart = _this.items[chartName];
                     if (chart.filters && chart.filters() && chart.filters().length > 0) {
+                        var chartFilters = JSON.parse(JSON.stringify(chart.filters().slice(0))); //deep clone
                         if (chart.xtickscale && chart.xtickscale > 0) {
-                            for (i = 0; i < chart.filters()[0].length; i++) {
-                                chart.filters()[0][i] = Math.floor(chart.filters()[0][i] * chart.xtickscale);
+                            for (i = 0; i < chartFilters[0].length; i++) {
+                                chartFilters[0][i] = Math.floor(chartFilters[0][i] * chart.xtickscale);
                             }
                         }
-                        currentFilters[chartName] = chart.filters();
+                        currentFilters[chartName] = chartFilters;
                     }
                 }
             }
