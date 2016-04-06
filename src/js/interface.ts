@@ -126,7 +126,7 @@ dc.useRemoteData = true;
  * Singular class
  */
 class Singular {
-    public version:string = '0.0.7';
+    public version:string = '0.0.8';
     public items:any[] = [];//any chart type
 
     /**
@@ -230,9 +230,12 @@ class Singular {
             var width = 300;
             try {
                 var elem = document.getElementById(itemId);
-                width = (elem && (elem.clientWidth > 0 ) ? elem.clientWidth : elem.parentNode["clientWidth"]);
-            } catch (e) {
-            } finally {
+                width = (elem && elem.parentNode && elem.parentNode["clientWidth"]) ?
+                    elem.parentNode["clientWidth"] : (elem.clientWidth > 0) ? elem.clientWidth : width;
+            }
+            catch (e) {
+            }
+            finally {
                 return width;
             }
         };
@@ -242,7 +245,7 @@ class Singular {
                 if (chart.hasOwnProperty('rescale')) {
                     chart.rescale();
                 }
-                chart.redraw();
+                chart.redraw().render();
             }
         }());
     };

@@ -5759,7 +5759,7 @@ var Singular = (function () {
      */
     function Singular() {
         var _this = this;
-        this.version = '0.0.7';
+        this.version = '0.0.8';
         this.items = []; //any chart type
         /**
          * render all the charts managed by me, CHARTS
@@ -5845,7 +5845,8 @@ var Singular = (function () {
                 var width = 300;
                 try {
                     var elem = document.getElementById(itemId);
-                    width = (elem && (elem.clientWidth > 0) ? elem.clientWidth : elem.parentNode["clientWidth"]);
+                    width = (elem && elem.parentNode && elem.parentNode["clientWidth"]) ?
+                        elem.parentNode["clientWidth"] : (elem.clientWidth > 0) ? elem.clientWidth : width;
                 }
                 catch (e) {
                 }
@@ -5859,7 +5860,7 @@ var Singular = (function () {
                     if (chart.hasOwnProperty('rescale')) {
                         chart.rescale();
                     }
-                    chart.redraw();
+                    chart.redraw().render();
                 };
             }());
         };

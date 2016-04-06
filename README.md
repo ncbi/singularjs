@@ -1,4 +1,4 @@
-# Singular 0.0.7
+# Singular 0.0.8
 
 
 V0.0.7
