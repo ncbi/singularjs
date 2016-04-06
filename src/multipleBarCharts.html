@@ -51,13 +51,16 @@
                 xmin: 6,
                 xmax: 20,
                 xtickscale: 1,
-                width: 400
+                width: 300,
+                height: 200
             }).filterHandler(singular.defaultFilterHandler);
 
             barchart1.load(json);
         });
         singular.renderAll();//dc.renderAll() also works
     });
+    document.body.insertAdjacentHTML('afterbegin', '<div>Singular@' + singular.version + '</div>');
+
 
 </script>
 

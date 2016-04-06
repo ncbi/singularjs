@@ -1,4 +1,12 @@
-# Singular 0.0.6
+# Singular 0.0.7
+
+
+V0.0.7
+
+  * allow the chart to use the width and height from it's dom element, or from it's parent if it's missing from configuration.
+  * much better way of resize the charts!
+  
+        window.addEventListener('resize', singular.onResize(barchart, 'seqlen-chart-explicit-id'));
 
 v0.0.6 
 

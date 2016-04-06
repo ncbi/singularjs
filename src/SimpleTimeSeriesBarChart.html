@@ -7,9 +7,10 @@
 </head>
 <body>
 
-<div style="width: 80%;height: 200px;">
-    <div id="seqlen-chart-explicit-id"></div>
+<div>
+    <div id="seqlen-chart-explicit-id" style="width: 80%;height: 300px;"></div>
 </div>
+
 <script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
 <script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
 <script type="text/javascript" src="js/dc_1.7.0_modified.js"></script>
@@ -17,9 +18,7 @@
 
 <script type="text/javascript">
     var singular = new Singular();
-
-
-    console.info(document.getElementById('seqlen-chart-explicit-id').parentNode.clientWidth, document.getElementById('seqlen-chart-explicit-id').parentNode.clientHeight);
+    //console.info(document.getElementById('seqlen-chart-explicit-id').parentNode.clientWidth, document.getElementById('seqlen-chart-explicit-id').parentNode.clientHeight);
     var barchart = singular.createTimeSeriesBarChart({
         field: 'seqlen',
         itemId: 'seqlen-chart-explicit-id',
@@ -39,7 +38,9 @@
         barchart.load(json);
     });
 
+    window.addEventListener('resize', singular.onResize(barchart, 'seqlen-chart-explicit-id'));
 
+    document.body.insertAdjacentHTML('afterbegin', '<div>Singular@' + singular.version + '</div>');
 </script>
 
 </body>

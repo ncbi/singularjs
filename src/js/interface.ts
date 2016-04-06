@@ -198,6 +198,12 @@ class Singular {
         return filter;// return the actual filter value
     };
 
+
+    /**
+     * updateDimension
+     * @param conf
+     * @returns {any}
+     */
     private updateDimension = function (conf) {
         if (conf && conf.field && !conf.itemId) {
             conf.itemId = conf.field + "-chart";
@@ -205,16 +211,41 @@ class Singular {
         try {
             if (conf && conf.itemId) {
                 var elem = document.getElementById(conf.itemId);
-                console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
+                //console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
                 conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ? elem.clientWidth : elem.parentNode["clientWidth"]);
                 conf.height = conf.height || (elem && (elem.clientHeight > 0) ? elem.clientHeight : elem.parentNode["clientHeight"]);
             }
         } catch (e) {
             console.info(e);
+        } finally {
+            conf.width = conf.width || 300;
+            conf.height = conf.height || 300;
         }
         return conf;
     };
 
+
+    public onResize = function (chart, itemId) {
+        var getNewWidth = function (itemId) {
+            var width = 300;
+            try {
+                var elem = document.getElementById(itemId);
+                width = (elem && (elem.clientWidth > 0 ) ? elem.clientWidth : elem.parentNode["clientWidth"]);
+            } catch (e) {
+            } finally {
+                return width;
+            }
+        };
+        return (function () {
+            return function () {
+                chart.width(getNewWidth(itemId));
+                if (chart.hasOwnProperty('rescale')) {
+                    chart.rescale();
+                }
+                chart.redraw();
+            }
+        }());
+    };
     /**
      * createBarChart
      * @param newconf
@@ -266,6 +297,7 @@ class Singular {
             chart.group(Singular.getGroupsFromData(data)).render();
             return chart;
         };
+
         return chart;
     };
 
@@ -287,7 +319,7 @@ class Singular {
                 dimensionGroup: Singular.getGroupsFromData([])
             });
         conf = this.updateDimension(conf);
-        console.info(conf);
+        //console.info(conf);
         var chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
 
         me.items[conf.field] = chart;

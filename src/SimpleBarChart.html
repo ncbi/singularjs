@@ -33,6 +33,7 @@
         if (error) return console.warn(error);
         barchart.load(json);
     });
+    document.body.insertAdjacentHTML('afterbegin', '<div>Singular@' + singular.version + '</div>');
 
 
 </script>
