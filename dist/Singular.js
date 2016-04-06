@@ -5759,7 +5759,7 @@ var Singular = (function () {
      */
     function Singular() {
         var _this = this;
-        this.version = '0.0.4';
+        this.version = '0.0.7';
         this.items = []; //any chart type
         /**
          * render all the charts managed by me, CHARTS
@@ -5815,6 +5815,55 @@ var Singular = (function () {
             return filter; // return the actual filter value
         };
         /**
+         * updateDimension
+         * @param conf
+         * @returns {any}
+         */
+        this.updateDimension = function (conf) {
+            if (conf && conf.field && !conf.itemId) {
+                conf.itemId = conf.field + "-chart";
+            }
+            try {
+                if (conf && conf.itemId) {
+                    var elem = document.getElementById(conf.itemId);
+                    //console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
+                    conf.width = conf.width || (elem && (elem.clientWidth > 0) ? elem.clientWidth : elem.parentNode["clientWidth"]);
+                    conf.height = conf.height || (elem && (elem.clientHeight > 0) ? elem.clientHeight : elem.parentNode["clientHeight"]);
+                }
+            }
+            catch (e) {
+                console.info(e);
+            }
+            finally {
+                conf.width = conf.width || 300;
+                conf.height = conf.height || 300;
+            }
+            return conf;
+        };
+        this.onResize = function (chart, itemId) {
+            var getNewWidth = function (itemId) {
+                var width = 300;
+                try {
+                    var elem = document.getElementById(itemId);
+                    width = (elem && (elem.clientWidth > 0) ? elem.clientWidth : elem.parentNode["clientWidth"]);
+                }
+                catch (e) {
+                }
+                finally {
+                    return width;
+                }
+            };
+            return (function () {
+                return function () {
+                    chart.width(getNewWidth(itemId));
+                    if (chart.hasOwnProperty('rescale')) {
+                        chart.rescale();
+                    }
+                    chart.redraw();
+                };
+            }());
+        };
+        /**
          * createBarChart
          * @param newconf
          * @returns {*}
@@ -5824,14 +5873,14 @@ var Singular = (function () {
                 xmin: 0,
                 xmax: 150,
                 gap: 1,
-                width: 400,
-                height: 180,
                 elasticX: false,
                 numberFormat: d3.format(".0f"),
                 xtickscale: 1,
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
-            }), chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+            });
+            conf = this.updateDimension(conf);
+            var chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
             chart.xtickscale = conf.xtickscale;
             me.items[conf.field] = chart;
             chart.width(conf.width).height(conf.height).margins({
@@ -5872,14 +5921,15 @@ var Singular = (function () {
                 xmin: new Date(2015, 2, 31),
                 xmax: new Date(2015, 3, 10),
                 gap: 1,
-                width: 400,
-                height: 180,
                 elasticX: false,
                 xUnits: d3.time.days,
                 timeParser: d3.time.format("%d-%m-%Y %H:%M:%S").parse,
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
-            }), chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+            });
+            conf = this.updateDimension(conf);
+            //console.info(conf);
+            var chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
             me.items[conf.field] = chart;
             chart.width(conf.width).height(conf.height).margins({
                 top: 10,
@@ -5924,15 +5974,15 @@ var Singular = (function () {
         this.createRowChart = function (newconf) {
             var me = this, conf = Singular.apply({}, newconf, {
                 field: "row",
-                width: 200,
-                height: 120,
                 colors: d3.scale.category20c(),
                 colorsdomain: [],
                 //colors: ['red', 'green', 'blue', '#c6dbef', '#dadaeb'],
                 //colorsdomain: ["active", "inactive", "unspecified", "inclonclusive"],
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
-            }), chart = dc.rowChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
+            });
+            conf = this.updateDimension(conf);
+            var chart = dc.rowChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
             this.items[conf.field] = chart;
             chart.width(conf.width).height(conf.height).margins({
                 top: 10,
