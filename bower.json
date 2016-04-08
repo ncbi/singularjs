@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "dcjs": "~1.7.0",
-    "crossfilter": "~1.3.11"
+    "crossfilter": "~1.3.11",
+    "angular": "^1.3.20",
+    "bootstrap": "^3.2.0"
   }
 }
