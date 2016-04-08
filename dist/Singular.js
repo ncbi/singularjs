@@ -6135,7 +6135,7 @@ angular.module('Singular', [])
                 onFilterChanges: '&' //use as on-tag-changes
             },
 
-            controller: function ($scope, $timeout) {
+            controller: ['$scope', '$timeout', function ($scope, $timeout) {
 
                 //filters management should go here
                 $scope.config = $scope.config || {
@@ -6237,6 +6237,6 @@ angular.module('Singular', [])
                         }
                     );
                 });
-            }
+            }]
         };
     });
