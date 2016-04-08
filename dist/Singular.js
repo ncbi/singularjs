@@ -6121,7 +6121,7 @@ var Singular = (function () {
 angular.module('Singular', [])
     .run(['$templateCache', function ($templateCache) {
         $templateCache.put('views/singular-angular-RangeFacetFields.html',
-            "<div class=ngram><div id={{::config.field}}-chart class=barchart><p style=\"font-size: 11px\">{{config.unit}} <span class=filter></span> <a class=reset ng-click=resetChart() style=\"display: none\">reset</a></p><div style=\"clear: both\"></div></div></div>"
+            "<div id={{::config.field}}-chart class=barchart><p style=\"font-size: 11px\">{{config.unit}} <span class=filter></span> <a class=reset ng-click=resetChart() style=\"display: none\">reset</a></p><div style=\"clear: both\"></div></div>"
         );
     }])
     .directive('singularBarchart', function () {

@@ -13,18 +13,18 @@
 <div ng-app=TestApp>
     <div ng-controller=myController class="container">
         <div ng-repeat="n in config.rangeFacetFields" class="col-xs-12 col-md-12">
-            <div class="input-group input-group-sm">
+            <div class="input-group input-group-sm singular">
                         <span class="input-group-addon"
                               style="border-right: 1px solid #ccc; min-width: 120px; background-color: rgba(245, 245, 245, 0.54);">
                             <span class="glyphicon glyphicon-filter-"></span>{{n.name}}
                         </span>
-                <singular-barchart
-                        config="n"
-                        filters="filters[n.field]"
-                        range-filters="rangeFilters[n.field]"
-                        on-filter-changes="onFilterChange()"
-                        style="border-right:none;border-bottom: none;border-top: none;padding-top: 5px;padding-left: 10px;">
-                </singular-barchart>
+                <div singular-barchart
+                     config="n"
+                     filters="filters[n.field]"
+                     range-filters="rangeFilters[n.field]"
+                     on-filter-changes="onFilterChange()"
+                     style="border-right:none;border-bottom: none;border-top: none;padding-top: 5px;padding-left: 10px;">
+                </div>
             </div>
         </div>
     </div>

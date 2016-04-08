@@ -15,7 +15,7 @@ module.exports = function (grunt) {
                 dest: 'dist/Singular.js'
             },
             css: {
-                src: ["bower_components/dcjs/dc.css", "css/angular-singular.css"],
+                src: ["bower_components/dcjs/dc.css", "src/css/angular-singular.css"],
                 dest: 'dist/Singular.css'
             }
         },
