@@ -121,8 +121,6 @@ var Singular = (function () {
                 try {
                     var elem = document.getElementById(itemId);
                     width = elem.offsetWidth || elem.parentNode["offsetWidth"];
-                    // width=300;
-                    console.info(elem.offsetWidth, elem.clientWidth, elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
                 }
                 catch (e) {
                 }
