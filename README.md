@@ -1,5 +1,7 @@
 # Singular
 
+Singular is a fork of dc.js, without dependencies on crossfilter or jquery, and
+that is tuned to support remote data stores.
 
 
 ## Installation
@@ -65,7 +67,8 @@ Then bump the version, and then
 ```
 git commit -m 'Release version x.y.z'
 git tag -a 'vx.y.z' -m 'Tagging release'
-git push --all
+git push
+git push --tags
 npm publish
 ```
 

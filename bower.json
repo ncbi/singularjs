@@ -1,9 +1,8 @@
 {
   "name": "Singular",
-  "description": "Singular is a fork of the modified dc-chart-js(in house lib,a standalone-version without dependency on crossfilter and jquery of dc.js that tuned to support remote data stores)",
-  "version": "0.0.8",
-  "license": "MIT",
-  "private": true,
+  "description": "Singular is a fork of dc.js with fewer dependencies",
+  "version": "0.0.10",
+  "license": "SEE LICENSE IN LICENSE.md",
   "main": [
     "dist/Singular.min.css",
     "dist/Singular.min.js"

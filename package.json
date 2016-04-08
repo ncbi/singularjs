@@ -1,6 +1,24 @@
 {
   "name": "singularjs",
   "version": "0.0.10",
+  "description": "Singular is a fork of dc.js with fewer dependencies",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": {
+    "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ncbi/singularjs.git"
+  },
+  "author": "NCBI",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/ncbi/singularjs/issues"
+  },
+  "homepage": "https://github.com/ncbi/singularjs#readme",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-cli": "0.1.11",
