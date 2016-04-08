@@ -224,14 +224,18 @@ class Singular {
         return conf;
     };
 
+    public getItemId = function (conf) {
+        return conf.itemId ? conf.itemId : conf.field + '-chart';
+    };
 
     public onResize = function (chart, itemId) {
         var getNewWidth = function (itemId) {
             var width = 300;
             try {
                 var elem = document.getElementById(itemId);
-                width = (elem && elem.parentNode && elem.parentNode["clientWidth"]) ?
-                    elem.parentNode["clientWidth"] : (elem.clientWidth > 0) ? elem.clientWidth : width;
+                width =  elem.offsetWidth ||  elem.parentNode["offsetWidth"];
+               // width=300;
+                console.info(elem.offsetWidth,elem.clientWidth, elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
             }
             catch (e) {
             }
@@ -267,7 +271,7 @@ class Singular {
                 dimensionGroup: Singular.getGroupsFromData([])
             });
         conf = this.updateDimension(conf);
-        var chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+        var chart = dc.barChart('#' + me.getItemId(conf));
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
@@ -323,7 +327,7 @@ class Singular {
             });
         conf = this.updateDimension(conf);
         //console.info(conf);
-        var chart = dc.barChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+        var chart = dc.barChart('#' + me.getItemId(conf));
 
         me.items[conf.field] = chart;
 
@@ -380,7 +384,7 @@ class Singular {
                 dimensionGroup: Singular.getGroupsFromData([])
             });
         conf = this.updateDimension(conf);
-        var chart = dc.rowChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
+        var chart = dc.rowChart('#' + me.getItemId(conf));
 
         this.items[conf.field] = chart;
 
@@ -431,7 +435,7 @@ class Singular {
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
             }),
-            chart = dc.pieChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + '-chart');
+            chart = dc.pieChart('#' + me.getItemId(conf));
         me.items[conf.field] = chart;
 
         chart.width(conf.width)
