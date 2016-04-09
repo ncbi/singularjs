@@ -311,7 +311,7 @@ function quicksort_by(f) {
 var quicksort_sizeThreshold = 32;
 
 /*!
- *  dc 1.7.0
+ *  dc 1.7.5
  *  http://dc-js.github.io/dc.js/
  *  Copyright 2012 Nick Zhu and other contributors
  *
@@ -332,7 +332,7 @@ var quicksort_sizeThreshold = 32;
 'use strict';
 
 /**
-#### Version 1.7.0
+#### Version 1.7.5
 
 The entire dc.js library is scoped under **dc** name space. It does not introduce anything else into the global
 name space.
@@ -369,7 +369,7 @@ The API references will highlight the fact if a particular function is not chain
 
 **/
 var dc = {
-    version: "1.7.0",
+    version: "1.7.5",
     constants: {
         CHART_CLASS: "dc-chart",
         DEBUG_GROUP_CLASS: "debug",
@@ -5719,13 +5719,17 @@ return dc;}
 if(typeof define === "function" && define.amd) {
   define(["d3"], _dc);
 } else if(typeof module === "object" && module.exports) {
-  module.exports = _dc(d3);
+        var _d3 = require('d3');
+
+
+  module.exports = _dc(_d3);
 } else {
   this.dc = _dc(d3);
 }
 }
 )();
 
+//# sourceMappingURL=dc.js.map
 ///<reference path='../../typings/browser.d.ts'/>
 /**
  * Created by hanl on 6/22/2015.
