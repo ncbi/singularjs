@@ -9,7 +9,7 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     "src/js/crossfilter_1.3.7_quicksort_modified.js",
-                    "src/js/dc_1.7.0_modified.js",
+                    "src/js/dc_1.7.5_modified.js",
                     "src/js/interface.js"],
                 dest: 'dist/Singular.js'
             },

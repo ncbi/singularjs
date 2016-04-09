@@ -25,7 +25,7 @@ v0.0.6
 
 ## Libs
 
-    dc_1.7.0
+    dc_1.7.5
     quicksort from crossfilter 1.3.11
 
 ## setup
