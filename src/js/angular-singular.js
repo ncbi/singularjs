@@ -87,7 +87,7 @@ angular.module('Singular', [])
                     });
                     //chart.load(getDummyData());
                     chart.load([]);
-                    window.addEventListener('resize', singular.onResize(chart, singular.getItemId($scope.config)));
+                    //window.addEventListener('resize', singular.onResize(chart, singular.getItemId($scope.config)));
                     $scope.resetChart = function (item) {
                         chart.filterAll();
                         dc.redrawAll();

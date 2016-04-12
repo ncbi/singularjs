@@ -3,7 +3,6 @@
 Singular is a fork of dc.js, without dependencies on crossfilter or jquery, and
 that is tuned to support remote data stores.
 
-
 ## Installation
 
 ### npm
@@ -12,24 +11,19 @@ that is tuned to support remote data stores.
 npm install singularjs
 ```
 
-### wget
+### Download
 
-> ***FIXME:*** The ***REMOVED*** URLs don't work, even for NCBI users, because
-> credentials. Here is another suggestion for where we could deploy. Could also
-> use bower.
+Download the latest release from 
+[GitHub](https://github.com/ncbi/singular/releases/latest) and extract it
+to your local drive.
 
 
-```
-wget https://github.com/ncbi/singular/releases/latest/Singular.min.css?raw
-wget https://github.com/ncbi/singular/releases/latest/Singular.min.js?raw
-```
 
 
 ## Libraries used
 
 * dc_1.7.0
 * quicksort from crossfilter 1.3.11
-
 
 ## Development
 
@@ -44,7 +38,7 @@ Then, clone the repo, install dependencies, and build:
 ```
 npm install
 bower install
-grunt       #=> creates the dist/ directory
+grunt         #=> creates the dist/ directory
 ```
 
 ## Release and publish
@@ -72,17 +66,19 @@ git push --tags
 npm publish
 ```
 
-
 ## Change log
 
-V0.0.7
+### v0.0.7
 
 * allow the chart to use the width and height from it's dom element, or from 
   it's parent if it's missing from configuration.
-* much better way of resize the charts!
+* much better way to resize the charts!
   
-      window.addEventListener('resize', singular.onResize(barchart, 'seqlen-chart-explicit-id'));
+      window.addEventListener('resize', 
+        singular.onResize(barchart, 'seqlen-chart-explicit-id'));
 
-v0.0.6 
+### v0.0.6 
 
+* dc_1.7.5
+* quicksort from crossfilter 1.3.11
 * add time series bar chart
