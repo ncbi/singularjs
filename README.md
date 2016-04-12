@@ -17,7 +17,20 @@ Download the latest release from
 [GitHub](https://github.com/ncbi/singular/releases/latest) and extract it
 to your local drive.
 
+## Development
 
+```
+npm install -g typings grunt-cli less
+npm install
+bower install
+typings install
+grunt
+```
+
+Then, you can start an http server at the project root directory, and bring
+up http://localhost:8080/src.
+
+***FIXME:*** Integrate `grunt watch`.
 
 
 ## Libraries used

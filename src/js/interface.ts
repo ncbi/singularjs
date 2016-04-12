@@ -4,12 +4,15 @@
  * Created by hanl on 6/22/2015.
  *
  * IMPORTANT:
- *    interface.ts: This is where the interface defined using typescript, and all editing should go to this file
- *                  make sure to compile the ts to js before testing
- *    interface.js: This is automatically generated. Please do not update the interface.js directly unless you
- *                  want to maintain the interface.js without the type definition.
+ *    interface.ts: This is where the interface defined using typescript, and 
+ *                  all editing should go to this file make sure to compile the 
+ *                  ts to js before testing
+ *    interface.js: This is automatically generated. Please do not update the 
+ *                  interface.js directly unless you want to maintain the 
+ *                  interface.js without the type definition.
  *
- *    However, you can use JavaScript in this interface.ts file as you would like to do in *.js
+ *    However, you can use JavaScript in this interface.ts file as you would 
+ *    like to do in *.js
  *
  *
  */
@@ -23,7 +26,7 @@
  *
  */
 //
-//var myCharts = new dc.CHARTS();
+//var myChrts = new dc.CHARTS();
 //
 //d3.json("json/barchart.data.json", function (error, json) {
 //       if (error) return console.warn(error);
@@ -126,7 +129,7 @@ dc.useRemoteData = true;
  * Singular class
  */
 class Singular {
-    public version:string = '0.0.8';
+    public version:string = '0.0.10';
     public items:any[] = [];//any chart type
 
     /**
@@ -307,6 +310,7 @@ class Singular {
 
         return chart;
     };
+
 
     /**
      * createBarChart
