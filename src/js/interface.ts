@@ -292,7 +292,8 @@ class Singular {
             .renderHorizontalGridLines(true)//
             .filterPrinter(function (filters) {
                 var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + 
+                    conf.numberFormat(filter[1] * conf.xtickscale) + " ";
                 return s;
             });
         chart.xAxis().ticks(5);
@@ -367,8 +368,20 @@ class Singular {
      * createRowChart
      *   -- function that create customized row chart
      *   -- usage:
-     *     CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:"actvtyrow"});
-     *     CHARTS.items[actvtyrow].width(200).height(120).dimension(CHARTS.helper.getDimensions([])).group(CHARTS.helper.getGroupsFromData([])).renderLabel(true).colors().colorDomain([]).label(function(d) { return d.key;}).elasticX(true).xAxis().ticks(2);
+     *     CHARTS.createRowChart({
+     *         dimension:mwDimension,
+     *         dimensionGroup:mwDimension.group(),
+     *         field:"actvtyrow"});
+     *     CHARTS.items[actvtyrow]
+     *         .width(200)
+     *         .height(120)
+     *         .dimension(CHARTS.helper.getDimensions([]))
+     *         .group(CHARTS.helper.getGroupsFromData([]))
+     *         .renderLabel(true)
+     *         .colors()
+     *         .colorDomain([])
+     *         .label(function(d) { 
+     *             return d.key;}).elasticX(true).xAxis().ticks(2);
      *
      * @param newconf
      * @returns {*}
@@ -417,11 +430,11 @@ class Singular {
      *
      * function that create customized row chart
      *
-     * usage:
-     * CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:'actvtyrow'});
-     *
-     *
-     *
+     * Usage:
+     * CHARTS.createRowChart({
+     *     dimension:mwDimension,
+     *     dimensionGroup:mwDimension.group(),
+     *     field:'actvtyrow'});
      */
     public createPieChart = function (newconf):DC.PieChart {
         var me = this,
