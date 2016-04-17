@@ -7,12 +7,10 @@
     <link rel="stylesheet" href="demo.css"/>
   </head>
   <body>
-    <!-- FIXME: doesn't work with this title header for some reason.
     <h2 id='begin'>Simple bar chart</h2>
-    -->
 
-    <div id="seqlen-chart"></div>
-    <div id="seqlen-chart-explicit-id"></div>
+    <div id="seqlen-chart" style='height: 300px'>
+    </div>
 
     <script src="../bower_components/d3/d3.min.js"></script>
     <script src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
@@ -21,10 +19,8 @@
 
     <script type="text/javascript">
       var singular = new Singular();
-
       var barchart = singular.createBarChart({
         field: 'seqlen',
-        itemId: 'seqlen-chart-explicit-id',
         xmin: 6,
         xmax: 20,
         xtickscale: 2,

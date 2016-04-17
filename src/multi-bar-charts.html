@@ -35,14 +35,14 @@
 
     <div id="seqlen2-chart">
       <strong><i class="fa fa-bar-chart-o"></i>By seqlen2</strong>
-        <span class="reset" style="display: none;">range: 
-        <span class="filter"></span></span>
-        <a class="reset" 
-          href="javascript:myCharts.items.seqlen2.filterAll();dc.redrawAll();" 
-          style="display: none;">reset
-          <i class="fa fa-bar-chart-o"></i> 
-        </a>
-        <div style="clear: both;"></div>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:myCharts.items.seqlen2.filterAll();dc.redrawAll();" 
+        style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i> 
+      </a>
+      <div style="clear: both;"></div>
     </div>
 
     <script src="../bower_components/d3/d3.min.js"></script>
@@ -50,7 +50,7 @@
     <script src="../node_modules/singular-dc/dc.js"></script>
     <script src="js/interface.js"></script>
 
-    <script type="text/javascript">
+    <script>
       var singular = new Singular();
 
       d3.json("json/barchart.data.json", function (error, json) {
@@ -67,7 +67,7 @@
 
           barchart1.load(json);
         });
-        singular.renderAll();//dc.renderAll() also works
+        singular.renderAll(); //dc.renderAll() also works
       });
     </script>
     <script src='demo.js'></script>
