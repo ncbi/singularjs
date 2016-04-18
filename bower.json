@@ -1,11 +1,11 @@
 {
-  "name": "Singular",
+  "name": "singularjs",
   "description": "Singular is a fork of dc.js with fewer dependencies",
   "version": "0.0.11",
   "license": "SEE LICENSE IN LICENSE.md",
   "main": [
-    "dist/Singular.min.css",
-    "dist/Singular.min.js"
+    "dist/singular.min.css",
+    "dist/singular.min.js"
   ],
   "dependencies": {
     "d3": "~3.5.4"

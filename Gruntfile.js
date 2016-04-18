@@ -40,27 +40,28 @@ module.exports = function (grunt) {
       js: {
         src: [
           "src/js/crossfilter_1.3.7_quicksort_modified.js",
+          "src/js/dc_1.7.5_modified.js",
           "src/js/interface.js",
           "src/js/angular-singular.js"],
-        dest: 'dist/Singular.js'
+        dest: 'dist/singular.js'
       },
       css: {
         src: ["bower_components/dcjs/dc.css", "src/css/angular-singular.css"],
-        dest: 'dist/Singular.css'
+        dest: 'dist/singular.css'
       }
     },
 
     uglify: {
       build: {
-        src: 'dist/Singular.js',
-        dest: 'dist/Singular.min.js'
+        src: 'dist/singular.js',
+        dest: 'dist/singular.min.js'
       }
     },
 
     cssmin: {
       cssbuild: {
-        src: 'dist/Singular.css',
-        dest: 'dist/Singular.min.css'
+        src: 'dist/singular.css',
+        dest: 'dist/singular.min.css'
       }
     },
     // FIXME: get this working
