@@ -46,7 +46,7 @@ module.exports = function (grunt) {
         dest: 'dist/singular.js'
       },
       css: {
-        src: ["bower_components/dcjs/dc.css", "src/css/angular-singular.css"],
+        src: ["vendor/dcjs-1.7.5/dc.css", "src/css/angular-singular.css"],
         dest: 'dist/singular.css'
       }
     },
@@ -71,6 +71,7 @@ module.exports = function (grunt) {
     //         tasks: ['typescript'],
     //     },
     // },
+
     // Compile less -> css
     less: {
       components: {

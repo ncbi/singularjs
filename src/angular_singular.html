@@ -7,8 +7,9 @@
     <link rel="stylesheet" 
       href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <!--the following styles are required  -->
-    <link rel="stylesheet" href="../node_modules/singular-dc/dc.css"/>
-    <link rel="stylesheet" href="css/angular-singular.css"/>
+
+    <link rel="stylesheet" href="singular.css"/>
+    <link rel="stylesheet" href="demo.css"/>
   </head>
   <body>
 
@@ -41,14 +42,9 @@
     <script src="../bower_components/angular/angular.min.js"></script>
 
     <!-- the following js are required dependency -->
-    <script src="../bower_components/d3/d3.min.js"></script>
 
-    <!-- the following js should be included in angular-singular libs -->
-    <script src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
-    <script src="../node_modules/singular-dc/dc.js"></script>
-    <script src="js/interface.js"></script>
-    <script src="js/angular-singular.js"></script>
-    <!-- end -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="singular.js"></script>
 
     <script type="text/javascript">
       angular.module('TestApp', ["Singular"])
