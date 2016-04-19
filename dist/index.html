@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Singular.js - Multiple charts demo</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="singular.css"/>
+    <link rel="stylesheet" href="demo.css"/>
+  </head>
+  <body>
+    <h2 id='begin'>Multiple bar and pie charts</h2>
+
+    <div id="seqlen0-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By seqlen0</strong>
+      <span class="reset" style="display: none;">range:
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen0.filterAll();dc.redrawAll();" 
+        style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="seqlen1-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By seqlen1</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen1.filterAll();dc.redrawAll();" 
+        style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="seqlen2-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By seqlen2</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen2.filterAll();dc.redrawAll();" 
+        style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div style="clear: both;"></div>
+    <div id="row0-chart"></div>
+    <div id="row1-chart"></div>
+    <div id="row2-chart"></div>
+
+    <div style="clear: both;"></div>
+    <div id="pie0-chart"></div>
+    <div id="pie1-chart"></div>
+    <div id="pie2-chart"></div>
+
+    <div style="clear: both;"></div>
+    <h3>More:</h3>
+    <ul>
+      <li><a href='bar-chart.html'>Bar chart</a></li>
+      <li><a href='multi-bar-charts.html'>Multiple bar charts</a></li>
+      <li><a href="filtering.html">Dynamic chart filtering</a> </li>
+      <li><a href='multi-row-charts.html'>Multiple row charts</a></li>
+      <li><a href='time-series-bar-chart.html'>Time series bar chart</a></li>
+      <li><a href='angular_singular.html'>Angular-based app</a></li>
+    </ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="singular.js"></script>
+
+    <script type="text/javascript">
+      var singular = new Singular();
+      var defaultHandler = singular.defaultFilterHandler;
+
+      d3.json("json/barchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        ["seqlen0", "seqlen1", "seqlen2"].forEach(
+          function (chartname, index) {
+            var chart = singular.createBarChart({
+              field: chartname,
+              xmin: 6,
+              xmax: 20,
+              xtickscale: 1,
+              width: 300,
+              height: 200
+            }).filterHandler(defaultHandler);
+            chart.load(json);
+          });
+        singular.renderAll()
+      });
+
+      d3.json("json/rowchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        ["row0", "row1", "row2"].forEach(function (chartname, index) {
+          var chart = singular.createRowChart({
+            field: chartname,
+            width: 300,
+            height: 200
+          }).filterHandler(defaultHandler);
+          chart.load(json);
+        });
+        singular.renderAll()
+      });
+
+      d3.json("json/rowchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        ["pie0", "pie1", "pie2"].forEach(function (chartname, index) {
+          var chart = singular.createPieChart({
+            field: chartname,
+            width: 300,
+            height: 200
+          }).filterHandler(defaultHandler);
+          chart.dimension(Singular.getDimensions(json));
+          chart.load(json);
+        });
+        singular.renderAll()
+      });
+    </script>
+    <script src='demo.js'></script>
+  </body>
+</html>
