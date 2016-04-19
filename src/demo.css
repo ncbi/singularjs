@@ -1,0 +1,7 @@
+body { position: relative; }
+.version { 
+  position: absolute; 
+  top: 0px; 
+  right: 30px; 
+  font-size: 90%; 
+}

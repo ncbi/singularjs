@@ -1,89 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Singular - dynamic chart filtering</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../bower_components/dcjs/dc.css"/>
-</head>
-<body>
+    <link rel="stylesheet" href="singular.css"/>
+    <link rel="stylesheet" href="demo.css"/>
+    <style>
+      body { position: relative; }
+      .version { 
+        position: absolute; 
+        top: 0px; 
+        right: 30px; 
+        font-size: 90%; 
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id='begin'>Dynamic chart filtering</h2>
 
-<div id="seqlen0-chart">
-    <strong><i class="fa fa-bar-chart-o"></i> By seqlen0</strong>
-    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:singular.items.seqlen0.filterAll();dc.redrawAll();" style="display: none;">reset
-        <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
-    </a>
+    <div id="seqlen0-chart">
+      <strong><i class="fa fa-bar-chart-o"></i> By seqlen0</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen0.filterAll();dc.redrawAll();" 
+        style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
 
-    <div style="clear: both;"></div>
-</div>
-<div id="seqlen1-chart">
-    <strong><i class="fa fa-bar-chart-o"></i> By seqlen1</strong>
-    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:singular.items.seqlen1.filterAll();dc.redrawAll();" style="display: none;">reset
-        <i class="fa fa-bar-chart-o"></i> &nbsp;&nbsp;
-    </a>
+    <div id="seqlen1-chart">
+      <strong><i class="fa fa-bar-chart-o"></i> By seqlen1</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen1.filterAll();dc.redrawAll();" 
+        style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
 
-    <div style="clear: both;"></div>
-</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="singular.js"></script>
 
-
-<script type="text/javascript" src="../bower_components/d3/d3.min.js"></script>
-<script type="text/javascript" src="js/crossfilter_1.3.7_quicksort_modified.js"></script>
-<script type="text/javascript" src="js/dc_1.7.5_modified.js"></script>
-<script type="text/javascript" src="js/interface.js"></script>
-
-<script type="text/javascript">
-    var getData = function () {
+    <script type="text/javascript">
+      var getData = function () {
         var data = [];
         for (var i = 0; i < 100; i++) {
-            data.push([i, 5 + Math.random() * 20]);
+          data.push([i, 5 + Math.random() * 20]);
         }
         data = data.map(function (d) {
-            return {
-                key: d[0],
-                value: d[1]
-            };
+          return {
+            key: d[0],
+            value: d[1]
+          };
         });
         return data;
-    };
+      };
 
-    var singular = new Singular(),
-            chart1 = singular.createBarChart({
-                field: 'seqlen0',
-                xmin: 1,
-                xmax: 100,
-                xtickscale: 1,
-                width: 300,
-                height: 200
-            }),
-            chart2 = singular.createBarChart({
-                field: 'seqlen1',
-                xmin: 1,
-                xmax: 100,
-                xtickscale: 1,
-                width: 300,
-                height: 200
-            }),
-            myHandler1 = function () {
-                console.info(singular.getAllFilters());
-                chart2.load(getData());
-            },
-            myHandler2 = function () {
-                console.info(singular.getAllFilters());
-                chart1.load(getData());
-            };
+      var singular = new Singular(),
+      chart1 = singular.createBarChart({
+        field: 'seqlen0',
+        xmin: 1,
+        xmax: 100,
+        xtickscale: 1,
+        width: 300,
+        height: 200
+      }),
+      chart2 = singular.createBarChart({
+        field: 'seqlen1',
+        xmin: 1,
+        xmax: 100,
+        xtickscale: 1,
+        width: 300,
+        height: 200
+      }),
+      myHandler1 = function () {
+        console.info(singular.getAllFilters());
+        chart2.load(getData());
+      },
+      myHandler2 = function () {
+        console.info(singular.getAllFilters());
+        chart1.load(getData());
+      };
 
-    //attach listener
-    chart1.filterHandler(myHandler1);
-    chart2.filterHandler(myHandler2);
-    //init load
-    chart1.load(getData());
-    chart2.load(getData());
-    //    setInterval(function () {
-    //        chart2.group(singular.getGroupsFromData(getData())).render();
-    //    }, 1000);
-    document.body.insertAdjacentHTML('afterbegin', '<div>Singular@' + singular.version + '</div>');
-</script>
+      //attach listeners
+      chart1.filterHandler(myHandler1);
+      chart2.filterHandler(myHandler2);
 
-</body>
+      //init load
+      chart1.load(getData());
+      chart2.load(getData());
+
+      //    setInterval(function () {
+      //        chart2.group(singular.getGroupsFromData(getData())).render();
+      //    }, 1000);
+    </script>
+    <script src='demo.js'></script>
+  </body>
 </html>

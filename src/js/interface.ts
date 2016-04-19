@@ -4,16 +4,16 @@
  * Created by hanl on 6/22/2015.
  *
  * IMPORTANT:
- *    interface.ts: This is where the interface defined using typescript, and all editing should go to this file
- *                  make sure to compile the ts to js before testing
- *    interface.js: This is automatically generated. Please do not update the interface.js directly unless you
- *                  want to maintain the interface.js without the type definition.
+ * - interface.ts: This is the master source file, in TypeScript, that defines the
+ *               interface for Singular.
+ * - interface.js: AUTOMATICALLY GENERATED! Any changes here will be lost.
  *
- *    However, you can use JavaScript in this interface.ts file as you would like to do in *.js
- *
- *
+ * Note, however, that you can write normal JavaScript code in the interface.ts 
+ * file -- no need to learn TypeScript!
  */
+
 'use strict';
+
 /*global dc, d3,crossfilter,console,colorbrewer */
 /**
  *  Create Singular Chart Objects
@@ -23,7 +23,7 @@
  *
  */
 //
-//var myCharts = new dc.CHARTS();
+//var myChrts = new dc.CHARTS();
 //
 //d3.json("json/barchart.data.json", function (error, json) {
 //       if (error) return console.warn(error);
@@ -126,7 +126,7 @@ dc.useRemoteData = true;
  * Singular class
  */
 class Singular {
-    public version:string = '0.0.8';
+    public version:string = '0.0.11';
     public items:any[] = [];//any chart type
 
     /**
@@ -292,7 +292,8 @@ class Singular {
             .renderHorizontalGridLines(true)//
             .filterPrinter(function (filters) {
                 var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + 
+                    conf.numberFormat(filter[1] * conf.xtickscale) + " ";
                 return s;
             });
         chart.xAxis().ticks(5);
@@ -307,6 +308,7 @@ class Singular {
 
         return chart;
     };
+
 
     /**
      * createBarChart
@@ -366,8 +368,20 @@ class Singular {
      * createRowChart
      *   -- function that create customized row chart
      *   -- usage:
-     *     CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:"actvtyrow"});
-     *     CHARTS.items[actvtyrow].width(200).height(120).dimension(CHARTS.helper.getDimensions([])).group(CHARTS.helper.getGroupsFromData([])).renderLabel(true).colors().colorDomain([]).label(function(d) { return d.key;}).elasticX(true).xAxis().ticks(2);
+     *     CHARTS.createRowChart({
+     *         dimension:mwDimension,
+     *         dimensionGroup:mwDimension.group(),
+     *         field:"actvtyrow"});
+     *     CHARTS.items[actvtyrow]
+     *         .width(200)
+     *         .height(120)
+     *         .dimension(CHARTS.helper.getDimensions([]))
+     *         .group(CHARTS.helper.getGroupsFromData([]))
+     *         .renderLabel(true)
+     *         .colors()
+     *         .colorDomain([])
+     *         .label(function(d) { 
+     *             return d.key;}).elasticX(true).xAxis().ticks(2);
      *
      * @param newconf
      * @returns {*}
@@ -416,11 +430,11 @@ class Singular {
      *
      * function that create customized row chart
      *
-     * usage:
-     * CHARTS.createRowChart({dimension:mwDimension,dimensionGroup:mwDimension.group(),field:'actvtyrow'});
-     *
-     *
-     *
+     * Usage:
+     * CHARTS.createRowChart({
+     *     dimension:mwDimension,
+     *     dimensionGroup:mwDimension.group(),
+     *     field:'actvtyrow'});
      */
     public createPieChart = function (newconf):DC.PieChart {
         var me = this,

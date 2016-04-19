@@ -1,4 +1,9 @@
 .idea
-node_modules
-/bower_components
-typings
+/bower_components/
+/dist/
+/node_modules/
+/npm-debug.log
+/typings/
+/src/js/interface.js
+/src/js/interface.js.map
+/src/css/angular-singular.css
