@@ -36,7 +36,7 @@ up http://localhost:8080/src.
 
 ## Libraries used
 
-* dc_1.7.0
+* dc_1.7.5
 * quicksort from crossfilter 1.3.11
 
 ## Development
