@@ -1,7 +1,7 @@
 {
   "name": "singularjs",
   "description": "Singular is a fork of dc.js with fewer dependencies",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "SEE LICENSE IN LICENSE.md",
   "main": [
     "dist/singular.css",
