@@ -66,20 +66,3 @@ git push
 git push --tags
 npm publish
 ```
-
-## Change log
-
-### v0.0.7
-
-* allow the chart to use the width and height from it's dom element, or from 
-  it's parent if it's missing from configuration.
-* much better way to resize the charts!
-  
-      window.addEventListener('resize', 
-        singular.onResize(barchart, 'seqlen-chart-explicit-id'));
-
-### v0.0.6 
-
-* dc_1.7.5
-* quicksort from crossfilter 1.3.11
-* add time series bar chart
