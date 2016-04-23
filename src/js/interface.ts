@@ -126,7 +126,7 @@ dc.useRemoteData = true;
  * Singular class
  */
 class Singular {
-    public version:string = '0.0.13';
+    public version:string = '0.0.14-github';
     public items:any[] = [];//any chart type
 
     /**

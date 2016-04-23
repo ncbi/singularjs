@@ -15,27 +15,8 @@ npm install singularjs
 ### Download
 
 Download the latest release from 
-[GitHub](https://github.com/ncbi/singular/releases/latest) and extract it
+[GitHub](https://github.com/ncbi/singularjs/releases) and extract it
 to your local drive.
-
-## Development
-
-```
-npm install -g typings grunt-cli less
-npm install
-bower install
-typings install
-grunt
-```
-
-Then, you can start an http server at the project root directory, and bring
-up http://localhost:8080/dist.
-
-
-## Libraries used
-
-* dc_1.7.5
-* quicksort from crossfilter 1.3.11
 
 ## Development
 
@@ -53,6 +34,16 @@ bower install
 grunt         #=> creates the dist/ directory
 ```
 
+Then, you can start an http server at the project root directory, and bring
+up http://localhost:8080/dist.
+
+
+## Libraries used
+
+* dc_1.7.5 - singularjs repository was forked from here
+* quicksort - from crossfilter 1.3.11
+
+
 ## Release and publish
 
 Build:
@@ -62,13 +53,11 @@ rm -rf dist
 grunt
 ```
 
-Test:
+Test (not automated yet).
 
-```
-safe-http-server    #=> make sure http://localhost:8080/dist/ is working
-```
+First bring up `http-server`, and check that the demo pages are working.
 
-Then bump the version, and then
+Bump the version, tag, and publish:
 
 ```
 git commit -m 'Release version x.y.z'

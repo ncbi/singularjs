@@ -2,20 +2,23 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-
+        // This takes the version number from package.json and propogates it to
+        // bower.json and src/js/interface.js
         version: {
+            bower: {
+                src: 'bower.json',
+            },
             typescript: {
+                src: 'src/js/interface.ts',
                 options: {
                     prefix: '[^\\-]version:string[\'"]?\\s*[:=]\\s*[\'"]',
                 },
-                src: ['src/js/interface.ts']
-            }
+            },
         },
 
         typescript: {
             base: {
-                src: ['src/js/*.ts'],
+                src: 'src/js/*.ts',
                 dest: 'src/js',
                 options: {
                     sourceMap: true
@@ -43,7 +46,7 @@ module.exports = function (grunt) {
         },
 
         concat: {
-            // 2. Configuration js src files goes here.
+            // JavaScript src files
             js: {
                 src: [
                     "src/js/crossfilter_1.3.7_quicksort_modified.js",
