@@ -23,7 +23,7 @@ to your local drive.
 Set up these command-line tools (you should only have to do this once):
 
 ```    
-npm install -g bower grunt-cli safe-http-server
+npm install -g bower grunt-cli safe-http-server typings
 ```
 
 Then, clone the repo, install dependencies, and build:
@@ -31,6 +31,7 @@ Then, clone the repo, install dependencies, and build:
 ```
 npm install
 bower install
+typings install
 grunt         #=> creates the dist/ directory
 ```
 
