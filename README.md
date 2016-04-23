@@ -29,9 +29,7 @@ grunt
 ```
 
 Then, you can start an http server at the project root directory, and bring
-up http://localhost:8080/src.
-
-***FIXME:*** Integrate `grunt watch`.
+up http://localhost:8080/dist.
 
 
 ## Libraries used
