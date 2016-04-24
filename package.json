@@ -1,6 +1,6 @@
 {
   "name": "singularjs",
-  "version": "0.0.14-github",
+  "version": "0.0.14",
   "description": "Singular is a fork of dc.js with fewer dependencies",
   "main": "Gruntfile.js",
   "scripts": {
