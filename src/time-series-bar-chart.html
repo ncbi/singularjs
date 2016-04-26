@@ -3,7 +3,10 @@
   <head>
     <title>Singular.js - Simple Bar Chart</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="singular.css"/>
+    <!-- build:css singular.css -->
+    <link rel="stylesheet" href="css/dc-1.7.5.css"/>
+    <link rel="stylesheet" href="css/angular-singular.css"/>
+    <!-- endbuild -->
     <link rel="stylesheet" href="demo.css"/>
   </head>
   <body>
@@ -14,7 +17,12 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
-    <script src="singular.js"></script>
+    <!-- build:js singular.js -->
+    <script src='js/crossfilter_1.3.7_quicksort_modified.js'></script>
+    <script src='js/dc_1.7.5_modified.js'></script>
+    <script src='js/interface.js'></script>
+    <script src='js/angular-singular.js'></script>
+    <!-- endbuild -->
 
     <script>
       var singular = new Singular();
