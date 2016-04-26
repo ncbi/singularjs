@@ -4,6 +4,4 @@
 /node_modules/
 /npm-debug.log
 /typings/
-/src/js/interface.js
-/src/js/interface.js.map
-/src/css/angular-singular.css
+/tmp/

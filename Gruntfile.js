@@ -56,7 +56,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     // This takes the version number from package.json and propogates it to
-    // bower.json and src/js/interface.js
+    // bower.json and src/js/interface.js, changing those files *in place*.
     version: {
       bower: {
         src: 'bower.json',
@@ -69,14 +69,19 @@ module.exports = function (grunt) {
       },
     },
 
+    clean: {
+      all: ['tmp', 'dist'],
+    },
+
+    // Compile .ts -> .js
     typescript: {
       base: {
         src: 'src/js/*.ts',
-        dest: 'src/js',
+        dest: 'tmp/compiled/interface.js', 
         options: {
           sourceMap: true
-        }
-      }
+        },
+      },
     },
 
     // Compile less -> css
@@ -84,15 +89,13 @@ module.exports = function (grunt) {
       components: {
         options: {},
         files: [
-          {
-            expand: true,
-            cwd: 'src',
-            src: ['css/*.less'],
-            dest: 'src',
-            ext: '.css'
-          }
-        ]
-      }
+          { expand: true,
+            cwd: 'src/css',
+            src: ['*.less'],
+            dest: 'tmp/compiled',
+            ext: '.css' },
+        ],
+      },
     },
 
     copy: {
@@ -170,7 +173,6 @@ module.exports = function (grunt) {
   // Sync version number everywhere, then compile. This task is needed before
   // the demos in `src` will work.
   grunt.registerTask('compile', [
-    'version', 
     'typescript', 
     'less',
   ]);
@@ -187,6 +189,8 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
+    'version', 
+    'clean',
     'compile',
     'copy:main',
     'catmin',
