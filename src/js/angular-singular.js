@@ -10,11 +10,12 @@ if (typeof angular !== 'undefined') {
    */
   angular.module('Singular', [])
     .run(['$templateCache', function ($templateCache) {
-      $templateCache.put('views/singular-angular-RangeFacetFields.html',
-        "<div id={{::config.field}}-chart class=barchart style='width: 100%'>" +
-        "<p style=\"font-size: 11px\">{{config.unit}} <span class=filter></span> " +
-        "<a class=reset ng-click=resetChart() style=\"display: none\">reset</a>" +
-        "</p><div style=\"clear: both\"></div></div>"
+      $templateCache.put(
+        'views/singular-angular-RangeFacetFields.html',
+        '<div id={{::config.field}}-chart class=barchart style="width: 100%">' +
+        '<p style="font-size: 11px">{{config.unit}} <span class=filter></span> ' +
+        '<a class=reset ng-click=resetChart() style="display: none">reset</a>' +
+        '</p><div style="clear: both"></div></div>'
       );
     }])
     .directive('singularBarchart', function () {
@@ -95,7 +96,8 @@ if (typeof angular !== 'undefined') {
             });
             //chart.load(getDummyData());
             chart.load([]);
-            //window.addEventListener('resize', singular.onResize(chart, singular.getItemId($scope.config)));
+            //window.addEventListener('resize', 
+            //  singular.onResize(chart, singular.getItemId($scope.config)));
             $scope.resetChart = function (item) {
               chart.filterAll();
               dc.redrawAll();

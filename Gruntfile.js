@@ -1,5 +1,6 @@
 'use strict';
 var extend = require('extend');
+var _ = require('lodash');
 
 
 const demoHtmls = [
@@ -27,7 +28,7 @@ module.exports = function (grunt) {
     return function(context, block) {
       context.options.generated.options = opts;
     };
-  };
+  }
 
   // These are the options we'll add to the `concat` task; it adds some banners 
   // and file markers to the concatenated output files.
@@ -71,6 +72,26 @@ module.exports = function (grunt) {
 
     clean: {
       all: ['tmp', 'dist'],
+    },
+
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc',
+      },
+      all: {
+        src: [
+          'Gruntfile.js',
+          'src/js/*.js',
+        ],
+        filter: function(filepath) {
+          // exclude these from jshint:
+          var skipFiles = [
+            'crossfilter_1.3.7_quicksort_modified.js',
+            'dc_1.7.5_modified.js',
+          ];
+          return !_.some(skipFiles, sf => filepath.includes(sf));
+        },
+      },
     },
 
     // Compile .ts -> .js
@@ -191,6 +212,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'version', 
     'clean',
+    'jshint',
     'compile',
     'copy:main',
     'catmin',
