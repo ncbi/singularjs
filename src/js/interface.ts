@@ -25,7 +25,7 @@
 //
 //var myCharts = new dc.CHARTS();
 //
-//d3.json("json/barchart.data.json", function (error, json) {
+//d3.json("assets/barchart.data.json", function (error, json) {
 //       if (error) return console.warn(error);
 //       ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
 //           var chart = myCharts.createBarChart({
@@ -43,7 +43,7 @@
 //       myCharts.renderAll()
 //   });
 //
-//d3.json("json/rowchart.data.json", function (error, json) {
+//d3.json("assets/rowchart.data.json", function (error, json) {
 //       if (error) return console.warn(error);
 //       ["row0", "row1", "row2"].forEach(function (chartname, index) {
 //           var chart = myCharts.createRowChart({
@@ -57,7 +57,7 @@
 //   });
 //
 //
-//d3.json("json/rowchart.data.json", function (error, json) {
+//d3.json("assets/rowchart.data.json", function (error, json) {
 //       if (error) return console.warn(error);
 //       ["pie0", "pie1", "pie2"].forEach(function (chartname, index) {
 //           var chart = myCharts.createPieChart({

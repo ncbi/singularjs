@@ -130,9 +130,9 @@ module.exports = function (grunt) {
             dest: 'dist'
           },
           { expand: true,
-            cwd: 'src/json',
+            cwd: 'src/assets',
             src: '*.*',
-            dest: 'dist/json'
+            dest: 'dist/assets'
           }
         ]
       },

@@ -22,7 +22,6 @@
     <script src='js/dc_1.7.5_modified.js'></script>
     <script src='../tmp/compiled/interface.js'></script>
     <script src='js/angular-singular.js'></script>
-    <script src="js/usstates.js"></script>
     <!-- endbuild -->
 
     <script>
@@ -45,7 +44,7 @@
       // This will make the left margin to show the yaxis 
       // barchart.margins().left = 80;  properly
       barchart.filterHandler(singular.defaultFilterHandler);
-      d3.json("json/barcharttimeseries.data.json", function (error, json) {
+      d3.json("assets/barcharttimeseries.data.json", function (error, json) {
         if (error) return console.warn(error);
         barchart.load(json);
       });

@@ -54,13 +54,12 @@
     <script src='js/dc_1.7.5_modified.js'></script>
     <script src='../tmp/compiled/interface.js'></script>
     <script src='js/angular-singular.js'></script>
-    <script src="js/usstates.js"></script>
     <!-- endbuild -->
 
     <script>
       var singular = new Singular();
 
-      d3.json("json/barchart.data.json", function (error, json) {
+      d3.json("assets/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
           var barchart1 = singular.createBarChart({

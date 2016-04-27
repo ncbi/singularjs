@@ -15,8 +15,8 @@
     <script src='js/dc_1.7.5_modified.js'></script>
     <script src='../tmp/compiled/interface.js'></script>
     <script src='js/angular-singular.js'></script>
-    <script src="js/usstates.js"></script>
     <!-- endbuild -->
+    <script src="assets/usstates.js"></script>
   </head>
   <body>
     <h2 id='begin'>GeoJson Test</h2>
@@ -45,7 +45,7 @@
       // This will make the left margin to show the yaxis properly:
       // barchart.margins().left = 80;  
       geoChoroplethChart.filterHandler(singular.defaultFilterHandler);
-      d3.json("json/geoChoroplethChart.data.json", function (error, json) {
+      d3.json("assets/geoChoroplethChart.data.json", function (error, json) {
         if (error) return console.warn(error);
         geoChoroplethChart.load(json);
       });
