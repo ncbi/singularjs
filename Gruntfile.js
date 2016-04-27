@@ -11,7 +11,8 @@ const demoHtmls = [
   'multi-row-charts.html',
   'time-series-bar-chart.html',
   // FIXME: why does this one have an underscore?
-  'angular_singular.html',
+  'angular-singular.html',
+  'geo-chart.html',
 ];
 
 
@@ -88,6 +89,7 @@ module.exports = function (grunt) {
           var skipFiles = [
             'crossfilter_1.3.7_quicksort_modified.js',
             'dc_1.7.5_modified.js',
+            'usstates.js',
           ];
           return !_.some(skipFiles, sf => filepath.includes(sf));
         },
