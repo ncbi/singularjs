@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Singular.js - GeoJson demo</title>
+    <meta charset="UTF-8">
+    <!-- build:css singular.css -->
+    <link rel="stylesheet" href="css/dc-1.7.5.css"/>
+    <link rel="stylesheet" href="../tmp/compiled/angular-singular.css"/>
+    <!-- endbuild -->
+    <link rel="stylesheet" href="demo.css"/>
+
+    <script src="../bower_components/d3/d3.min.js"></script>
+    <!-- build:js singular.js -->
+    <script src='js/crossfilter_1.3.7_quicksort_modified.js'></script>
+    <script src='js/dc_1.7.5_modified.js'></script>
+    <script src='../tmp/compiled/interface.js'></script>
+    <script src='js/angular-singular.js'></script>
+    <!-- endbuild -->
+    <script src="assets/usstates.js"></script>
+  </head>
+  <body>
+    <h2 id='begin'>GeoJson Test</h2>
+
+    <div id="us2-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By state</strong>
+      <span class="reset" style="display: none;"> : 
+        <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:dc.filterAll();dc.redrawAll();" 
+        style="display: none;">reset<i class="fa fa-bar-chart-o"></i> 
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <script>
+      var singular = new Singular();
+
+      var geoChoroplethChart = singular.createGeoChoroplethChart({
+        field: 'us2',
+        geoJsonData: geo_usstates,
+        width: 300,
+        height: 200
+      });
+
+      // This will make the left margin to show the yaxis properly:
+      // barchart.margins().left = 80;  
+      geoChoroplethChart.filterHandler(singular.defaultFilterHandler);
+      d3.json("assets/geoChoroplethChart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        geoChoroplethChart.load(json);
+      });
+    </script>
+    <script src='demo.js'></script>
+  </body>
+</html>

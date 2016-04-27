@@ -59,7 +59,7 @@
     <script>
       var singular = new Singular();
 
-      d3.json("json/barchart.data.json", function (error, json) {
+      d3.json("assets/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
           var barchart1 = singular.createBarChart({

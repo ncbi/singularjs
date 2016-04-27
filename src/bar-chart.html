@@ -36,7 +36,7 @@
       // This will make the left margin to show the yaxis properly:
       // barchart.margins().left = 80;  
       barchart.filterHandler(singular.defaultFilterHandler);
-      d3.json("json/barchart.data.json", function (error, json) {
+      d3.json("assets/barchart.data.json", function (error, json) {
         if (error) return console.warn(error);
         barchart.load(json);
       });
