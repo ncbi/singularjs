@@ -17,6 +17,9 @@
   "ignore": [
     "/.*",
     "src",
-    "vendor"
+    "bower_components",
+    "node_modules",
+    "tmp",
+    "typings"
   ]
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Singular.js - Simple bar chart</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="singular.css">
+    <link rel="stylesheet" href="demo.css"/>
+  </head>
+  <body>
+    <h2 id='begin'>Simple bar chart</h2>
+
+    <div id="seqlen-chart" style='height: 300px'>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="singular.js"></script>
+
+    <script>
+      var singular = new Singular();
+      var barchart = singular.createBarChart({
+        field: 'seqlen',
+        xmin: 6,
+        xmax: 20,
+        xtickscale: 2,
+        width: 400
+      });
+
+      // This will make the left margin to show the yaxis properly:
+      // barchart.margins().left = 80;  
+      barchart.filterHandler(singular.defaultFilterHandler);
+      d3.json("assets/barchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        barchart.load(json);
+      });
+    </script>
+    <script src='demo.js'></script>
+  </body>
+</html>

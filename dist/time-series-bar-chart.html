@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Singular.js - Simple Bar Chart</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="singular.css">
+    <link rel="stylesheet" href="demo.css"/>
+  </head>
+  <body>
+    <h2 id='begin'>Time series bar chart</h2>
+
+    <div>
+      <div id="seqlen-chart-explicit-id" style="width: 80%; height: 300px;"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="singular.js"></script>
+
+    <script>
+      var singular = new Singular();
+      //console.info(document.getElementById('seqlen-chart-explicit-id').parentNode.clientWidth, document.getElementById('seqlen-chart-explicit-id').parentNode.clientHeight);
+      var barchart = singular.createTimeSeriesBarChart({
+        field: 'seqlen',
+        itemId: 'seqlen-chart-explicit-id',
+        xmin: new Date(2015, 2, 31),
+        xmax: new Date(2015, 3, 20),
+        width: document.getElementById('seqlen-chart-explicit-id')
+          .parentNode.clientWidth,
+        height: document.getElementById('seqlen-chart-explicit-id')
+          .parentNode.clientHeight,
+        xUnits: d3.time.days,
+        elasticX: true,
+        timeParser: d3.time.format("%d-%m-%Y %H:%M:%S").parse
+      });
+
+      // This will make the left margin to show the yaxis 
+      // barchart.margins().left = 80;  properly
+      barchart.filterHandler(singular.defaultFilterHandler);
+      d3.json("assets/barcharttimeseries.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        barchart.load(json);
+      });
+
+      window.addEventListener('resize', 
+        singular.onResize(barchart, 'seqlen-chart-explicit-id'));
+    </script>
+    <script src='demo.js'></script>
+  </body>
+</html>
