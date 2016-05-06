@@ -1,5 +1,5 @@
 /*******************************************/
-/* singularjs - v0.0.14 - 2016-04-27 */
+/* singularjs - v1.0.1 - 2016-05-06 */
 
 /**********************************************/
 /* src/js/crossfilter_1.3.7_quicksort_modified.js */
@@ -5773,7 +5773,7 @@ var Singular = (function () {
      */
     function Singular() {
         var _this = this;
-        this.version = '0.0.14';
+        this.version = '1.0.1';
         this.items = []; //any chart type
         /**
          * render all the charts managed by me, CHARTS
