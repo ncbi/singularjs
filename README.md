@@ -1,4 +1,4 @@
-# Singular
+# Singular.js
 
 Singular is a fork of dc.js, without dependencies on crossfilter or jquery.
 In our target environment, most of crossfilter's functionality is handled on
