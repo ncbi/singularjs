@@ -10,9 +10,9 @@ const demoHtmls = [
   'filtering.html',
   'multi-row-charts.html',
   'time-series-bar-chart.html',
-  // FIXME: why does this one have an underscore?
   'angular-singular.html',
   'geo-chart.html',
+    'bar-chart-ordinal.html'
 ];
 
 
@@ -21,8 +21,8 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
 
   // Helpers to set up the usemin config.
-  // It's a little bit tricky to add custom options to one of the steps 
-  // controlled by usemin. 
+  // It's a little bit tricky to add custom options to one of the steps
+  // controlled by usemin.
 
   // Add custom options to one of the usemin-generated steps.
   function addOptions(opts) {
@@ -31,7 +31,7 @@ module.exports = function (grunt) {
     };
   }
 
-  // These are the options we'll add to the `concat` task; it adds some banners 
+  // These are the options we'll add to the `concat` task; it adds some banners
   // and file markers to the concatenated output files.
   const concatOpts = {
     // This is the banner at the top of the concatenated file
@@ -42,7 +42,7 @@ module.exports = function (grunt) {
 
     // The per-file banner:
     process: function(src, filepath) {
-      return '/**********************************************/\n' + 
+      return '/**********************************************/\n' +
         '/* ' + filepath + ' */\n\n' +
         src;
     },
@@ -100,7 +100,7 @@ module.exports = function (grunt) {
     typescript: {
       base: {
         src: 'src/js/*.ts',
-        dest: 'tmp/compiled/interface.js', 
+        dest: 'tmp/compiled/interface.js',
         options: {
           sourceMap: true
         },
@@ -143,7 +143,7 @@ module.exports = function (grunt) {
       products: {
         files: [
           { src: 'tmp/unminified/concat/singular.js',
-            dest: 'dist/singular.js', },        
+            dest: 'dist/singular.js', },
           { src: 'tmp/unminified/concat/singular.css',
             dest: 'dist/singular.css', },
           { src: 'tmp/minified/singular.js',
@@ -166,11 +166,11 @@ module.exports = function (grunt) {
       options: {
         dest: 'tmp/minified',
         staging: 'tmp/unminified',
-        flow: { 
-          steps: { 
-            js: ['concat', 'uglify'], 
+        flow: {
+          steps: {
+            js: ['concat', 'uglify'],
             css: ['concat', 'cssmin'],
-          }, 
+          },
           post: {
             // Only need this once; it inserts `options` at the top-level of
             // the concat:generated target, so the `css` step finds it, too.
@@ -196,7 +196,7 @@ module.exports = function (grunt) {
   // Sync version number everywhere, then compile. This task is needed before
   // the demos in `src` will work.
   grunt.registerTask('compile', [
-    'typescript', 
+    'typescript',
     'less',
   ]);
 
@@ -212,7 +212,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'version', 
+    'version',
     'clean',
     'jshint',
     'compile',

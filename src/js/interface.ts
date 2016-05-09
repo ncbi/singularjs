@@ -8,7 +8,7 @@
  *               interface for Singular.
  * - interface.js: AUTOMATICALLY GENERATED! Any changes here will be lost.
  *
- * Note, however, that you can write normal JavaScript code in the interface.ts 
+ * Note, however, that you can write normal JavaScript code in the interface.ts
  * file -- no need to learn TypeScript!
  */
 
@@ -113,7 +113,7 @@ interface ChartConfiguration {
     timeParser?:any;
 
     //GeoChoroplethChart Only
-    geoJsonData: Object;
+    geoJsonData:Object;
 }
 
 /**
@@ -264,8 +264,8 @@ class Singular {
     public createBarChart = function (newconf:ChartConfiguration):DC.BarChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
-                xmin: 0,
-                xmax: 150,
+                // xmin: 0,
+                // xmax: 150,
                 gap: 1,
                 elasticX: false,
                 numberFormat: d3.format(".0f"),
@@ -278,6 +278,31 @@ class Singular {
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
+        var x = d3.scale.linear().domain([conf.xmin, conf.xmax]);
+
+
+        /**
+         * order arr by the order given in another array( order)
+         * @param arr
+         * @param order
+         * @returns {Array}
+         */
+        function orderBy(arr, order) {
+            var result = [],
+                i = 0, len = arr.length,
+                index;
+
+            while (result.length < len) {
+                index = arr.indexOf(order[i]);
+                result.push(arr[index]);
+                arr.splice(index, 1);
+                i = i >= order.length - 1 ? 0 : ++i;
+            }
+
+            return result;
+        }
+
+        //console.log(orderBy(arr, order));
         chart.width(conf.width).height(conf.height).margins({
             top: 10,
             right: 50,
@@ -286,23 +311,36 @@ class Singular {
         }).dimension(conf.dimension)//
             .group(conf.dimensionGroup)//
             .elasticY(true)//
-            .elasticX(conf.elasticX)//
-            //.centerBar(true)//
-            .gap(conf.gap)//
-            // .round(dc.round.floor)//
-            .x(d3.scale.linear().domain([conf.xmin, conf.xmax]))//
-            // .xUnits(dc.units.fp.precision(0.01))
-            .renderHorizontalGridLines(true)//
-            .filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + 
-                    conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                return s;
+            .elasticX(conf.elasticX);
+
+        if (conf.ordinal && Array.isArray(conf.ordinal)) {
+            chart.x(d3.scale.ordinal().domain(conf.ordinal))
+                .xUnits(dc.units.ordinal)
+                .filterPrinter(function (filters) {
+                    return filters.join(',');
+                })
+        } else {
+            chart.x(d3.scale.linear().domain([conf.xmin, conf.xmax]))
+                .gap(conf.gap)
+                .filterPrinter(function (filters) {
+                    var filter = filters[0], s = "";
+                    s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " +
+                        conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                    return s;
+                })
+                .xAxis().ticks(5);
+            chart.xAxis().tickFormat((v)=> {
+                return v * conf.xtickscale + '';
             });
-        chart.xAxis().ticks(5);
-        chart.xAxis().tickFormat((v)=> {
-            return v * conf.xtickscale + '';
-        });
+        }
+
+
+        chart.renderHorizontalGridLines(true);
+
+
+        //.centerBar(true)//
+        // .round(dc.round.floor)//
+        // .xUnits(dc.units.fp.precision(0.01))
         chart.yAxis().ticks(5);
         chart.load = function (data) {
             chart.group(Singular.getGroupsFromData(data)).render();
@@ -368,7 +406,7 @@ class Singular {
         return chart;
     };
 
-    public createGeoChoroplethChart = function(newconf: ChartConfiguration): DC.GeoChoroplethChart {
+    public createGeoChoroplethChart = function (newconf:ChartConfiguration):DC.GeoChoroplethChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
                 dimension: Singular.getDimensions([]),
@@ -386,13 +424,13 @@ class Singular {
             //.colors(colorbrewer.RdYlGn[9])
             .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"])
             .colorDomain([0, 200])
-            .title(function(d) {
+            .title(function (d) {
                 return d.key;
             })
-            .filterPrinter(function(filters) {
+            .filterPrinter(function (filters) {
                 return filters.join(',');
             })
-            .overlayGeoJson(conf.geoJsonData.features, "state", function(d) {
+            .overlayGeoJson(conf.geoJsonData.features, "state", function (d) {
                 return d.properties.name;
             });
         // .filterHandler((new Singular()).defaultFilterHandler)
@@ -405,7 +443,7 @@ class Singular {
         var albers = d3.geo.albersUsa();
         albers.scale(conf.width).translate([conf.width / 2, conf.height / 2]); //these are sample numbers, will make the map about half the size
         chart.projection(albers);// then, when it's time to make your chart...
-        chart.load = function(data) {
+        chart.load = function (data) {
             chart.group(Singular.getGroupsFromData(data)).render();
             return chart;
         };
