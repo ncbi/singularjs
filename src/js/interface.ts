@@ -278,31 +278,6 @@ class Singular {
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
-        var x = d3.scale.linear().domain([conf.xmin, conf.xmax]);
-
-
-        /**
-         * order arr by the order given in another array( order)
-         * @param arr
-         * @param order
-         * @returns {Array}
-         */
-        function orderBy(arr, order) {
-            var result = [],
-                i = 0, len = arr.length,
-                index;
-
-            while (result.length < len) {
-                index = arr.indexOf(order[i]);
-                result.push(arr[index]);
-                arr.splice(index, 1);
-                i = i >= order.length - 1 ? 0 : ++i;
-            }
-
-            return result;
-        }
-
-        //console.log(orderBy(arr, order));
         chart.width(conf.width).height(conf.height).margins({
             top: 10,
             right: 50,
@@ -338,8 +313,8 @@ class Singular {
         chart.renderHorizontalGridLines(true);
 
 
-        //.centerBar(true)//
-        // .round(dc.round.floor)//
+        //chart.centerBar(true)
+        // .round(dc.round.floor)
         // .xUnits(dc.units.fp.precision(0.01))
         chart.yAxis().ticks(5);
         chart.load = function (data) {
