@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Singular.js - Simple ordinal bar chart</title>
+    <meta charset="UTF-8">
+    <!-- build:css singular.css -->
+    <link rel="stylesheet" href="css/dc-1.7.5.css"/>
+    <link rel="stylesheet" href="../tmp/compiled/angular-singular.css"/>
+    <!-- endbuild -->
+    <link rel="stylesheet" href="demo.css"/>
+</head>
+<body>
+<h2 id='begin'>Simple ordinal bar chart</h2>
+
+<p>&#10;</p>
+<div id="mic-chart">
+    <strong><i class="fa fa-bar-chart-o"></i>mic</strong>
+      <span class="reset" style="display: none;">   :
+      <span class="filter"></span></span>
+    <a class="reset"
+       href="javascript:singular.items.mic.filterAll();dc.redrawAll();"
+       style="display: none;"> x <i class="fa fa-bar-chart-o"></i>
+    </a>
+    <div style="clear: both;"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+<!-- build:js singular.js -->
+<script src='js/crossfilter_1.3.7_quicksort_modified.js'></script>
+<script src='js/dc_1.7.5_modified.js'></script>
+<script src='../tmp/compiled/interface.js'></script>
+<script src='js/angular-singular.js'></script>
+<!-- endbuild -->
+
+<script>
+    var singular = new Singular();
+    var barchart = singular.createBarChart({
+        field: 'mic',
+        ordinal: ['>2', '4', '8', '16', '32', '>64'],
+        width: 300,
+        height: 200
+    });
+
+    // This will make the left margin to show the yaxis properly:
+    // barchart.margins().left = 80;
+    barchart.filterHandler(singular.defaultFilterHandler);
+    d3.json("assets/barchart.ordinal.json", function (error, json) {
+        if (error) return console.warn(error);
+        barchart.load(json);
+    });
+</script>
+<script src='demo.js'></script>
+</body>
+</html>
