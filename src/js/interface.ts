@@ -114,6 +114,10 @@ interface ChartConfiguration {
 
     //GeoChart Only
     geoJsonData:Object;
+    // Projection, from https://github.com/mbostock/d3/wiki/Geo-Projections
+    // For example, 'albersUsa'
+    geoProjection:string;
+    geoScale:number;
 }
 
 /**
@@ -135,7 +139,6 @@ class Singular {
     public items:any[] = [];//any chart type
 
     /**
-     *
      * @param useRemoteDataStore
      */
     constructor() {
@@ -163,9 +166,8 @@ class Singular {
         }
     };
 
-
     /**
-     *getAllFilters
+     * getAllFilters
      * @returns the string that has all the filters in CHARTS collection
      */
     getAllFilters = ()=> {
@@ -191,6 +193,7 @@ class Singular {
         }
         return currentFilters;
     };
+
     /**
      *defaultFilterHandler
      * @param dimension
@@ -202,7 +205,6 @@ class Singular {
         console.info(this.getAllFilters());
         return filter;// return the actual filter value
     };
-
 
     /**
      * updateDimension
@@ -217,8 +219,10 @@ class Singular {
             if (conf && conf.itemId) {
                 var elem = document.getElementById(conf.itemId);
                 //console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
-                conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ? elem.clientWidth : elem.parentNode["clientWidth"]);
-                conf.height = conf.height || (elem && (elem.clientHeight > 0) ? elem.clientHeight : elem.parentNode["clientHeight"]);
+                conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ?
+                        elem.clientWidth : elem.parentNode["clientWidth"]);
+                conf.height = conf.height || (elem && (elem.clientHeight > 0) ?
+                        elem.clientHeight : elem.parentNode["clientHeight"]);
             }
         } catch (e) {
             console.info(e);
@@ -240,7 +244,8 @@ class Singular {
                 var elem = document.getElementById(itemId);
                 width = elem.offsetWidth || elem.parentNode["offsetWidth"];
                 // width=300;
-                // console.info(elem.offsetWidth,elem.clientWidth, elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
+                // console.info(elem.offsetWidth,elem.clientWidth,
+                // elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
             }
             catch (e) {
             }
@@ -258,6 +263,7 @@ class Singular {
             }
         }());
     };
+
     /**
      * createBarChart
      * @param newconf
@@ -280,14 +286,17 @@ class Singular {
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height).margins({
-            top: 10,
-            right: 50,
-            bottom: 30,
-            left: 40
-        }).dimension(conf.dimension)//
-            .group(conf.dimensionGroup)//
-            .elasticY(true)//
+        chart.width(conf.width)
+            .height(conf.height)
+            .margins({
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            })
+            .dimension(conf.dimension)
+            .group(conf.dimensionGroup)
+            .elasticY(true)
             .elasticX(conf.elasticX);
 
         if (conf.ordinal && Array.isArray(conf.ordinal)) {
@@ -311,9 +320,7 @@ class Singular {
             });
         }
 
-
         chart.renderHorizontalGridLines(true);
-
 
         //chart.centerBar(true)
         // .round(dc.round.floor)
@@ -326,7 +333,6 @@ class Singular {
 
         return chart;
     };
-
 
     /**
      * createBarChart
@@ -351,21 +357,24 @@ class Singular {
 
         me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height).margins({
-            top: 10,
-            right: 50,
-            bottom: 30,
-            left: 40
-        }).dimension(conf.dimension)//
-            .group(conf.dimensionGroup)//
-            .elasticY(true)//
-            .elasticX(conf.elasticX)//
+        chart.width(conf.width)
+            .height(conf.height)
+            .margins({
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            })
+            .dimension(conf.dimension)
+            .group(conf.dimensionGroup)
+            .elasticY(true)
+            .elasticX(conf.elasticX)
             //.centerBar(true)//
             .gap(conf.gap)
             .brushOn(true)
             .x(d3.time.scale().domain([conf.xmin, conf.xmax]))
             .xUnits(conf.xUnits)
-            .renderHorizontalGridLines(true)//
+            .renderHorizontalGridLines(true)
             .filterPrinter(function (filters) {
                 var filter = filters[0], s = "";
                 s += filter[0] + " -> " + filter[1];
@@ -401,7 +410,6 @@ class Singular {
                 .height(conf.height)
                 .dimension(conf.dimension)
                 .group(conf.dimensionGroup)
-                //.colors(colorbrewer.RdYlGn[9])
                 .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF",
                     "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF",
                     "#0061B5"])
@@ -421,11 +429,17 @@ class Singular {
             // })
 
             // create a projection from d3
-            var albers = d3.geo.albersUsa();
-            albers.scale(conf.width)
+            console.log('*************************************************');
+            console.log('conf.geoProjection: ' +  conf.geoProjection);
+            var projection = d3.geo[conf.geoProjection]();
+            console.log('projection props: ' + Object.keys(projection).map(function(key) {
+                    return key + ': ' + projection[key]
+                }).join('\n'));
+            console.log('projection: ', projection);
+            projection.scale(conf.geoScale)
                 //these are sample numbers, will make the map about half the size
                 .translate([conf.width / 2, conf.height / 2]);
-            chart.projection(albers);
+            chart.projection(projection);
 
             // then, when it's time to make your chart...
             chart.load = function (data) {
