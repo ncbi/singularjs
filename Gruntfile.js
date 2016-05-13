@@ -12,7 +12,7 @@ const demoHtmls = [
   'time-series-bar-chart.html',
   'angular-singular.html',
   'geo-chart.html',
-    'bar-chart-ordinal.html'
+  'bar-chart-ordinal.html'
 ];
 
 
@@ -131,7 +131,7 @@ module.exports = function (grunt) {
           },
           { expand: true,
             cwd: 'src/assets',
-            src: '*.*',
+            src: '**',
             dest: 'dist/assets'
           }
         ]

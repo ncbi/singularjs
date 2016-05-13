@@ -16,8 +16,8 @@
     <script src='../tmp/compiled/interface.js'></script>
     <script src='js/angular-singular.js'></script>
     <!-- endbuild -->
-    <script src="assets/usstates.js"></script>
-    <script src="assets/countries.geo.js"></script>
+    <script src="assets/geo/usstates.geo.js"></script>
+    <script src="assets/geo/world.geo.js"></script>
   </head>
   <body>
     <h2 id='begin'>GeoJson Demo</h2>
@@ -49,15 +49,28 @@
 
       var usa = singular.createGeoChoroplethChart({
         field: 'us2',
-        geoJsonData: geo_countries,
+        geoJsonData: geo_usstates,
         width: 600,
         height: 400
       });
       usa.filterHandler(singular.defaultFilterHandler);
-      d3.json("assets/choropleth.data.json", function (error, json) {
+      d3.json("assets/geo/usstates.data.json", function (error, json) {
         if (error) return console.warn(error);
         usa.load(json);
       });
+
+      var world = singular.createGeoChoroplethChart({
+        field: 'world',
+        geoJsonData: geo_world,
+        width: 600,
+        height: 400
+      });
+      world.filterHandler(singular.defaultFilterHandler);
+      d3.json("assets/geo/world.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        world.load(json);
+      });
+
     </script>
     <script src='demo.js'></script>
   </body>

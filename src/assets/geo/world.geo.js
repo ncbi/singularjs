@@ -1,4 +1,4 @@
-var geo_countries = {
+var geo_world = {
   "type": "FeatureCollection",
   "features": [
     {
