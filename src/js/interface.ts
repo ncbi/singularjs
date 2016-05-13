@@ -71,7 +71,6 @@
 //       myCharts.renderAll()
 //   });
 
-
 declare module DC {
     export interface Base {
         useRemoteData:boolean;
@@ -81,6 +80,7 @@ declare module DC {
         xtickscale:number;
     }
 }
+
 
 declare var dc:DC.Base;
 
@@ -120,7 +120,9 @@ interface ChartConfiguration {
  * dc.useRemoteData = true;
  * @type {boolean}
  *
- *   -- this is required for server side data processing: this will also turn off the filter re-settings when using remote data store; to avoid the rapid backend firing
+ *   -- this is required for server side data processing: this will also turn
+ *      off the filter re-settings when using remote data store; to avoid the
+ *      rapid backend firing
  *   -- reference: if(!dc.useRemoteData)_chart.filter(null);
  */
 dc.useRemoteData = true;
@@ -381,51 +383,57 @@ class Singular {
         return chart;
     };
 
-    public createGeoChoroplethChart = function (newconf:ChartConfiguration):DC.GeoChoroplethChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
-                dimension: Singular.getDimensions([]),
-                dimensionGroup: Singular.getGroupsFromData([])
-            });
-        conf = this.updateDimension(conf);
-        //console.info(conf);
-        var chart = dc.geoChoroplethChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+    public createGeoChoroplethChart = 
+        function(newconf:ChartConfiguration):DC.GeoChoroplethChart {
+            var me = this,
+                conf = Singular.apply({}, newconf, {
+                    dimension: Singular.getDimensions([]),
+                    dimensionGroup: Singular.getGroupsFromData([])
+                });
+            conf = this.updateDimension(conf);
+            //console.info(conf);
+            var chart = dc.geoChoroplethChart(
+                conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
 
-        me.items[conf.field] = chart;
+            me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height)
-            .dimension(conf.dimension)
-            .group(conf.dimensionGroup)
-            //.colors(colorbrewer.RdYlGn[9])
-            .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"])
-            .colorDomain([0, 200])
-            .title(function (d) {
-                return d.key;
-            })
-            .filterPrinter(function (filters) {
-                return filters.join(',');
-            })
-            .overlayGeoJson(conf.geoJsonData.features, "state", function (d) {
-                return d.properties.name;
-            });
-        // .filterHandler((new Singular()).defaultFilterHandler)
-        // .filterPrinter(function (filters) {
-        //     return filters.join(',');
-        // })
+            chart.width(conf.width)
+                .height(conf.height)
+                .dimension(conf.dimension)
+                .group(conf.dimensionGroup)
+                //.colors(colorbrewer.RdYlGn[9])
+                .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF",
+                    "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF",
+                    "#0061B5"])
+                .colorDomain([0, 200])
+                .title(function (d) {
+                    return d.key;
+                })
+                .filterPrinter(function (filters) {
+                    return filters.join(', ');
+                })
+                .overlayGeoJson(conf.geoJsonData.features, "state", function (d) {
+                    return d.properties.name;
+                });
+            // .filterHandler((new Singular()).defaultFilterHandler)
+            // .filterPrinter(function (filters) {
+            //     return filters.join(',');
+            // })
 
+            // create a projection from d3
+            var albers = d3.geo.albersUsa();
+            albers.scale(conf.width)
+                //these are sample numbers, will make the map about half the size
+                .translate([conf.width / 2, conf.height / 2]);
+            chart.projection(albers);
 
-        // create a projection from d3
-        var albers = d3.geo.albersUsa();
-        albers.scale(conf.width).translate([conf.width / 2, conf.height / 2]); //these are sample numbers, will make the map about half the size
-        chart.projection(albers);// then, when it's time to make your chart...
-        chart.load = function (data) {
-            chart.group(Singular.getGroupsFromData(data)).render();
+            // then, when it's time to make your chart...
+            chart.load = function (data) {
+                chart.group(Singular.getGroupsFromData(data)).render();
+                return chart;
+            };
             return chart;
         };
-
-        return chart;
-
-    };
 
 
     /**

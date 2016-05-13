@@ -35,19 +35,19 @@
     <script>
       var singular = new Singular();
 
-      var geoChoroplethChart = singular.createGeoChoroplethChart({
+      var choropleth = singular.createGeoChoroplethChart({
         field: 'us2',
         geoJsonData: geo_usstates,
-        width: 300,
-        height: 200
+        width: 600,
+        height: 400
       });
 
       // This will make the left margin to show the yaxis properly:
       // barchart.margins().left = 80;  
-      geoChoroplethChart.filterHandler(singular.defaultFilterHandler);
-      d3.json("assets/geoChoroplethChart.data.json", function (error, json) {
+      choropleth.filterHandler(singular.defaultFilterHandler);
+      d3.json("assets/choropleth.data.json", function (error, json) {
         if (error) return console.warn(error);
-        geoChoroplethChart.load(json);
+        choropleth.load(json);
       });
     </script>
     <script src='demo.js'></script>
