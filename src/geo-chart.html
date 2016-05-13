@@ -33,22 +33,30 @@
       <div style="clear: both;"></div>
     </div>
 
+    <div id="world-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By country</strong>
+      <span class="reset" style="display: none;"> :
+        <span class="filter"></span></span>
+      <a class="reset"
+         href="javascript:dc.filterAll();dc.redrawAll();"
+         style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
     <script>
       var singular = new Singular();
 
-      var choropleth = singular.createGeoChoroplethChart({
+      var usa = singular.createGeoChoroplethChart({
         field: 'us2',
         geoJsonData: geo_countries,
         width: 600,
         height: 400
       });
-
-      // This will make the left margin to show the yaxis properly:
-      // barchart.margins().left = 80;
-      choropleth.filterHandler(singular.defaultFilterHandler);
+      usa.filterHandler(singular.defaultFilterHandler);
       d3.json("assets/choropleth.data.json", function (error, json) {
         if (error) return console.warn(error);
-        choropleth.load(json);
+        usa.load(json);
       });
     </script>
     <script src='demo.js'></script>
