@@ -1,4 +1,4 @@
-{
+var geo_countries = {
   "type": "FeatureCollection",
   "features": [
     {
@@ -45882,4 +45882,4 @@
       }
     }
   ]
-}
+};

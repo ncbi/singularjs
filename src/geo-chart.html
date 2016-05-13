@@ -17,9 +17,10 @@
     <script src='js/angular-singular.js'></script>
     <!-- endbuild -->
     <script src="assets/usstates.js"></script>
+    <script src="assets/countries.geo.js"></script>
   </head>
   <body>
-    <h2 id='begin'>GeoJson Test</h2>
+    <h2 id='begin'>GeoJson Demo</h2>
 
     <div id="us2-chart">
       <strong><i class="fa fa-bar-chart-o"></i>By state</strong>
@@ -37,13 +38,13 @@
 
       var choropleth = singular.createGeoChoroplethChart({
         field: 'us2',
-        geoJsonData: geo_usstates,
+        geoJsonData: geo_countries,
         width: 600,
         height: 400
       });
 
       // This will make the left margin to show the yaxis properly:
-      // barchart.margins().left = 80;  
+      // barchart.margins().left = 80;
       choropleth.filterHandler(singular.defaultFilterHandler);
       d3.json("assets/choropleth.data.json", function (error, json) {
         if (error) return console.warn(error);
