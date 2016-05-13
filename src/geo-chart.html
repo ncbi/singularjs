@@ -47,7 +47,7 @@
     <script>
       var singular = new Singular();
 
-      var usa = singular.createGeoChoroplethChart({
+      var usa = singular.createGeoChart({
         field: 'us2',
         geoJsonData: geo_usstates,
         width: 600,
@@ -59,7 +59,7 @@
         usa.load(json);
       });
 
-      var world = singular.createGeoChoroplethChart({
+      var world = singular.createGeoChart({
         field: 'world',
         geoJsonData: geo_world,
         width: 600,

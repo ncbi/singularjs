@@ -112,7 +112,7 @@ interface ChartConfiguration {
     xUnits?:any;
     timeParser?:any;
 
-    //GeoChoroplethChart Only
+    //GeoChart Only
     geoJsonData:Object;
 }
 
@@ -383,7 +383,7 @@ class Singular {
         return chart;
     };
 
-    public createGeoChoroplethChart = 
+    public createGeoChart =
         function(newconf:ChartConfiguration):DC.GeoChoroplethChart {
             var me = this,
                 conf = Singular.apply({}, newconf, {
