@@ -85,11 +85,11 @@ module.exports = function (grunt) {
           'src/js/*.js',
         ],
         filter: function(filepath) {
-          // exclude these from jshint:
           var skipFiles = [
             'crossfilter_1.3.7_quicksort_modified.js',
             'dc_1.7.5_modified.js',
             'usstates.js',
+            'interface.js',  // built from typescript
           ];
           return !_.some(skipFiles, sf => filepath.includes(sf));
         },

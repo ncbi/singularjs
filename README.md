@@ -20,11 +20,8 @@ to your local drive.
 
 ## Development
 
-Set up these command-line tools (you should only have to do this once):
-
-```    
-npm install -g bower grunt-cli safe-http-server typings
-```
+To make sure you have access to the build tools from the command line, add
+the *relative* directory `./node_modules/.bin` to your PATH.
 
 Then, clone the repo, install dependencies, and build:
 
@@ -35,7 +32,7 @@ typings install
 grunt         #=> creates the dist/ directory
 ```
 
-Then, you can start an http server at the project root directory, and bring
+Start an http server at the project root directory, and bring
 up http://localhost:8080/dist.
 
 
