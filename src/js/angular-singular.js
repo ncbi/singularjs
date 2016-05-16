@@ -103,7 +103,6 @@ if (typeof angular !== 'undefined') {
               dc.redrawAll();
             };
 
-
             $scope.$watch(function ($scope) {
                 return $scope.filters;
               },

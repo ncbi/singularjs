@@ -66,6 +66,8 @@
           $scope.onFilterChange = function () {
             console.info(JSON.stringify($scope.rangeFilters));
           };
+          var fieldWidth = window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
+              fieldHeight = 100;
           $scope.config = {
             rangeFacetFields: {
               mw: {
@@ -75,8 +77,8 @@
                 xmin: 1,
                 xmax: 200,
                 xtickscale: 10,
-                width: window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
-                height: 100
+                width: fieldWidth,
+                height: fieldHeight,
               },
               acvalue: {
                 field: 'acvalue',
@@ -85,8 +87,8 @@
                 xmin: 1,
                 xmax: 100,
                 xtickscale: 1,
-                width: window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
-                height: 100
+                width: fieldWidth,
+                height: fieldHeight,
               },
               aidmdate: {
                 field: 'aidmdate',
@@ -96,9 +98,22 @@
                 xmax: new Date(),
                 xUnits: d3.time.months,
                 timeParser: d3.time.format('%Y-%m-%dT%H:%M:%SZ').parse,
+                width: fieldWidth,
+                height: fieldHeight,
+              },
+
+              // Goal is to morph this into a geo facet field:
+              actvty: {
+                field: 'actvty',
+                name: 'Activity',
+                unit: 'unknown',
+                xmin: 0,
+                xmax: 30,
+                xtickscale: 10000000,
+                //xUnits: 10000000,
                 width: window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
                 height: 100
-              }
+              },
             }
           };
         }]);
