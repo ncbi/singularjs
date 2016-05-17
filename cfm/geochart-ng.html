@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bar chart directive demo</title>
+    <title>Geo chart directive demo</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../src/css/dc-1.7.5.css"/>
     <link rel="stylesheet" href="../tmp/compiled/angular-singular.css"/>
   </head>
   <body>
-    <h2 id='begin'>Bar chart directive demo</h2>
+    <h2 id='begin'>Geo chart directive demo</h2>
 
-    <div ng-app='Barchart'>
+    <div ng-app='Geochart'>
       <div ng-controller='cntlr' class='container'>
         {{ff.name}}
         <div singular-barchart
@@ -28,7 +28,7 @@
     <script src='../src/js/angular-singular.js'></script>
 
     <script type="text/javascript">
-      angular.module('Barchart', ["Singular"])
+      angular.module('Geochart', ["Singular"])
       .controller('cntlr', [ '$scope',
         function ($scope) {
           if (!$scope.filters) {
