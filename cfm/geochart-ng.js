@@ -5,15 +5,9 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
     var ngModule = Singular.ngModule ||
       (Singular.ngModule = angular.module('Singular', []));
 
-    /**
-     * @ngdoc directive
-     * @name ngramApp.directive:checkboxInline
-     * @description
-     * # checkboxInline
-     */
     ngModule.run(['$templateCache', function ($templateCache) {
       $templateCache.put(
-        'views/singular-angular-RangeFacetFields.html',
+        'views/singular-angular-GeoFacetFields.html',
         '<div id="{{::config.field}}-chart" ' +
         '     class="barchart" style="width: 100%">' +
         '  <p style="font-size: 11px">{{config.unit}} ' +
@@ -24,11 +18,10 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
         '  <div style="clear: both"></div>' +
         '</div>'
       );
-    }]);
-
-    ngModule.directive('singularBarchart', function () {
+    }])
+    .directive('singularGeochart', function () {
       return {
-        templateUrl: 'views/singular-angular-RangeFacetFields.html',
+        templateUrl: 'views/singular-angular-GeoFacetFields.html',
         restrict: 'AE',
         replace: true,
         scope: {
@@ -116,6 +109,5 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
         ],
       };
     });
-
   })();
 }
