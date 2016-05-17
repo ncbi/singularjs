@@ -85,7 +85,7 @@ declare module DC {
 declare var dc:DC.Base;
 
 interface ChartConfiguration {
-    field:string ;// use to label the field
+    field:string ;  // use to label the field
     width:number;
     height:number;
     itemId?:string; // dom el id, #id, must be unique if provided
@@ -201,9 +201,10 @@ class Singular {
      * @returns {*}
      */
     public defaultFilterHandler = (dimension, filter) => {
-        console.info("Chart.FilterHandler():filter=" + filter + " dimension = " + dimension);
+        console.info("Chart.FilterHandler():filter=" + filter + 
+            " dimension = " + dimension);
         console.info(this.getAllFilters());
-        return filter;// return the actual filter value
+        return filter;  // return the actual filter value
     };
 
     /**

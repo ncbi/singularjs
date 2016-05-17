@@ -1,36 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>angular-singular - dynamic chart filtering</title>
+    <title>Angular chart directives experiments</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet"
-      href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/dc-1.7.5.css"/>
     <link rel="stylesheet" href="../tmp/compiled/angular-singular.css"/>
     <link rel="stylesheet" href="demo.css"/>
   </head>
   <body>
+    <h2 id='begin'>Angular chart directives experiments</h2>
 
-    <div ng-app=TestApp>
+    <div ng-app='Sandbox'>
       <div ng-controller='myController' class='container'>
-        <h2 id='begin'>Angular chart directives experiments</h2>
-        <p>&#10;</p>
-        <div ng-repeat="n in config.rangeFacetFields" 
-          class="col-xs-12 col-md-12">
-          <div class="input-group input-group-sm singular">
-            <span class="input-group-addon"
-                  style="border-right: 1px solid #ccc; 
-                         min-width: 120px; 
-                         background-color: rgba(245, 245, 245, 0.54);">
-              <span class="glyphicon glyphicon-filter-"></span>{{n.name}}
-            </span>
-            <div singular-barchart
-                 config="n"
-                 filters="filters[n.field]"
-                 range-filters="rangeFilters[n.field]"
-                 on-filter-changes="onFilterChange()"
-                 style="border-right:none;border-bottom: none;border-top: none;padding-top: 5px;padding-left: 10px;">
-            </div>
+        <div class="input-group input-group-sm singular">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-filter-"
+              ></span>{{ff.name}}
+          </span>
+          <div singular-barchart
+               config="ff"
+               filters="filters[ff.field]"
+               range-filters="rangeFilters[ff.field]"
+               on-filter-changes="onFilterChange()">
           </div>
         </div>
       </div>
@@ -44,20 +35,16 @@
     <script src='js/angular-singular.js'></script>
 
     <script type="text/javascript">
-      angular.module('TestApp', ["Singular"])
+      angular.module('Sandbox', ["Singular"])
       .controller('myController', [ '$scope', 
         function ($scope) {
-          console.log('filters, before: ', $scope.filters);
           if (!$scope.filters) {
             d3.json("assets/angular-barchart-data.json", function(err, json) {
               if (err) return console.warn(err);
               $scope.filters = json;
             });
           };
-          $scope.rangeFilters = $scope.rangeFilters || {};
-          $scope.onFilterChange = function () {
-            console.info(JSON.stringify($scope.rangeFilters));
-          };
+
           var fieldWidth = window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
               fieldHeight = 100;
           $scope.config = {
@@ -72,43 +59,16 @@
                 width: fieldWidth,
                 height: fieldHeight,
               },
-              acvalue: {
-                field: 'acvalue',
-                name: 'Activity Value ',
-                unit: 'Activity Value, μM',
-                xmin: 1,
-                xmax: 100,
-                xtickscale: 1,
-                width: fieldWidth,
-                height: fieldHeight,
-              },
-              aidmdate: {
-                field: 'aidmdate',
-                name: 'Modified Date',
-                unit: 'Modified Date',
-                xmin: new Date(1996, 1, 1),
-                xmax: new Date(),
-                xUnits: d3.time.months,
-                timeParser: d3.time.format('%Y-%m-%dT%H:%M:%SZ').parse,
-                width: fieldWidth,
-                height: fieldHeight,
-              },
-
-              // Goal is to morph this into a geo facet field:
-              actvty: {
-                field: 'actvty',
-                name: 'Activity',
-                unit: 'unknown',
-                xmin: 0,
-                xmax: 30,
-                xtickscale: 10000000,
-                //xUnits: 10000000,
-                width: window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
-                height: 100
-              },
-            }
+            },
           };
-        }]);
+          // A shortcut ("facet field") for use in the HTML:
+          $scope.ff = $scope.config.rangeFacetFields.mw;
+
+          $scope.onFilterChange = function () {
+            console.info(JSON.stringify($scope.rangeFilters));
+          };
+        }
+      ]);
     </script>
   </body>
 </html>
