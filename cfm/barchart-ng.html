@@ -9,33 +9,27 @@
   <body>
     <h2 id='begin'>Angular chart directives experiments</h2>
 
-    <div ng-app='Sandbox'>
-      <div ng-controller='myController' class='container'>
-        <div class="input-group input-group-sm singular">
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-filter-"
-              ></span>{{ff.name}}
-          </span>
-          <div singular-barchart
-               config="ff"
-               filters="filters[ff.field]"
-               range-filters="rangeFilters[ff.field]"
-               on-filter-changes="onFilterChange()">
-          </div>
-        </div>
+    <div ng-app='Barchart'>
+      <div ng-controller='cntlr' class='container'>
+        {{ff.name}}
+        <div singular-barchart
+             config="ff"
+             filters="filters[ff.field]"
+             range-filters="rangeFilters[ff.field]"
+             on-filter-changes="onFilterChange()"></div>
       </div>
     </div>
 
     <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="../bower_components/d3/d3.min.js"></script>
     <script src='../src/js/crossfilter_1.3.7_quicksort_modified.js'></script>
     <script src='../src/js/dc_1.7.5_modified.js'></script>
     <script src='../tmp/compiled/interface.js'></script>
     <script src='../src/js/angular-singular.js'></script>
 
     <script type="text/javascript">
-      angular.module('Sandbox', ["Singular"])
-      .controller('myController', [ '$scope', 
+      angular.module('Barchart', ["Singular"])
+      .controller('cntlr', [ '$scope',
         function ($scope) {
           if (!$scope.filters) {
             d3.json("../src/assets/angular-barchart-data.json", function(err, json) {

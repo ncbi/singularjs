@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bar chart - simple example</title>
+    <title>Geo chart - simple example</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../src/css/dc-1.7.5.css"/>
   </head>
   <body>
-    <h2 id='begin'>Bar chart - simple example</h2>
+    <h2 id='begin'>Geo chart - simple example</h2>
 
-    <div id="times-chart" style='height: 300px'></div>
+    <div id="usa-chart"></div>
 
     <script src="../bower_components/d3/d3.min.js"></script>
     <script src='../src/js/crossfilter_1.3.7_quicksort_modified.js'></script>
     <script src='../src/js/dc_1.7.5_modified.js'></script>
     <script src='../tmp/compiled/interface.js'></script>
+    <script src="../src/assets/geo/usstates.geo.js"></script>
 
     <script>
       var singular = new Singular();
-      var barchart = singular.createBarChart({
-        field: 'times',
-        xmin: 6,
-        xmax: 20,
-        xtickscale: 2,
+      var chart = singular.createGeoChart({
+        field: 'usa',
+        geoJsonData: geo_usstates,
+        geoProjection: 'albersUsa',
+        geoScale: 650,
         width: 600,
+        height: 400,
       });
 
       // Sets up the handler to use for filter events.
       // (e.g. `barchart.filterHandler(singular.defaultFilterHandler);`)
-      barchart.filterHandler(function(dimension, filter) {
+      chart.filterHandler(function(dimension, filter) {
         console.log('filter: ', filter, ", dimension: ", dimension);
         console.log('all filters: ', singular.getAllFilters());
       });
 
-      d3.json("../src/assets/barchart.data.json", function (error, json) {
+      d3.json("../src/assets/geo/usstates.data.json", function (error, json) {
         if (error) return console.warn(error);
-        barchart.load(json);
+        chart.load(json);
       });
     </script>
   </body>
