@@ -5,7 +5,6 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
     var ngModule = Singular.ngModule ||
       (Singular.ngModule = angular.module('Singular', []));
 
-
     /**
      * @ngdoc directive
      * @name ngramApp.directive:checkboxInline
