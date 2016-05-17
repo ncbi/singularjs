@@ -15,8 +15,7 @@
         <div singular-geochart
              config="ff"
              filters="filters[ff.field]"
-             range-filters="rangeFilters[ff.field]"
-             on-filter-changes="onFilterChange()"></div>
+             on-filter-changes="myHandler()"></div>
       </div>
     </div>
 
@@ -33,34 +32,26 @@
       angular.module('Geochart', ["Singular"])
       .controller('cntlr', [ '$scope',
         function ($scope) {
-          if (!$scope.filters) {
-            d3.json("../src/assets/angular-barchart-data.json", function(err, json) {
-              if (err) return console.warn(err);
-              $scope.filters = json;
-            });
-          };
 
           var fieldWidth = window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
               fieldHeight = 100;
           $scope.config = {
-            rangeFacetFields: {
-              mw: {
-                field: 'mw',
-                name: 'Molecular Weight',
-                unit: 'Molecular Weight, Daltons ',
-                xmin: 1,
-                xmax: 200,
-                xtickscale: 10,
-                width: fieldWidth,
-                height: fieldHeight,
+            facetFields: {
+              'usa': {
+                field: 'usa',
+                geoJsonData: geo_usstates,
+                geoProjection: 'albersUsa',
+                geoScale: 650,
+                width: 600,
+                height: 400,
               },
             },
           };
           // A shortcut ("facet field") for use in the HTML:
-          $scope.ff = $scope.config.rangeFacetFields.mw;
+          $scope.ff = $scope.config.facetFields.usa;
 
-          $scope.onFilterChange = function () {
-            console.info(JSON.stringify($scope.rangeFilters));
+          $scope.myHandler = function () {
+            console.info('from html onFilterChange: ' + JSON.stringify($scope.filters));
           };
         }
       ]);

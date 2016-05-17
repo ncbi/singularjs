@@ -22,12 +22,12 @@
   <body>
     <h2 id='begin'>GeoJson Demo</h2>
 
-    <div id="us2-chart">
+    <div id="usa-chart">
       <strong><i class="fa fa-bar-chart-o"></i>By state</strong>
       <span class="reset" style="display: none;"> : 
         <span class="filter"></span></span>
       <a class="reset" 
-        href="javascript:singular.items.us2.filterAll();dc.redrawAll();"
+        href="javascript:singular.items.usa.filterAll();dc.redrawAll();"
         style="display: none;">reset<i class="fa fa-bar-chart-o"></i> 
       </a>
       <div style="clear: both;"></div>
@@ -48,7 +48,7 @@
       var singular = new Singular();
 
       var usa = singular.createGeoChart({
-        field: 'us2',
+        field: 'usa',
         geoJsonData: geo_usstates,
         geoProjection: 'albersUsa',
         geoScale: 650,
