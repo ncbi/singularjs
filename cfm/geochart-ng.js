@@ -2,6 +2,7 @@
 
 if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
   (function () {
+    // Create a new module if necessary
     var ngModule = Singular.ngModule ||
       (Singular.ngModule = angular.module('Singular', []));
 
@@ -34,25 +35,27 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
         controller: ['$scope', '$timeout',
           function ($scope, $timeout) {
 
-            // Defaults, if the user hasn't specified anything
-            // FIXME: does this really belong here?
             $scope.config = $scope.config || {};
+
+            // FIXME: for debugging:
+            $scope.config = {
+              field: 'usa',
+              geoJsonData: geo_usstates,
+              geoProjection: 'albersUsa',
+              geoScale: 650,
+              width: 600,
+              height: 400,
+            };
+  
+
             $scope.rangeFilters = $scope.rangeFilters || [];
 
             var singular = new Singular();
             if (!singular) return;
 
             $timeout(function () {
-              var chart =
-                ($scope.config.xmax && angular.isDate($scope.config.xmax))
-                  ? singular.createTimeSeriesBarChart($scope.config)
-                  : singular.createBarChart($scope.config);
-              chart.margins({
-                top: 10,
-                right: 50,
-                bottom: 20,
-                left: 80
-              });
+              var chart = singular.createGeoChart($scope.config);
+              console.log('created: ', chart);
 
               chart.filterHandler(function () {
                 //TODO:: here we need to update $scope.filters
