@@ -429,13 +429,7 @@ class Singular {
             // })
 
             // create a projection from d3
-            console.log('*************************************************');
-            console.log('conf.geoProjection: ' +  conf.geoProjection);
             var projection = d3.geo[conf.geoProjection]();
-            console.log('projection props: ' + Object.keys(projection).map(function(key) {
-                    return key + ': ' + projection[key]
-                }).join('\n'));
-            console.log('projection: ', projection);
             projection.scale(conf.geoScale)
                 //these are sample numbers, will make the map about half the size
                 .translate([conf.width / 2, conf.height / 2]);
@@ -612,10 +606,10 @@ class Singular {
                 return data.slice(0, count);
             },
             filter: function (filter) {
-                console.log('dimention.filter():' + filter);
+                //console.log('dimention.filter():' + filter);
             },
             filterFunction: function (filter) {
-                console.log('dimention.filterFunction():' + filter);
+                //console.log('dimention.filterFunction():' + filter);
             }
         };
     };
