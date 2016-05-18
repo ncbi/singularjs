@@ -33,22 +33,26 @@
       .controller('cntlr', [ '$scope',
         function ($scope) {
 
-          var fieldWidth = window.innerWidth * 0.5 > 500 ? 500 : window.innerWidth * 0.5,
-              fieldHeight = 100;
           $scope.config = {
             facetFields: {
-              'usa': {
-                field: 'usa',
+              'usstate': {
+                field: 'usstate',
+                name: 'United States',
+                unit: 'State',
                 geoJsonData: geo_usstates,
                 geoProjection: 'albersUsa',
-                geoScale: 650,
+
+                // FIXME: Fix how the scale is specified.
+                // Right now, it's trial-and-error; I think the scale is implicit in the geojson
+                // data. The geoScale has to be in sync with width and height.
+                geoScale: 400,
                 width: 600,
-                height: 400,
+                height: 300,
               },
             },
           };
           // A shortcut ("facet field") for use in the HTML:
-          $scope.ff = $scope.config.facetFields.usa;
+          $scope.ff = $scope.config.facetFields.usstate;
 
           $scope.myHandler = function () {
             console.info('from html onFilterChange: ' + JSON.stringify($scope.filters));

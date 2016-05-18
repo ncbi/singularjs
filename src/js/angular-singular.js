@@ -67,10 +67,10 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
 
                 $scope.rangeFilters =
                   ( allfilters[$scope.config.field] &&
-                  angular.isArray(allfilters[$scope.config.field]) &&
-                  allfilters[$scope.config.field].length > 0 )
-                    ? allfilters[$scope.config.field][0]
-                    : [];
+                    angular.isArray(allfilters[$scope.config.field]) &&
+                    allfilters[$scope.config.field].length > 0 )
+                  ? allfilters[$scope.config.field][0]
+                  : [];
                 $timeout(function () {
                   $scope.onFilterChanges();
                 });
@@ -84,6 +84,7 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
               $scope.$watch(
                 // Invoked whenever there's a change in the filter selection
                 function ($scope) {
+                  console.log('watch: filters: ', $scope.filters);
                   return $scope.filters;
                 },
                 // Invoked when a data values changes:

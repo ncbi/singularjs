@@ -3,25 +3,22 @@
 if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
   (function () {
     // Create a new module if necessary
-    var ngModule = Singular.ngModule ||
+    var module = Singular.ngModule ||
       (Singular.ngModule = angular.module('Singular', []));
 
-    ngModule.run(['$templateCache', function ($templateCache) {
+    module.run(['$templateCache', function ($templateCache) {
       $templateCache.put(
         'views/singular-angular-GeoFacetFields.html',
         '<div id="{{::config.field}}-chart" ' +
         '     class="geochart" style="width: 100%">' +
-        '  <strong>By state</strong>' +
-        '    <span class="reset" style="display: none;"> : ' +
-        '      <span class="filter"></span></span>' +
+        '  <p style="font-size: 70%">{{config.unit}} ' +
+        '    <span class="filter"></span> ' +
         '    <a class="reset" ng-click="resetChart()" href=""' +
-        '      style="display: none;">reset<i class="fa fa-bar-chart-o"></i>' +
-        '    </a>' +
+        '      style="display: none;">reset</a>' +
         '  <div style="clear: both"></div>' +
         '</div>'
       );
     }])
-
 
     var controller = function ($scope, $timeout) {
       $scope.config = $scope.config || {};
@@ -71,7 +68,7 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
       });
     }
 
-    ngModule.directive('singularGeochart', function () {
+    module.directive('singularGeochart', function () {
       return {
         templateUrl: 'views/singular-angular-GeoFacetFields.html',
         restrict: 'AE',
