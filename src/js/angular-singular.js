@@ -47,13 +47,12 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
             $scope.rangeFilters = $scope.rangeFilters || [];
 
             var singular = new Singular();
-            if (!singular) return;
+            if (!singular) { return; }
 
             $timeout(function () {
-              var chart =
-                ($scope.config.xmax && angular.isDate($scope.config.xmax))
-                  ? singular.createTimeSeriesBarChart($scope.config)
-                  : singular.createBarChart($scope.config);
+              var chart = ($scope.config.xmax && angular.isDate($scope.config.xmax)) ?
+                singular.createTimeSeriesBarChart($scope.config) :
+                singular.createBarChart($scope.config);
               chart.margins({
                 top: 10,
                 right: 50,
@@ -68,9 +67,9 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
                 $scope.rangeFilters =
                   ( allfilters[$scope.config.field] &&
                     angular.isArray(allfilters[$scope.config.field]) &&
-                    allfilters[$scope.config.field].length > 0 )
-                  ? allfilters[$scope.config.field][0]
-                  : [];
+                    allfilters[$scope.config.field].length > 0 ) ?
+                  allfilters[$scope.config.field][0] :
+                  [];
                 $timeout(function () {
                   $scope.onFilterChanges();
                 });
@@ -92,7 +91,10 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
                   var data = [];
                   if (newValue && angular.isArray(newValue)) {
                     //only for non-time series
-                    if ($scope.config.xtickscale && !($scope.config.xmax && angular.isDate($scope.config.xmax))) {
+                    if ($scope.config.xtickscale &&
+                        !($scope.config.xmax &&
+                        angular.isDate($scope.config.xmax)))
+                    {
                       data = newValue.map(function (d) {
                         return {
                           key: d.name / ($scope.config.xtickscale || 1 ),

@@ -1,65 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Geo chart directive demo</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../src/css/dc-1.7.5.css"/>
     <link rel="stylesheet" href="../tmp/compiled/angular-singular.css"/>
-</head>
-<body>
-<h2 id='begin'>Geo chart directive demo</h2>
+  </head>
+  <body>
+    <h2 id='begin'>Geo chart directive demo</h2>
 
-<div ng-app='Geochart'>
-    <div ng-controller='cntlr' class='container'>
+    <div ng-app='Geochart'>
+      <div ng-controller='cntlr' class='container'>
         {{ff.name}}
         <div singular-geochart
              config="ff"
              filters="filters[ff.field]"
              on-filter-changes="myHandler()"></div>
+      </div>
     </div>
-</div>
 
-<script src="../bower_components/angular/angular.min.js"></script>
-<script src="../bower_components/d3/d3.min.js"></script>
-<script src='../src/js/crossfilter_1.3.7_quicksort_modified.js'></script>
-<script src='../src/js/dc_1.7.5_modified.js'></script>
-<script src='../tmp/compiled/interface.js'></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/d3/d3.min.js"></script>
+    <script src='../src/js/crossfilter_1.3.7_quicksort_modified.js'></script>
+    <script src='../src/js/dc_1.7.5_modified.js'></script>
+    <script src='../tmp/compiled/interface.js'></script>
 
-<script src="../src/assets/geo/usstates.geo.js"></script>
-<script src='geochart-ng.js'></script>
+    <script src="../src/assets/geo/usstates.geo.js"></script>
+    <script src='geochart-ng.js'></script>
 
-<script type="text/javascript">
-    angular.module('Geochart', ["Singular"])
-            .controller('cntlr', ['$scope',
-                function ($scope) {
-                    $scope.filters = $scope.filters || {
-                                usstate: [{name: 'CA', count: 102}, {name: 'VA', count: 102}]
-                            };
-                    $scope.config = {
-                        facetFields: {
-                            'usstate': {
-                                field: 'usstate',
-                                name: 'United States',
-                                unit: 'State',
-                                geoJsonData: geo_usstates,
-                                geoProjection: 'albersUsa',
-                                // FIXME: Fix how the scale is specified.
-                                // Right now, it's trial-and-error; I think the scale is implicit in the geojson
-                                // data. The geoScale has to be in sync with width and height.
-                                geoScale: 400,
-                                width: 600,
-                                height: 300
-                            }
-                        }
-                    };
-                    // A shortcut ("facet field") for use in the HTML:
-                    $scope.ff = $scope.config.facetFields.usstate;
+    <script type="text/javascript">
+      angular.module('Geochart', ["Singular"])
+      .controller('cntlr', [ '$scope',
+        function ($scope) {
+          $scope.filters = $scope.filters || {
+            usstate: [{name: 'CA', count: 102}, {name: 'VA', count: 102}]
+          };
+          $scope.config = {
+            facetFields: {
+              'usstate': {
+                field: 'usstate',
+                name: 'United States',
+                unit: 'State',
+                geoJsonData: geo_usstates,
+                geoProjection: 'albersUsa',
 
-                    $scope.myHandler = function () {
-                        console.info('from html onFilterChange: ' + JSON.stringify($scope.filters));
-                    };
-                }
-            ]);
-</script>
-</body>
+                // FIXME: Fix how the scale is specified.
+                // Right now, it's trial-and-error; I think the scale is implicit in the geojson
+                // data. The geoScale has to be in sync with width and height.
+                geoScale: 400,
+                width: 600,
+                height: 300,
+              },
+            },
+          };
+          // A shortcut ("facet field") for use in the HTML:
+          $scope.ff = $scope.config.facetFields.usstate;
+
+          $scope.myHandler = function () {
+            console.info('from html onFilterChange: ' + JSON.stringify($scope.filters));
+          };
+        }
+      ]);
+    </script>
+  </body>
 </html>
