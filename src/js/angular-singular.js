@@ -20,7 +20,7 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
         '<a class=reset ng-click=resetChart() style="display: none">reset</a>' +
         '</p><div style="clear: both"></div></div>'
       );
-    }])
+    }]);
 
     ngModule.directive('singularBarchart', function () {
       return {
@@ -115,7 +115,9 @@ if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
                 var data = [];
                 if (newValue && angular.isArray(newValue)) {
                   //only for non-time series
-                  if ($scope.config.xtickscale && !($scope.config.xmax && angular.isDate($scope.config.xmax))) {
+                  if ($scope.config.xtickscale && 
+                      !($scope.config.xmax && angular.isDate($scope.config.xmax))) 
+                  {
                     data = newValue.map(function (d) {
                       return {
                         key: d.name / ($scope.config.xtickscale || 1 ),
