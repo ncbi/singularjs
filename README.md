@@ -21,7 +21,14 @@ to your local drive.
 ## Development
 
 To make sure you have access to the build tools from the command line, add
-the *relative* directory `./node_modules/.bin` to your PATH.
+the *relative* directory `./node_modules/.bin` to your PATH. (This will
+prevent problems you might have from breaking changes that were introduced
+to typings when it released major version 1.x. This library still depends on
+0.8.) If you're using bash:
+
+```
+export PATH=./node_modules/.bin:$PATH
+```
 
 Then, clone the repo, install dependencies, and build:
 
