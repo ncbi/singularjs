@@ -8,7 +8,7 @@
  *               interface for Singular.
  * - interface.js: AUTOMATICALLY GENERATED! Any changes here will be lost.
  *
- * Note, however, that you can write normal JavaScript code in the interface.ts 
+ * Note, however, that you can write normal JavaScript code in the interface.ts
  * file -- no need to learn TypeScript!
  */
 
@@ -71,7 +71,6 @@
 //       myCharts.renderAll()
 //   });
 
-
 declare module DC {
     export interface Base {
         useRemoteData:boolean;
@@ -81,6 +80,7 @@ declare module DC {
         xtickscale:number;
     }
 }
+
 
 declare var dc:DC.Base;
 
@@ -112,15 +112,21 @@ interface ChartConfiguration {
     xUnits?:any;
     timeParser?:any;
 
-    //GeoChoroplethChart Only
-    geoJsonData: Object;
+    //GeoChart Only
+    geoJsonData:Object;
+    // Projection, from https://github.com/mbostock/d3/wiki/Geo-Projections
+    // For example, 'albersUsa'
+    geoProjection:string;
+    geoScale:number;
 }
 
 /**
  * dc.useRemoteData = true;
  * @type {boolean}
  *
- *   -- this is required for server side data processing: this will also turn off the filter re-settings when using remote data store; to avoid the rapid backend firing
+ *   -- this is required for server side data processing: this will also turn
+ *      off the filter re-settings when using remote data store; to avoid the
+ *      rapid backend firing
  *   -- reference: if(!dc.useRemoteData)_chart.filter(null);
  */
 dc.useRemoteData = true;
@@ -133,7 +139,6 @@ class Singular {
     public items:any[] = [];//any chart type
 
     /**
-     *
      * @param useRemoteDataStore
      */
     constructor() {
@@ -161,9 +166,8 @@ class Singular {
         }
     };
 
-
     /**
-     *getAllFilters
+     * getAllFilters
      * @returns the string that has all the filters in CHARTS collection
      */
     getAllFilters = ()=> {
@@ -189,6 +193,7 @@ class Singular {
         }
         return currentFilters;
     };
+
     /**
      *defaultFilterHandler
      * @param dimension
@@ -200,7 +205,6 @@ class Singular {
         console.info(this.getAllFilters());
         return filter;// return the actual filter value
     };
-
 
     /**
      * updateDimension
@@ -215,8 +219,10 @@ class Singular {
             if (conf && conf.itemId) {
                 var elem = document.getElementById(conf.itemId);
                 //console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
-                conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ? elem.clientWidth : elem.parentNode["clientWidth"]);
-                conf.height = conf.height || (elem && (elem.clientHeight > 0) ? elem.clientHeight : elem.parentNode["clientHeight"]);
+                conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ?
+                        elem.clientWidth : elem.parentNode["clientWidth"]);
+                conf.height = conf.height || (elem && (elem.clientHeight > 0) ?
+                        elem.clientHeight : elem.parentNode["clientHeight"]);
             }
         } catch (e) {
             console.info(e);
@@ -238,7 +244,8 @@ class Singular {
                 var elem = document.getElementById(itemId);
                 width = elem.offsetWidth || elem.parentNode["offsetWidth"];
                 // width=300;
-                // console.info(elem.offsetWidth,elem.clientWidth, elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
+                // console.info(elem.offsetWidth,elem.clientWidth,
+                // elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
             }
             catch (e) {
             }
@@ -256,6 +263,7 @@ class Singular {
             }
         }());
     };
+
     /**
      * createBarChart
      * @param newconf
@@ -264,8 +272,8 @@ class Singular {
     public createBarChart = function (newconf:ChartConfiguration):DC.BarChart {
         var me = this,
             conf = Singular.apply({}, newconf, {
-                xmin: 0,
-                xmax: 150,
+                // xmin: 0,
+                // xmax: 150,
                 gap: 1,
                 elasticX: false,
                 numberFormat: d3.format(".0f"),
@@ -278,31 +286,45 @@ class Singular {
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height).margins({
-            top: 10,
-            right: 50,
-            bottom: 30,
-            left: 40
-        }).dimension(conf.dimension)//
-            .group(conf.dimensionGroup)//
-            .elasticY(true)//
-            .elasticX(conf.elasticX)//
-            //.centerBar(true)//
-            .gap(conf.gap)//
-            // .round(dc.round.floor)//
-            .x(d3.scale.linear().domain([conf.xmin, conf.xmax]))//
-            // .xUnits(dc.units.fp.precision(0.01))
-            .renderHorizontalGridLines(true)//
-            .filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + 
-                    conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                return s;
+        chart.width(conf.width)
+            .height(conf.height)
+            .margins({
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            })
+            .dimension(conf.dimension)
+            .group(conf.dimensionGroup)
+            .elasticY(true)
+            .elasticX(conf.elasticX);
+
+        if (conf.ordinal && Array.isArray(conf.ordinal)) {
+            chart.x(d3.scale.ordinal().domain(conf.ordinal))
+                .xUnits(dc.units.ordinal)
+                .filterPrinter(function (filters) {
+                    return filters.join(',');
+                })
+        } else {
+            chart.x(d3.scale.linear().domain([conf.xmin, conf.xmax]))
+                .gap(conf.gap)
+                .filterPrinter(function (filters) {
+                    var filter = filters[0], s = "";
+                    s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " +
+                        conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                    return s;
+                })
+                .xAxis().ticks(5);
+            chart.xAxis().tickFormat((v)=> {
+                return v * conf.xtickscale + '';
             });
-        chart.xAxis().ticks(5);
-        chart.xAxis().tickFormat((v)=> {
-            return v * conf.xtickscale + '';
-        });
+        }
+
+        chart.renderHorizontalGridLines(true);
+
+        //chart.centerBar(true)
+        // .round(dc.round.floor)
+        // .xUnits(dc.units.fp.precision(0.01))
         chart.yAxis().ticks(5);
         chart.load = function (data) {
             chart.group(Singular.getGroupsFromData(data)).render();
@@ -311,7 +333,6 @@ class Singular {
 
         return chart;
     };
-
 
     /**
      * createBarChart
@@ -336,21 +357,24 @@ class Singular {
 
         me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height).margins({
-            top: 10,
-            right: 50,
-            bottom: 30,
-            left: 40
-        }).dimension(conf.dimension)//
-            .group(conf.dimensionGroup)//
-            .elasticY(true)//
-            .elasticX(conf.elasticX)//
+        chart.width(conf.width)
+            .height(conf.height)
+            .margins({
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            })
+            .dimension(conf.dimension)
+            .group(conf.dimensionGroup)
+            .elasticY(true)
+            .elasticX(conf.elasticX)
             //.centerBar(true)//
             .gap(conf.gap)
             .brushOn(true)
             .x(d3.time.scale().domain([conf.xmin, conf.xmax]))
             .xUnits(conf.xUnits)
-            .renderHorizontalGridLines(true)//
+            .renderHorizontalGridLines(true)
             .filterPrinter(function (filters) {
                 var filter = filters[0], s = "";
                 s += filter[0] + " -> " + filter[1];
@@ -368,51 +392,56 @@ class Singular {
         return chart;
     };
 
-    public createGeoChoroplethChart = function(newconf: ChartConfiguration): DC.GeoChoroplethChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
-                dimension: Singular.getDimensions([]),
-                dimensionGroup: Singular.getGroupsFromData([])
-            });
-        conf = this.updateDimension(conf);
-        //console.info(conf);
-        var chart = dc.geoChoroplethChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+    public createGeoChart =
+        function(newconf:ChartConfiguration):DC.GeoChoroplethChart {
+            var me = this,
+                conf = Singular.apply({}, newconf, {
+                    dimension: Singular.getDimensions([]),
+                    dimensionGroup: Singular.getGroupsFromData([])
+                });
+            conf = this.updateDimension(conf);
+            //console.info(conf);
+            var chart = dc.geoChoroplethChart(
+                conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
 
-        me.items[conf.field] = chart;
+            me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height)
-            .dimension(conf.dimension)
-            .group(conf.dimensionGroup)
-            //.colors(colorbrewer.RdYlGn[9])
-            .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"])
-            .colorDomain([0, 200])
-            .title(function(d) {
-                return d.key;
-            })
-            .filterPrinter(function(filters) {
-                return filters.join(',');
-            })
-            .overlayGeoJson(conf.geoJsonData.features, "state", function(d) {
-                return d.properties.name;
-            });
-        // .filterHandler((new Singular()).defaultFilterHandler)
-        // .filterPrinter(function (filters) {
-        //     return filters.join(',');
-        // })
+            chart.width(conf.width)
+                .height(conf.height)
+                .dimension(conf.dimension)
+                .group(conf.dimensionGroup)
+                .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF",
+                    "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF",
+                    "#0061B5"])
+                .colorDomain([0, 200])
+                .title(function (d) {
+                    return d.key;
+                })
+                .filterPrinter(function (filters) {
+                    return filters.join(', ');
+                })
+                .overlayGeoJson(conf.geoJsonData.features, "state", function (d) {
+                    return d.properties.name;
+                });
+            // .filterHandler((new Singular()).defaultFilterHandler)
+            // .filterPrinter(function (filters) {
+            //     return filters.join(',');
+            // })
 
+            // create a projection from d3
+            var projection = d3.geo[conf.geoProjection]();
+            projection.scale(conf.geoScale)
+                //these are sample numbers, will make the map about half the size
+                .translate([conf.width / 2, conf.height / 2]);
+            chart.projection(projection);
 
-        // create a projection from d3
-        var albers = d3.geo.albersUsa();
-        albers.scale(conf.width).translate([conf.width / 2, conf.height / 2]); //these are sample numbers, will make the map about half the size
-        chart.projection(albers);// then, when it's time to make your chart...
-        chart.load = function(data) {
-            chart.group(Singular.getGroupsFromData(data)).render();
+            // then, when it's time to make your chart...
+            chart.load = function (data) {
+                chart.group(Singular.getGroupsFromData(data)).render();
+                return chart;
+            };
             return chart;
         };
-
-        return chart;
-
-    };
 
 
     /**
@@ -577,10 +606,10 @@ class Singular {
                 return data.slice(0, count);
             },
             filter: function (filter) {
-                console.log('dimention.filter():' + filter);
+                //console.log('dimention.filter():' + filter);
             },
             filterFunction: function (filter) {
-                console.log('dimention.filterFunction():' + filter);
+                //console.log('dimention.filterFunction():' + filter);
             }
         };
     };
