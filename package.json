@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ncbi/singularjs#readme",
   "devDependencies": {
+    "bower": "^1.7.9",
     "extend": "^3.0.0",
     "grunt": "~0.4.1",
     "grunt-cli": "^1.2.0",
