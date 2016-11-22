@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <title>Singular.js - GeoJson demo</title>
     <meta charset="UTF-8">
     <!-- build:css singular.css -->
@@ -18,64 +18,64 @@
     <!-- endbuild -->
     <script src="assets/geo/usstates.geo.js"></script>
     <script src="assets/geo/world.geo.js"></script>
-  </head>
-  <body>
-    <h2 id='begin'>GeoJson Demo</h2>
+</head>
+<body>
+<h2 id='begin'>GeoJson Demo</h2>
 
-    <div id="us2-chart">
-      <strong><i class="fa fa-bar-chart-o"></i>By state</strong>
-      <span class="reset" style="display: none;"> : 
+<div id="us2-chart">
+    <strong><i class="fa fa-bar-chart-o"></i>By state</strong>
+    <span class="reset" style="display: none;"> :
         <span class="filter"></span></span>
-      <a class="reset" 
-        href="javascript:singular.items.us2.filterAll();dc.redrawAll();"
-        style="display: none;">reset<i class="fa fa-bar-chart-o"></i> 
-      </a>
-      <div style="clear: both;"></div>
-    </div>
+    <a class="reset"
+       href="javascript:singular.items.us2.filterAll();dc.redrawAll();"
+       style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
+    </a>
+    <div style="clear: both;"></div>
+</div>
 
-    <div id="world-chart">
-      <strong><i class="fa fa-bar-chart-o"></i>By country</strong>
-      <span class="reset" style="display: none;"> :
+<div id="world-chart">
+    <strong><i class="fa fa-bar-chart-o"></i>By country</strong>
+    <span class="reset" style="display: none;"> :
         <span class="filter"></span></span>
-      <a class="reset"
-         href="javascript:singular.items.world.filterAll();dc.redrawAll();"
-         style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
-      </a>
-      <div style="clear: both;"></div>
-    </div>
+    <a class="reset"
+       href="javascript:singular.items.world.filterAll();dc.redrawAll();"
+       style="display: none;">reset<i class="fa fa-bar-chart-o"></i>
+    </a>
+    <div style="clear: both;"></div>
+</div>
 
-    <script>
-      var singular = new Singular();
+<script>
+    var singular = new Singular();
 
-      var usa = singular.createGeoChart({
+    var usa = singular.createGeoChart({
         field: 'us2',
         geoJsonData: geo_usstates,
         geoProjection: 'albersUsa',
         geoScale: 650,
         width: 600,
-        height: 400,
-      });
-      usa.filterHandler(singular.defaultFilterHandler);
-      d3.json("assets/geo/usstates.data.json", function (error, json) {
+        height: 400
+    });
+    usa.filterHandler(singular.defaultFilterHandler);
+    d3.json("assets/geo/usstates.data.json", function (error, json) {
         if (error) return console.warn(error);
         usa.load(json);
-      });
+    });
 
-      var world = singular.createGeoChart({
+    var world = singular.createGeoChart({
         field: 'world',
         geoJsonData: geo_world,
         geoProjection: 'equirectangular',
         geoScale: '95',
         width: 600,
-        height: 400,
-      });
-      world.filterHandler(singular.defaultFilterHandler);
-      d3.json("assets/geo/world.data.json", function (error, json) {
+        height: 400
+    });
+    world.filterHandler(singular.defaultFilterHandler);
+    d3.json("assets/geo/world.data.json", function (error, json) {
         if (error) return console.warn(error);
         world.load(json);
-      });
+    });
 
-    </script>
-    <script src='demo.js'></script>
-  </body>
+</script>
+<script src='demo.js'></script>
+</body>
 </html>
