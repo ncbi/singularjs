@@ -43,14 +43,13 @@ module.exports = function (grunt) {
     // The per-file banner:
     process: function(src, filepath) {
       return '/**********************************************/\n' +
-        '/* ' + filepath + ' */\n\n' +
-        src;
-    },
+        '/* ' + filepath + ' */\n\n' +  src;
+    }
   };
 
   // Prefixes each of an array of strings
   function prefix(pfx, arr) {
-    return arr.map(x => pfx + x);
+    return arr.map(function(x){return  pfx + x;});
   }
 
 
@@ -61,39 +60,39 @@ module.exports = function (grunt) {
     // bower.json and src/js/interface.js, changing those files *in place*.
     version: {
       bower: {
-        src: 'bower.json',
+        src: 'bower.json'
       },
       typescript: {
         src: 'src/js/interface.ts',
         options: {
-          prefix: '[^\\-]version:string[\'"]?\\s*[:=]\\s*[\'"]',
-        },
-      },
+          prefix: '[^\\-]version:string[\'"]?\\s*[:=]\\s*[\'"]'
+        }
+      }
     },
 
     clean: {
-      all: ['tmp', 'dist'],
+      all: ['tmp', 'dist']
     },
 
     jshint: {
       options: {
-        jshintrc: '.jshintrc',
+        jshintrc: '.jshintrc'
       },
       all: {
         src: [
           'Gruntfile.js',
-          'src/js/*.js',
+          'src/js/*.js'
         ],
         filter: function(filepath) {
           var skipFiles = [
             'crossfilter_1.3.7_quicksort_modified.js',
             'dc_1.7.5_modified.js',
             'usstates.js',
-            'interface.js',  // built from typescript
+            'interface.js'  // built from typescript
           ];
-          return !_.some(skipFiles, sf => filepath.includes(sf));
-        },
-      },
+          return !_.some(skipFiles, function(sf){return filepath.includes(sf);});
+        }
+      }
     },
 
     // Compile .ts -> .js
@@ -103,8 +102,8 @@ module.exports = function (grunt) {
         dest: 'tmp/compiled/interface.js',
         options: {
           sourceMap: true
-        },
-      },
+        }
+      }
     },
 
     // Compile less -> css
@@ -116,9 +115,9 @@ module.exports = function (grunt) {
             cwd: 'src/css',
             src: ['*.less'],
             dest: 'tmp/compiled',
-            ext: '.css' },
-        ],
-      },
+            ext: '.css' }
+        ]
+      }
     },
 
     copy: {
@@ -143,15 +142,15 @@ module.exports = function (grunt) {
       products: {
         files: [
           { src: 'tmp/unminified/concat/singular.js',
-            dest: 'dist/singular.js', },
+            dest: 'dist/singular.js' },
           { src: 'tmp/unminified/concat/singular.css',
-            dest: 'dist/singular.css', },
+            dest: 'dist/singular.css' },
           { src: 'tmp/minified/singular.js',
-            dest: 'dist/singular.min.js', },
+            dest: 'dist/singular.min.js' },
           { src: 'tmp/minified/singular.css',
-            dest: 'dist/singular.min.css', },
-        ],
-      },
+            dest: 'dist/singular.min.css'}
+        ]
+      }
     },
 
     // FIXME: get this working
@@ -169,25 +168,25 @@ module.exports = function (grunt) {
         flow: {
           steps: {
             js: ['concat', 'uglify'],
-            css: ['concat', 'cssmin'],
+            css: ['concat', 'cssmin']
           },
           post: {
             // Only need this once; it inserts `options` at the top-level of
             // the concat:generated target, so the `css` step finds it, too.
             'js': [
               { name: 'concat',
-                createConfig: addOptions(concatOpts),
-              },
-            ],
-          },
-        },
+                createConfig: addOptions(concatOpts)
+              }
+            ]
+          }
+        }
       },
-      html: 'src/index.html',
+      html: 'src/index.html'
     },
 
     usemin: {
-      html: prefix('dist/', demoHtmls),
-    },
+      html: prefix('dist/', demoHtmls)
+    }
   };
 
   var config = extend(true, {}, defaultConfig);
@@ -197,7 +196,7 @@ module.exports = function (grunt) {
   // the demos in `src` will work.
   grunt.registerTask('compile', [
     'typescript',
-    'less',
+    'less'
   ]);
 
   // Concatenate and minify the source js and css; process HTML files with
@@ -208,7 +207,7 @@ module.exports = function (grunt) {
     'uglify',
     'cssmin',
     'usemin',
-    'copy:products',
+    'copy:products'
   ]);
 
   grunt.registerTask('default', [
@@ -217,6 +216,6 @@ module.exports = function (grunt) {
     'jshint',
     'compile',
     'copy:main',
-    'catmin',
+    'catmin'
   ]);
 };
