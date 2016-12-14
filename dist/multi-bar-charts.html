@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Singular.js - Bar charts demo</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="singular.css">
+    <link rel="stylesheet" href="demo.css"/>
+  </head>
+  <body>
+    <h2 id='begin'>Multiple bar charts</h2>
+
+    <div id="seqlen0-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By seqlen0</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen0.filterAll();dc.redrawAll();"
+        style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i>
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="seqlen1-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By seqlen1</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen1.filterAll();dc.redrawAll();"
+        style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i> 
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="seqlen2-chart">
+      <strong><i class="fa fa-bar-chart-o"></i>By seqlen2</strong>
+      <span class="reset" style="display: none;">range: 
+      <span class="filter"></span></span>
+      <a class="reset" 
+        href="javascript:singular.items.seqlen2.filterAll();dc.redrawAll();"
+        style="display: none;">reset
+        <i class="fa fa-bar-chart-o"></i> 
+      </a>
+      <div style="clear: both;"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.js"></script>
+    <script src="singular.js"></script>
+
+    <script>
+      var singular = new Singular();
+
+      d3.json("assets/barchart.data.json", function (error, json) {
+        if (error) return console.warn(error);
+        ["seqlen0", "seqlen1", "seqlen2"].forEach(function (chartname, index) {
+          var barchart1 = singular.createBarChart({
+            field: chartname,
+            xmin: 6,
+            xmax: 20,
+            xtickscale: 1,
+            width: 300,
+            height: 200
+          }).filterHandler(singular.defaultFilterHandler);
+
+          barchart1.load(json);
+        });
+        singular.renderAll(); //dc.renderAll() also works
+      });
+    </script>
+    <script src='demo.js'></script>
+  </body>
+</html>
