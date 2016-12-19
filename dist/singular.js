@@ -1,5 +1,5 @@
 /*******************************************/
-/* singularjs - v1.0.1 - 2016-05-06 */
+/* singularjs - v1.0.2 - 2016-12-19 */
 
 /**********************************************/
 /* src/js/crossfilter_1.3.7_quicksort_modified.js */
@@ -5759,7 +5759,9 @@ if(typeof define === "function" && define.amd) {
  * dc.useRemoteData = true;
  * @type {boolean}
  *
- *   -- this is required for server side data processing: this will also turn off the filter re-settings when using remote data store; to avoid the rapid backend firing
+ *   -- this is required for server side data processing: this will also turn
+ *      off the filter re-settings when using remote data store; to avoid the
+ *      rapid backend firing
  *   -- reference: if(!dc.useRemoteData)_chart.filter(null);
  */
 dc.useRemoteData = true;
@@ -5768,12 +5770,11 @@ dc.useRemoteData = true;
  */
 var Singular = (function () {
     /**
-     *
      * @param useRemoteDataStore
      */
     function Singular() {
         var _this = this;
-        this.version = '1.0.1';
+        this.version = '1.0.2';
         this.items = []; //any chart type
         /**
          * render all the charts managed by me, CHARTS
@@ -5796,7 +5797,7 @@ var Singular = (function () {
             }
         };
         /**
-         *getAllFilters
+         * getAllFilters
          * @returns the string that has all the filters in CHARTS collection
          */
         this.getAllFilters = function () {
@@ -5831,7 +5832,7 @@ var Singular = (function () {
         /**
          * updateDimension
          * @param conf
-         * @returns {any}
+         * @returns {}
          */
         this.updateDimension = function (conf) {
             if (conf && conf.field && !conf.itemId) {
@@ -5841,12 +5842,14 @@ var Singular = (function () {
                 if (conf && conf.itemId) {
                     var elem = document.getElementById(conf.itemId);
                     //console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
-                    conf.width = conf.width || (elem && (elem.clientWidth > 0) ? elem.clientWidth : elem.parentNode["clientWidth"]);
-                    conf.height = conf.height || (elem && (elem.clientHeight > 0) ? elem.clientHeight : elem.parentNode["clientHeight"]);
+                    conf.width = conf.width || (elem && (elem.clientWidth > 0) ?
+                        elem.clientWidth : elem.parentNode["clientWidth"]);
+                    conf.height = conf.height || (elem && (elem.clientHeight > 0) ?
+                        elem.clientHeight : elem.parentNode["clientHeight"]);
                 }
             }
             catch (e) {
-                console.info(e);
+                console.warn(e);
             }
             finally {
                 conf.width = conf.width || 300;
@@ -5865,10 +5868,9 @@ var Singular = (function () {
                     width = elem.offsetWidth || elem.parentNode["offsetWidth"];
                 }
                 catch (e) {
+                    console.warn(e);
                 }
-                finally {
-                    return width;
-                }
+                return width;
             };
             return (function () {
                 return function () {
@@ -5886,9 +5888,14 @@ var Singular = (function () {
          * @returns {*}
          */
         this.createBarChart = function (newconf) {
-            var me = this, conf = Singular.apply({}, newconf, {
-                xmin: 0,
-                xmax: 150,
+            var me = this;
+            var conf = Singular.apply({}, newconf, {
+                margins: {
+                    top: 10,
+                    right: 50,
+                    bottom: 30,
+                    left: 40
+                },
                 gap: 1,
                 elasticX: false,
                 numberFormat: d3.format(".0f"),
@@ -5900,28 +5907,43 @@ var Singular = (function () {
             var chart = dc.barChart('#' + me.getItemId(conf));
             chart.xtickscale = conf.xtickscale;
             me.items[conf.field] = chart;
-            chart.width(conf.width).height(conf.height).margins({
-                top: 10,
-                right: 50,
-                bottom: 30,
-                left: 40
-            }).dimension(conf.dimension) //
-                .group(conf.dimensionGroup) //
-                .elasticY(true) //
-                .elasticX(conf.elasticX) //
-                .gap(conf.gap) //
-                .x(d3.scale.linear().domain([conf.xmin, conf.xmax])) //
-                .renderHorizontalGridLines(true) //
-                .filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " +
-                    conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                return s;
-            });
-            chart.xAxis().ticks(5);
-            chart.xAxis().tickFormat(function (v) {
-                return v * conf.xtickscale + '';
-            });
+            chart.width(conf.width)
+                .height(conf.height)
+                .margins(conf.margins)
+                .dimension(conf.dimension)
+                .group(conf.dimensionGroup)
+                .elasticX(conf.elasticX);
+            if (!conf.ymin || !conf.ymax || !conf.yLogScale) {
+                chart.elasticY(true);
+                chart.yAxis().ticks(5);
+            }
+            else {
+                chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
+                chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+            }
+            if (conf.ordinal && Array.isArray(conf.ordinal)) {
+                chart.x(d3.scale.ordinal().domain(conf.ordinal))
+                    .xUnits(dc.units.ordinal)
+                    .filterPrinter(function (filters) {
+                    return filters.join(',');
+                });
+            }
+            else {
+                chart.x(d3.scale.linear().domain([conf.xmin, conf.xmax]))
+                    .gap(conf.gap)
+                    .filterPrinter(function (filters) {
+                    var filter = filters[0];
+                    return conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                })
+                    .xAxis().ticks(5);
+                chart.xAxis().tickFormat(function (v) {
+                    return v * conf.xtickscale + '';
+                });
+            }
+            chart.renderHorizontalGridLines(true);
+            //chart.centerBar(true)
+            // .round(dc.round.floor)
+            // .xUnits(dc.units.fp.precision(0.01))
             chart.yAxis().ticks(5);
             chart.load = function (data) {
                 chart.group(Singular.getGroupsFromData(data)).render();
@@ -5935,7 +5957,14 @@ var Singular = (function () {
          * @returns {*}
          */
         this.createTimeSeriesBarChart = function (newconf) {
-            var me = this, conf = Singular.apply({}, newconf, {
+            var me = this;
+            var conf = Singular.apply({}, newconf, {
+                margins: {
+                    top: 10,
+                    right: 50,
+                    bottom: 30,
+                    left: 40
+                },
                 xmin: new Date(2015, 2, 31),
                 xmax: new Date(2015, 3, 10),
                 gap: 1,
@@ -5949,27 +5978,30 @@ var Singular = (function () {
             //console.info(conf);
             var chart = dc.barChart('#' + me.getItemId(conf));
             me.items[conf.field] = chart;
-            chart.width(conf.width).height(conf.height).margins({
-                top: 10,
-                right: 50,
-                bottom: 30,
-                left: 40
-            }).dimension(conf.dimension) //
-                .group(conf.dimensionGroup) //
-                .elasticY(true) //
-                .elasticX(conf.elasticX) //
+            chart.width(conf.width)
+                .height(conf.height)
+                .margins(conf.margins)
+                .dimension(conf.dimension)
+                .group(conf.dimensionGroup)
+                .elasticX(conf.elasticX)
                 .gap(conf.gap)
                 .brushOn(true)
                 .x(d3.time.scale().domain([conf.xmin, conf.xmax]))
                 .xUnits(conf.xUnits)
-                .renderHorizontalGridLines(true) //
+                .renderHorizontalGridLines(true)
                 .filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += filter[0] + " -> " + filter[1];
-                return s;
+                var filter = filters[0];
+                return filter[0] + " -> " + filter[1];
             });
+            if (!conf.ymin || !conf.ymax || !conf.yLogScale) {
+                chart.elasticY(true);
+                chart.yAxis().ticks(5);
+            }
+            else {
+                chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
+                chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+            }
             chart.xAxis().ticks(5);
-            chart.yAxis().ticks(5);
             chart.load = function (data) {
                 data.forEach(function (d) {
                     d.key = d3.time.day(conf.timeParser(d.key));
@@ -5979,8 +6011,9 @@ var Singular = (function () {
             };
             return chart;
         };
-        this.createGeoChoroplethChart = function (newconf) {
-            var me = this, conf = Singular.apply({}, newconf, {
+        this.createGeoChart = function (newconf) {
+            var me = this;
+            var conf = Singular.apply({}, newconf, {
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
             });
@@ -5988,16 +6021,19 @@ var Singular = (function () {
             //console.info(conf);
             var chart = dc.geoChoroplethChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
             me.items[conf.field] = chart;
-            chart.width(conf.width).height(conf.height)
+            chart.width(conf.width)
+                .height(conf.height)
                 .dimension(conf.dimension)
                 .group(conf.dimensionGroup)
-                .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"])
+                .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF",
+                "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF",
+                "#0061B5"])
                 .colorDomain([0, 200])
                 .title(function (d) {
                 return d.key;
             })
                 .filterPrinter(function (filters) {
-                return filters.join(',');
+                return filters.join(', ');
             })
                 .overlayGeoJson(conf.geoJsonData.features, "state", function (d) {
                 return d.properties.name;
@@ -6007,9 +6043,11 @@ var Singular = (function () {
             //     return filters.join(',');
             // })
             // create a projection from d3
-            var albers = d3.geo.albersUsa();
-            albers.scale(conf.width).translate([conf.width / 2, conf.height / 2]); //these are sample numbers, will make the map about half the size
-            chart.projection(albers); // then, when it's time to make your chart...
+            var projection = d3.geo[conf.geoProjection]();
+            projection.scale(conf.geoScale)
+                .translate([conf.width / 2, conf.height / 2]);
+            chart.projection(projection);
+            // then, when it's time to make your chart...
             chart.load = function (data) {
                 chart.group(Singular.getGroupsFromData(data)).render();
                 return chart;
@@ -6039,7 +6077,8 @@ var Singular = (function () {
          * @returns {*}
          */
         this.createRowChart = function (newconf) {
-            var me = this, conf = Singular.apply({}, newconf, {
+            var me = this;
+            var conf = Singular.apply({}, newconf, {
                 field: "row",
                 colors: d3.scale.category20c(),
                 colorsdomain: [],
@@ -6082,7 +6121,8 @@ var Singular = (function () {
          *     field:'actvtyrow'});
          */
         this.createPieChart = function (newconf) {
-            var me = this, conf = Singular.apply({}, newconf, {
+            var me = this;
+            var conf = Singular.apply({}, newconf, {
                 field: 'pie',
                 width: 200,
                 height: 120,
@@ -6166,10 +6206,10 @@ var Singular = (function () {
                 return data.slice(0, count);
             },
             filter: function (filter) {
-                console.log('dimention.filter():' + filter);
+                //console.log('dimention.filter():' + filter);
             },
             filterFunction: function (filter) {
-                console.log('dimention.filterFunction():' + filter);
+                //console.log('dimention.filterFunction():' + filter);
             }
         };
     };
@@ -6181,16 +6221,19 @@ var Singular = (function () {
 
 'use strict';
 
-if (typeof angular !== 'undefined') {
 
-  /**
-   * @ngdoc directive
-   * @name ngramApp.directive:checkboxInline
-   * @description
-   * # checkboxInline
-   */
-  angular.module('Singular', [])
-    .run(['$templateCache', function ($templateCache) {
+if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
+  (function () {
+    var ngModule = Singular.ngModule ||
+      (Singular.ngModule = angular.module('Singular', []));
+
+    /**
+     * @ngdoc directive
+     * @name ngramApp.directive:checkboxInline
+     * @description
+     * # checkboxInline
+     */
+    ngModule.run(['$templateCache', function ($templateCache) {
       $templateCache.put(
         'views/singular-angular-RangeFacetFields.html',
         '<div id={{::config.field}}-chart class=barchart style="width: 100%">' +
@@ -6198,8 +6241,9 @@ if (typeof angular !== 'undefined') {
         '<a class=reset ng-click=resetChart() style="display: none">reset</a>' +
         '</p><div style="clear: both"></div></div>'
       );
-    }])
-    .directive('singularBarchart', function () {
+    }]);
+
+    ngModule.directive('singularBarchart', function () {
       return {
         templateUrl: 'views/singular-angular-RangeFacetFields.html',
         restrict: 'AE',
@@ -6265,10 +6309,10 @@ if (typeof angular !== 'undefined') {
               //TODO:: here we need to update $scope.filters
               var allfilters = singular.getAllFilters();
 
-              $scope.rangeFilters = allfilters[$scope.config.field] && 
-                  angular.isArray(allfilters[$scope.config.field]) && 
-                  allfilters[$scope.config.field].length > 0 ? 
-                  allfilters[$scope.config.field][0] : [];
+              $scope.rangeFilters = allfilters[$scope.config.field] &&
+              angular.isArray(allfilters[$scope.config.field]) &&
+              allfilters[$scope.config.field].length > 0 ?
+                allfilters[$scope.config.field][0] : [];
               $timeout(function () {
                 $scope.onFilterChanges();
               });
@@ -6301,7 +6345,7 @@ if (typeof angular !== 'undefined') {
                         value: d.count
                       };
                     });
-                  } 
+                  }
                   else {
                     data = newValue.map(function (d) {
                       return {
@@ -6318,4 +6362,5 @@ if (typeof angular !== 'undefined') {
         }]
       };
     });
+  })();
 }
