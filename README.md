@@ -20,10 +20,14 @@ to your local drive.
 
 ## Development
 
-Set up these command-line tools (you should only have to do this once):
+To make sure you have access to the build tools from the command line, add
+the *relative* directory `./node_modules/.bin` to your PATH. (This will
+prevent problems you might have from breaking changes that were introduced
+to typings when it released major version 1.x. This library still depends on
+0.8.) If you're using bash:
 
-```    
-npm install -g bower grunt-cli safe-http-server typings
+```
+export PATH=./node_modules/.bin:$PATH
 ```
 
 Then, clone the repo, install dependencies, and build:
@@ -35,7 +39,7 @@ typings install
 grunt         #=> creates the dist/ directory
 ```
 
-Then, you can start an http server at the project root directory, and bring
+Start an http server at the project root directory, and bring
 up http://localhost:8080/dist.
 
 

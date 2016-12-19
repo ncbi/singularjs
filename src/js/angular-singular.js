@@ -1,15 +1,18 @@
 'use strict';
 
-if (typeof angular !== 'undefined') {
 
-  /**
-   * @ngdoc directive
-   * @name ngramApp.directive:checkboxInline
-   * @description
-   * # checkboxInline
-   */
-  angular.module('Singular', [])
-    .run(['$templateCache', function ($templateCache) {
+if (typeof angular !== 'undefined' && typeof Singular !== 'undefined') {
+  (function () {
+    var ngModule = Singular.ngModule ||
+      (Singular.ngModule = angular.module('Singular', []));
+
+    /**
+     * @ngdoc directive
+     * @name ngramApp.directive:checkboxInline
+     * @description
+     * # checkboxInline
+     */
+    ngModule.run(['$templateCache', function ($templateCache) {
       $templateCache.put(
         'views/singular-angular-RangeFacetFields.html',
         '<div id={{::config.field}}-chart class=barchart style="width: 100%">' +
@@ -17,8 +20,9 @@ if (typeof angular !== 'undefined') {
         '<a class=reset ng-click=resetChart() style="display: none">reset</a>' +
         '</p><div style="clear: both"></div></div>'
       );
-    }])
-    .directive('singularBarchart', function () {
+    }]);
+
+    ngModule.directive('singularBarchart', function () {
       return {
         templateUrl: 'views/singular-angular-RangeFacetFields.html',
         restrict: 'AE',
@@ -84,10 +88,10 @@ if (typeof angular !== 'undefined') {
               //TODO:: here we need to update $scope.filters
               var allfilters = singular.getAllFilters();
 
-              $scope.rangeFilters = allfilters[$scope.config.field] && 
-                  angular.isArray(allfilters[$scope.config.field]) && 
-                  allfilters[$scope.config.field].length > 0 ? 
-                  allfilters[$scope.config.field][0] : [];
+              $scope.rangeFilters = allfilters[$scope.config.field] &&
+              angular.isArray(allfilters[$scope.config.field]) &&
+              allfilters[$scope.config.field].length > 0 ?
+                allfilters[$scope.config.field][0] : [];
               $timeout(function () {
                 $scope.onFilterChanges();
               });
@@ -120,7 +124,7 @@ if (typeof angular !== 'undefined') {
                         value: d.count
                       };
                     });
-                  } 
+                  }
                   else {
                     data = newValue.map(function (d) {
                       return {
@@ -137,4 +141,5 @@ if (typeof angular !== 'undefined') {
         }]
       };
     });
+  })();
 }

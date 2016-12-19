@@ -1,4 +1,7 @@
 {
+  "compilerOptions": {
+    "outDir": "tmp/compiled"
+  },
   "exclude": [
     "typings/browser.d.ts",
     "typings/browser",

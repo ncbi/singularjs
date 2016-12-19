@@ -8,7 +8,7 @@
  *               interface for Singular.
  * - interface.js: AUTOMATICALLY GENERATED! Any changes here will be lost.
  *
- * Note, however, that you can write normal JavaScript code in the interface.ts 
+ * Note, however, that you can write normal JavaScript code in the interface.ts
  * file -- no need to learn TypeScript!
  */
 
@@ -71,56 +71,65 @@
 //       myCharts.renderAll()
 //   });
 
-
 declare module DC {
     export interface Base {
-        useRemoteData:boolean;
+        useRemoteData: boolean;
     }
     export interface BaseMixin<T> {
-        load(data:any):void;
-        xtickscale:number;
+        load(data: any): void;
+        xtickscale: number;
     }
 }
 
-declare var dc:DC.Base;
+
+declare var dc: DC.Base;
 
 interface ChartConfiguration {
-    field:string ;// use to label the field
-    width:number;
-    height:number;
-    itemId?:string; // dom el id, #id, must be unique if provided
-    colors?:any[];
-    colorsdomain?:any[];
+    field: string ;// use to label the field
+    width: number;
+    height: number;
+    itemId?: string; // dom el id, #id, must be unique if provided
+    colors?: any[];
+    colorsdomain?: any[];
 
     //Pie Chart
-    innerRadius?:number;
-    slicesCap?:number;
-    dimension?:any;
-    dimensionGroup?:any;
+    innerRadius?: number;
+    slicesCap?: number;
+    dimension?: any;
+    dimensionGroup?: any;
 
     //Bar Chart and time series Bar Chart
-    xmin?:any;
-    xmax?:any;
-    gap?:number;
+    xmin?: any;
+    xmax?: any;
+    ymin?: any;
+    ymax?: any;
+    yLogScale?: boolean;
+    gap?: number;
 
     //Bar Chart only
-    numberFormat?:any;
-    xtickscale?:number;
-    elasticX:boolean;
+    numberFormat?: any;
+    xtickscale?: number;
+    elasticX: boolean;
 
     //time series Bar Chart Only
-    xUnits?:any;
-    timeParser?:any;
+    xUnits?: any;
+    timeParser?: any;
 
-    //GeoChoroplethChart Only
+    //GeoChart Only
     geoJsonData: Object;
+    // Projection, from https://github.com/mbostock/d3/wiki/Geo-Projections
+    // For example, 'albersUsa'
+    geoProjection: string;
+    geoScale: number;
 }
 
 /**
  * dc.useRemoteData = true;
  * @type {boolean}
  *
- *   -- this is required for server side data processing: this will also turn off the filter re-settings when using remote data store; to avoid the rapid backend firing
+ *   -- this is required for server side data processing: this will also turn
+ *      off the filter re-settings when using remote data store; to avoid the
+ *      rapid backend firing
  *   -- reference: if(!dc.useRemoteData)_chart.filter(null);
  */
 dc.useRemoteData = true;
@@ -129,11 +138,10 @@ dc.useRemoteData = true;
  * Singular class
  */
 class Singular {
-    public version:string = '1.0.1';
-    public items:any[] = [];//any chart type
+    public version: string = '1.0.2';
+    public items: any[] = [];//any chart type
 
     /**
-     *
      * @param useRemoteDataStore
      */
     constructor() {
@@ -143,7 +151,7 @@ class Singular {
      * render all the charts managed by me, CHARTS
      */
     renderAll = () => {
-        for (var chartName in this.items) {
+        for (const chartName in this.items) {
             if (this.items.hasOwnProperty(chartName)) {
                 this.items[chartName].render();
             }
@@ -154,20 +162,19 @@ class Singular {
      * redraw all the charts managed by me, CHARTS
      */
     redrawAll = () => {
-        for (var chartName in this.items) {
+        for (const chartName in this.items) {
             if (this.items.hasOwnProperty(chartName)) {
                 this.items[chartName].redraw();
             }
         }
     };
 
-
     /**
-     *getAllFilters
+     * getAllFilters
      * @returns the string that has all the filters in CHARTS collection
      */
-    getAllFilters = ()=> {
-        var currentFilters = [],
+    getAllFilters = () => {
+        let currentFilters = [],
             chartName,
             chart,
             i;
@@ -176,7 +183,7 @@ class Singular {
                 chart = this.items[chartName];
 
                 if (chart.filters && chart.filters() && chart.filters().length > 0) {
-                    var chartFilters = JSON.parse(JSON.stringify(chart.filters().slice(0)));//deep clone
+                    const chartFilters = JSON.parse(JSON.stringify(chart.filters().slice(0)));//deep clone
                     if (chart.xtickscale && chart.xtickscale > 0) {
                         for (i = 0; i < chartFilters[0].length; i++) {
                             chartFilters[0][i] = Math.floor(chartFilters[0][i] * chart.xtickscale);
@@ -189,6 +196,7 @@ class Singular {
         }
         return currentFilters;
     };
+
     /**
      *defaultFilterHandler
      * @param dimension
@@ -201,11 +209,10 @@ class Singular {
         return filter;// return the actual filter value
     };
 
-
     /**
      * updateDimension
      * @param conf
-     * @returns {any}
+     * @returns {}
      */
     private updateDimension = function (conf) {
         if (conf && conf.field && !conf.itemId) {
@@ -213,13 +220,15 @@ class Singular {
         }
         try {
             if (conf && conf.itemId) {
-                var elem = document.getElementById(conf.itemId);
+                const elem = document.getElementById(conf.itemId);
                 //console.info(elem.clientWidth, elem.clientHeight, elem.parentNode["clientHeight"]);
-                conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ? elem.clientWidth : elem.parentNode["clientWidth"]);
-                conf.height = conf.height || (elem && (elem.clientHeight > 0) ? elem.clientHeight : elem.parentNode["clientHeight"]);
+                conf.width = conf.width || (elem && (elem.clientWidth > 0 ) ?
+                        elem.clientWidth : elem.parentNode["clientWidth"]);
+                conf.height = conf.height || (elem && (elem.clientHeight > 0) ?
+                        elem.clientHeight : elem.parentNode["clientHeight"]);
             }
         } catch (e) {
-            console.info(e);
+            console.warn(e);
         } finally {
             conf.width = conf.width || 300;
             conf.height = conf.height || 300;
@@ -232,19 +241,15 @@ class Singular {
     };
 
     public onResize = function (chart, itemId) {
-        var getNewWidth = function (itemId) {
-            var width = 300;
+        const getNewWidth = function (itemId) {
+            let width = 300;
             try {
-                var elem = document.getElementById(itemId);
+                const elem = document.getElementById(itemId);
                 width = elem.offsetWidth || elem.parentNode["offsetWidth"];
-                // width=300;
-                // console.info(elem.offsetWidth,elem.clientWidth, elem.parentNode["offsetWidth"], elem.parentNode["clientWidth"]);
+            } catch (e) {
+                console.warn(e);
             }
-            catch (e) {
-            }
-            finally {
-                return width;
-            }
+            return width;
         };
         return (function () {
             return function () {
@@ -256,108 +261,137 @@ class Singular {
             }
         }());
     };
+
     /**
      * createBarChart
      * @param newconf
      * @returns {*}
      */
-    public createBarChart = function (newconf:ChartConfiguration):DC.BarChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
-                xmin: 0,
-                xmax: 150,
-                gap: 1,
-                elasticX: false,
-                numberFormat: d3.format(".0f"),
-                xtickscale: 1,
-                dimension: Singular.getDimensions([]),
-                dimensionGroup: Singular.getGroupsFromData([])
-            });
+    public createBarChart = function (newconf: ChartConfiguration): DC.BarChart {
+        const me = this;
+        let conf = Singular.apply({}, newconf, {
+            margins: {
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            },
+            gap: 1,
+            elasticX: false,
+            numberFormat: d3.format(".0f"),
+            xtickscale: 1,
+            dimension: Singular.getDimensions([]),
+            dimensionGroup: Singular.getGroupsFromData([])
+        });
         conf = this.updateDimension(conf);
-        var chart = dc.barChart('#' + me.getItemId(conf));
+        const chart = dc.barChart('#' + me.getItemId(conf));
         chart.xtickscale = conf.xtickscale;
         me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height).margins({
-            top: 10,
-            right: 50,
-            bottom: 30,
-            left: 40
-        }).dimension(conf.dimension)//
-            .group(conf.dimensionGroup)//
-            .elasticY(true)//
-            .elasticX(conf.elasticX)//
-            //.centerBar(true)//
-            .gap(conf.gap)//
-            // .round(dc.round.floor)//
-            .x(d3.scale.linear().domain([conf.xmin, conf.xmax]))//
-            // .xUnits(dc.units.fp.precision(0.01))
-            .renderHorizontalGridLines(true)//
-            .filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + 
-                    conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                return s;
+        chart.width(conf.width)
+            .height(conf.height)
+            .margins(conf.margins)
+            .dimension(conf.dimension)
+            .group(conf.dimensionGroup)
+            .elasticX(conf.elasticX);
+
+        if (!conf.ymin || !conf.ymax || !conf.yLogScale) {
+            chart.elasticY(true);
+            chart.yAxis().ticks(5);
+        } else {
+            chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
+            chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+        }
+
+        if (conf.ordinal && Array.isArray(conf.ordinal)) {
+            chart.x(d3.scale.ordinal().domain(conf.ordinal))
+                .xUnits(dc.units.ordinal)
+                .filterPrinter(function (filters) {
+                    return filters.join(',');
+                })
+        } else {
+            chart.x(d3.scale.linear().domain([conf.xmin, conf.xmax]))
+                .gap(conf.gap)
+                .filterPrinter(function (filters) {
+                    const filter = filters[0];
+                    return conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
+                })
+                .xAxis().ticks(5);
+            chart.xAxis().tickFormat((v) => {
+                return v * conf.xtickscale + '';
             });
-        chart.xAxis().ticks(5);
-        chart.xAxis().tickFormat((v)=> {
-            return v * conf.xtickscale + '';
-        });
+        }
+
+        chart.renderHorizontalGridLines(true);
+
+        //chart.centerBar(true)
+        // .round(dc.round.floor)
+        // .xUnits(dc.units.fp.precision(0.01))
         chart.yAxis().ticks(5);
         chart.load = function (data) {
             chart.group(Singular.getGroupsFromData(data)).render();
             return chart;
         };
-
         return chart;
     };
-
 
     /**
      * createBarChart
      * @param newconf
      * @returns {*}
      */
-    public createTimeSeriesBarChart = function (newconf:ChartConfiguration):DC.BarChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
-                xmin: new Date(2015, 2, 31),
-                xmax: new Date(2015, 3, 10),
-                gap: 1,
-                elasticX: false,
-                xUnits: d3.time.days,
-                timeParser: d3.time.format("%d-%m-%Y %H:%M:%S").parse,
-                dimension: Singular.getDimensions([]),
-                dimensionGroup: Singular.getGroupsFromData([])
-            });
+    public createTimeSeriesBarChart = function (newconf: ChartConfiguration): DC.BarChart {
+        const me = this;
+        let conf = Singular.apply({}, newconf, {
+            margins: {
+                top: 10,
+                right: 50,
+                bottom: 30,
+                left: 40
+            },
+            xmin: new Date(2015, 2, 31),
+            xmax: new Date(2015, 3, 10),
+            gap: 1,
+            elasticX: false,
+            xUnits: d3.time.days,
+            timeParser: d3.time.format("%d-%m-%Y %H:%M:%S").parse,
+            dimension: Singular.getDimensions([]),
+            dimensionGroup: Singular.getGroupsFromData([])
+        });
         conf = this.updateDimension(conf);
         //console.info(conf);
-        var chart = dc.barChart('#' + me.getItemId(conf));
+        const chart = dc.barChart('#' + me.getItemId(conf));
 
         me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height).margins({
-            top: 10,
-            right: 50,
-            bottom: 30,
-            left: 40
-        }).dimension(conf.dimension)//
-            .group(conf.dimensionGroup)//
-            .elasticY(true)//
-            .elasticX(conf.elasticX)//
+        chart.width(conf.width)
+            .height(conf.height)
+            .margins(conf.margins)
+            .dimension(conf.dimension)
+            .group(conf.dimensionGroup)
+            .elasticX(conf.elasticX)
             //.centerBar(true)//
             .gap(conf.gap)
             .brushOn(true)
             .x(d3.time.scale().domain([conf.xmin, conf.xmax]))
+
             .xUnits(conf.xUnits)
-            .renderHorizontalGridLines(true)//
+            .renderHorizontalGridLines(true)
             .filterPrinter(function (filters) {
-                var filter = filters[0], s = "";
-                s += filter[0] + " -> " + filter[1];
-                return s;
+                const filter = filters[0];
+                return filter[0] + " -> " + filter[1];
             });
+
+        if (!conf.ymin || !conf.ymax || !conf.yLogScale) {
+            chart.elasticY(true);
+            chart.yAxis().ticks(5);
+        } else {
+            chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
+            chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+        }
+
         chart.xAxis().ticks(5);
-        chart.yAxis().ticks(5);
+
         chart.load = function (data) {
             data.forEach(function (d) {
                 d.key = d3.time.day(conf.timeParser(d.key));
@@ -368,51 +402,56 @@ class Singular {
         return chart;
     };
 
-    public createGeoChoroplethChart = function(newconf: ChartConfiguration): DC.GeoChoroplethChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
+    public createGeoChart =
+        function (newconf: ChartConfiguration): DC.GeoChoroplethChart {
+            const me = this;
+            let conf = Singular.apply({}, newconf, {
                 dimension: Singular.getDimensions([]),
                 dimensionGroup: Singular.getGroupsFromData([])
             });
-        conf = this.updateDimension(conf);
-        //console.info(conf);
-        var chart = dc.geoChoroplethChart(conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
+            conf = this.updateDimension(conf);
+            //console.info(conf);
+            const chart = dc.geoChoroplethChart(
+                conf.itemId ? '#' + conf.itemId : '#' + conf.field + "-chart");
 
-        me.items[conf.field] = chart;
+            me.items[conf.field] = chart;
 
-        chart.width(conf.width).height(conf.height)
-            .dimension(conf.dimension)
-            .group(conf.dimensionGroup)
-            //.colors(colorbrewer.RdYlGn[9])
-            .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"])
-            .colorDomain([0, 200])
-            .title(function(d) {
-                return d.key;
-            })
-            .filterPrinter(function(filters) {
-                return filters.join(',');
-            })
-            .overlayGeoJson(conf.geoJsonData.features, "state", function(d) {
-                return d.properties.name;
-            });
-        // .filterHandler((new Singular()).defaultFilterHandler)
-        // .filterPrinter(function (filters) {
-        //     return filters.join(',');
-        // })
+            chart.width(conf.width)
+                .height(conf.height)
+                .dimension(conf.dimension)
+                .group(conf.dimensionGroup)
+                .colors(["#ccc", "#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF",
+                    "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF",
+                    "#0061B5"])
+                .colorDomain([0, 200])
+                .title(function (d) {
+                    return d.key;
+                })
+                .filterPrinter(function (filters) {
+                    return filters.join(', ');
+                })
+                .overlayGeoJson(conf.geoJsonData.features, "state", function (d) {
+                    return d.properties.name;
+                });
+            // .filterHandler((new Singular()).defaultFilterHandler)
+            // .filterPrinter(function (filters) {
+            //     return filters.join(',');
+            // })
 
+            // create a projection from d3
+            const projection = d3.geo[conf.geoProjection]();
+            projection.scale(conf.geoScale)
+            //these are sample numbers, will make the map about half the size
+                .translate([conf.width / 2, conf.height / 2]);
+            chart.projection(projection);
 
-        // create a projection from d3
-        var albers = d3.geo.albersUsa();
-        albers.scale(conf.width).translate([conf.width / 2, conf.height / 2]); //these are sample numbers, will make the map about half the size
-        chart.projection(albers);// then, when it's time to make your chart...
-        chart.load = function(data) {
-            chart.group(Singular.getGroupsFromData(data)).render();
+            // then, when it's time to make your chart...
+            chart.load = function (data) {
+                chart.group(Singular.getGroupsFromData(data)).render();
+                return chart;
+            };
             return chart;
         };
-
-        return chart;
-
-    };
 
 
     /**
@@ -437,19 +476,19 @@ class Singular {
      * @param newconf
      * @returns {*}
      */
-    public createRowChart = function (newconf):DC.RowChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
-                field: "row",
-                colors: d3.scale.category20c(),
-                colorsdomain: [],
-                //colors: ['red', 'green', 'blue', '#c6dbef', '#dadaeb'],
-                //colorsdomain: ["active", "inactive", "unspecified", "inclonclusive"],
-                dimension: Singular.getDimensions([]),
-                dimensionGroup: Singular.getGroupsFromData([])
-            });
+    public createRowChart = function (newconf): DC.RowChart {
+        const me = this;
+        let conf = Singular.apply({}, newconf, {
+            field: "row",
+            colors: d3.scale.category20c(),
+            colorsdomain: [],
+            //colors: ['red', 'green', 'blue', '#c6dbef', '#dadaeb'],
+            //colorsdomain: ["active", "inactive", "unspecified", "inclonclusive"],
+            dimension: Singular.getDimensions([]),
+            dimensionGroup: Singular.getGroupsFromData([])
+        });
         conf = this.updateDimension(conf);
-        var chart = dc.rowChart('#' + me.getItemId(conf));
+        const chart = dc.rowChart('#' + me.getItemId(conf));
 
         this.items[conf.field] = chart;
 
@@ -487,9 +526,9 @@ class Singular {
      *     dimensionGroup:mwDimension.group(),
      *     field:'actvtyrow'});
      */
-    public createPieChart = function (newconf):DC.PieChart {
-        var me = this,
-            conf = Singular.apply({}, newconf, {
+    public createPieChart = function (newconf): DC.PieChart {
+        const me = this;
+        let conf = Singular.apply({}, newconf, {
                 field: 'pie',
                 width: 200,
                 height: 120,
@@ -556,7 +595,7 @@ class Singular {
      * @param data
      * @returns {{top: (function(any): string|T[]|ArrayBuffer|Blob), all: (function(): *)}}
      */
-    static getGroupsFromData = function (data:any[]) {
+    static getGroupsFromData = function (data: any[]) {
         return {
             top: function (k) {
                 return data.slice(0, k);
@@ -571,16 +610,16 @@ class Singular {
      * @param data
      * @returns {{top: (function(any): any[]), filter: (function(any): void), filterFunction: (function(any): void)}}
      */
-    static getDimensions = function (data:any[]) {
+    static getDimensions = function (data: any[]) {
         return {
             top: function (count) {
                 return data.slice(0, count);
             },
             filter: function (filter) {
-                console.log('dimention.filter():' + filter);
+                //console.log('dimention.filter():' + filter);
             },
             filterFunction: function (filter) {
-                console.log('dimention.filterFunction():' + filter);
+                //console.log('dimention.filterFunction():' + filter);
             }
         };
     };
