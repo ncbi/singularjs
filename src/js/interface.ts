@@ -300,7 +300,7 @@ class Singular {
             chart.yAxis().ticks(5);
         } else {
             chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
-            chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+            chart.yAxis().ticks(5, ",.1s").tickSize(5, 0);
         }
 
         if (conf.ordinal && Array.isArray(conf.ordinal)) {
@@ -315,19 +315,19 @@ class Singular {
                 .filterPrinter(function (filters) {
                     const filter = filters[0];
                     return conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                })
-                .xAxis().ticks(5);
+                });
             chart.xAxis().tickFormat((v) => {
                 return v * conf.xtickscale + '';
             });
         }
+        chart.xAxis().ticks(5);
 
         chart.renderHorizontalGridLines(true);
 
         //chart.centerBar(true)
         // .round(dc.round.floor)
         // .xUnits(dc.units.fp.precision(0.01))
-        chart.yAxis().ticks(5);
+
         chart.load = function (data) {
             chart.group(Singular.getGroupsFromData(data)).render();
             return chart;
@@ -387,7 +387,7 @@ class Singular {
             chart.yAxis().ticks(5);
         } else {
             chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
-            chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+            chart.yAxis().ticks(5, ",.1s").tickSize(5, 0);
         }
 
         chart.xAxis().ticks(5);
