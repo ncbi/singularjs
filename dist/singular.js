@@ -1,5 +1,5 @@
 /*******************************************/
-/* singularjs - v1.0.2 - 2016-12-19 */
+/* singularjs - v1.0.3 - 2017-04-26 */
 
 /**********************************************/
 /* src/js/crossfilter_1.3.7_quicksort_modified.js */
@@ -5919,7 +5919,7 @@ var Singular = (function () {
             }
             else {
                 chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
-                chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+                chart.yAxis().ticks(5, ",.1s").tickSize(5, 0);
             }
             if (conf.ordinal && Array.isArray(conf.ordinal)) {
                 chart.x(d3.scale.ordinal().domain(conf.ordinal))
@@ -5934,17 +5934,16 @@ var Singular = (function () {
                     .filterPrinter(function (filters) {
                     var filter = filters[0];
                     return conf.numberFormat(filter[0] * conf.xtickscale) + " -> " + conf.numberFormat(filter[1] * conf.xtickscale) + " ";
-                })
-                    .xAxis().ticks(5);
+                });
                 chart.xAxis().tickFormat(function (v) {
                     return v * conf.xtickscale + '';
                 });
             }
+            chart.xAxis().ticks(5);
             chart.renderHorizontalGridLines(true);
             //chart.centerBar(true)
             // .round(dc.round.floor)
             // .xUnits(dc.units.fp.precision(0.01))
-            chart.yAxis().ticks(5);
             chart.load = function (data) {
                 chart.group(Singular.getGroupsFromData(data)).render();
                 return chart;
@@ -5999,7 +5998,7 @@ var Singular = (function () {
             }
             else {
                 chart.y(d3.scale.log().clamp(true).domain([conf.ymin, conf.ymax]));
-                chart.yAxis().ticks(5, ",.0f").tickSize(5, 0);
+                chart.yAxis().ticks(5, ",.1s").tickSize(5, 0);
             }
             chart.xAxis().ticks(5);
             chart.load = function (data) {
