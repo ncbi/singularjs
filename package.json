@@ -1,6 +1,6 @@
 {
   "name": "singularjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Singular is a fork of dc.js with fewer dependencies",
   "main": "Gruntfile.js",
   "scripts": {
